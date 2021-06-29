@@ -1,7 +1,8 @@
 """Main module."""
 import numpy
 from scipy import stats
-from scipy import optimize
+from scipy.optimize import minimize_scalar
+from scipy.interpolate import interpn
 class fromZtoX(object):
     def copula_switch(self, copula, z):
         method_name = copula
@@ -66,27 +67,27 @@ class r_sol(object):
         method_name = comb
         method = getattr(self, "bridge_" + str(method_name), lambda: 'Invalid mixed types')
         return method(self = r_sol, r = r, zratio1 = zratio1, zratio2 = zratio2)
-    def bridge_10(r, zratio1, zratio2):
+    def bridge_10(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
         res = 4 * stats.multivariate_normal.pdf(x = [de1, 0], cov = numpy.array([1, r / numpy.sqrt(2) - 2 * zratio1], [r / numpy.sqrt(2) - 2 * zratio1, 1]))
         return res
-    def bridge_11(r, zratio1, zratio2):
+    def bridge_11(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         res = 2 * stats.multivariate_normal.pdf(x = [de1, de2], cov = numpy.array([1, r], [r, 1]) - zratio1 * zratio2)
         return res
-    def bridge_20(r, zratio1, zratio2):
+    def bridge_20(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
         mat2 = numpy.array([1, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), r, 1])
         res = - 2 * stats.multivariate_normal.pdf(x = [- de1, 0], cov = numpy.array([1, 1 / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1])) \
               + 4 * stats.multivariate_normal.pdf(x = [- de1, 0, 0], cov = mat2)
         return res
-    def bridge_21(r, zratio1, zratio2):
+    def bridge_21(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         mat1 = numpy.array([1, - r, 1 / numpy.sqrt(2)], [- r, 1, - r / numpy.sqrt(2)], [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1])
         mat2 = numpy.array([1, 0, - 1 / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [- 1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1])
         res = 2 * (1 - zratio1) * zratio2 - 2 * stats.multivariate_normal.pdf(x = [- de1, de2, 0], cov = mat1) - 2 * stats.multivariate_normal.pdf(x = [-de1, de2, 0], cov = mat2)
         return res
-    def bridge_22(r, zratio1, zratio2):
+    def bridge_22(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         mat1 = numpy.array([1, 0 , 1 / numpy.sqrt(2), - r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2), 1 / numpy.sqrt(2)], \
                [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1, - r], [- r / numpy.sqrt(2), 1 / numpy.sqrt(2), - r, 1])
@@ -94,18 +95,18 @@ class r_sol(object):
                [1 / numpy.sqrt(2), r /numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), 1 / numpy.sqrt(2), r, 1])
         res = - 2 * stats.multivariate_normal.pdf(x = [- de1, - de2, 0, 0], cov = mat1) + 2 * stats.multivariate_normal.pdf(x = [- de1, - de2, 0, 0], cov = mat2)
         return res
-    def bridge_30(r, zratio1, zratio2):
+    def bridge_30(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
         mat = numpy.array([1, 0, r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [r / numpy.sqrt(2), - r / numpy.sqrt(2), 1])
         res = 4 * stats.multivariate_normal.pdf(x = [de1[1], 0], cov = numpy.array([1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1])) - 2 * zratio1[1] \
               + 4 * stats.multivariate_normal.pdf(x = [de1[0], de1[1], 0], cov = mat) - 2 * zratio1[0] * zratio1[1]
         return res
-    def bridge_31(r, zratio1, zratio2):
+    def bridge_31(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         res = 2 * stats.multivariate_normal.pdf(x = [de2, de1[1]], cov = numpy.array([1, r], [r, 1])) * (1 - zratio1[0]) \
               - 2 * zratio1[1] * (zratio2 - stats.multivariate_normal.pdf(x = [de2, de1[0]], cov = numpy.array([1, r], [r, 1])))
         return res
-    def bridge_32(r, zratio1, zratio2):
+    def bridge_32(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         mat1 = numpy.array([1, 0, 0], [0, 1, r], [0, r, 1])
         mat2 = numpy.array([1, 0, 0, r / numpy.sqrt(2)], [0, 1, - r, r / numpy.sqrt(2)], [0, - r, 1, - 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), - 1 / numpy.sqrt(2), 1])
@@ -113,16 +114,16 @@ class r_sol(object):
         res = - 2 * (1 - zratio1[0]) * zratio1[1] + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], de2], cov = mat1) \
               + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], - de2, 0], cov = mat2) + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], - de2, 0], cov = mat3)
         return res
-    def bridge_33(r, zratio1, zratio2):
+    def bridge_33(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
         res = 2 * stats.multivariate_normal.pdf(x = [de1[1], de2[1]], cov = numpy.array([1, r], [r, 1])) * stats.multivariate_normal.pdf(x = [- de1[0], - de2[0]], cov = numpy.array([1, r], [r, 1]))
         return res
-    def obj(r, K, comb, zratio1, zratio2):
+    def obj(self, r, K, comb, zratio1, zratio2):
         return (r_sol.bridge_switch(self = r_sol, r = r, comb = comb, zratio1 = zratio1, zratio2 = zratio2) - K) ** 2
-    def batch(K, comb, zratio1, zratio2, tol):
+    def batch(self, K, comb, zratio1, zratio2, tol):
         K_len = len(K); out = numpy.empty(K_len)
         for i in range(K_len):
-            res = optimize.minimize_scalar(fun = r_sol.obj, args = [K[i], comb, zratio1[ : , i], zratio2[ : , i]], bounds = (-0.999, 0.999), method = 'bounded', tol = tol)
+            res = minimize_scalar(fun = r_sol.obj, args = [K[i], comb, zratio1[ : , i], zratio2[ : , i]], bounds = (-0.999, 0.999), method = 'bounded', tol = tol)
             res[i] = res[res.success == True].x
         return out
 
@@ -131,4 +132,48 @@ class r_switch(object):
         method_name = comb
         method = getattr(self, "bound_" + str(method_name), lambda: 'Invalid mixed types')
         return method(self = r_switch, zratio1 = zratio1, zratio2 = zratio2)
-    def bound_10(zratio1, zratio2)
+    def bound_10(self, zratio1, zratio2):
+        return 2 * zratio1 * (1 - zratio1)
+    def bound_11(self, zratio1, zratio2):
+        return 2 * min(zratio1, zratio2) * (1 - max(zratio1, zratio2))
+    def bound_20(self, zratio1, zratio2):
+        return 1 - zratio1 ** 2
+    def bound_21(self, zratio1, zratio2):
+        return 2 * max(zratio2, 1 - zratio2) * (1 - max(zratio2, 1 - zratio2, zratio1))
+    def bound_22(self, zratio1, zratio2):
+        return 1 - max(zratio1, zratio2) ** 2
+    def bound_30(self, zratio1, zratio2):
+        return 2 * (zratio1[0] * (1 - zratio1[0]) + (1 - zratio1[1]) * (zratio1[1] - zratio1[0]))
+    def bound_31(self, zratio1, zratio2):
+        return 2 * min(zratio1[0] * (1 - zratio1[0]) + (1 - zratio1[1]) * (zratio1[1] - zratio1[0]), zratio2 * (1 - zratio2))
+    def bound_32(self, zratio1, zratio2):
+        return 1 - max(zratio1[0], zratio1[1] - zratio1[0], 1 - zratio1[1], zratio2) ** 2
+    def bound_33(self, zratio1, zratio2):
+        return 2 * min(zratio1[0] * (1 - zratio1[0]) + (1 - zratio1[1]) * (zratio1[1] - zratio1[0]), \
+                       zratio2[0] * (1 - zratio2[0]) + (1 - zratio2[1]) * (zratio2[1] - zratio2[0]))
+    def ipol_switch(self, comb, K, zratio1, zratio2):
+        method_name = comb
+        method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed types')
+        return method(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
+    def r_ml(self, zratio1, zratio2, comb, ratio):
+        zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
+        if zratio1_nrow > 1:
+            zratio1[0:(zratio1_nrow - 2), ] = zratio1[0:(zratio1_nrow - 2), ] / zratio1[1:(zratio1_nrow - 1), ]
+        if zratio2_nrow > 1:
+            zratio2[0:(zratio2_nrow - 2), ] = zratio2[0:(zratio2_nrow - 2), ] / zratio2[1:(zratio2_nrow - 1), ]
+        out = r_switch.ipol_switch(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
+    def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
+        bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2)
+        cutoff = numpy.abs(K) > ratio * bound
+        if not any(cutoff):
+            out = r_switch.r_ml(self = r_switch, K = K / bound, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio = ratio)
+        elif all(cutoff):
+            out = r_sol.batch(K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio = ratio)
+        else:
+            out = numpy.empty(len(K)); revcutoff = numpy.logical_not(cutoff)
+            out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol, ratio = ratio)
+            out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , revcutoff], zratio2 = zratio2[ : , revcutoff], comb = comb, ratio = ratio)
+        return out
+
+
+
