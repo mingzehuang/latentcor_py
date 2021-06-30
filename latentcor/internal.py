@@ -155,7 +155,7 @@ class r_switch(object):
         method_name = comb
         method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed types')
         return method(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
-    def r_ml(self, zratio1, zratio2, comb, ratio):
+    def r_ml(self, K, zratio1, zratio2, comb, ratio):
         zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
         if zratio1_nrow > 1:
             zratio1[0:(zratio1_nrow - 2), ] = zratio1[0:(zratio1_nrow - 2), ] / zratio1[1:(zratio1_nrow - 1), ]
