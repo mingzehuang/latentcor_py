@@ -12,8 +12,8 @@ def GenData(n, rhos, copulas, types, XP):
         print("copulas should have the same length as types, so that each copula corresponds to a variable (feature).")
     if XP is None:
         XP = numpy.empty(p)
-        for type in numpy.unique(types):
-            XP[types == type] = getattr("Data" + type, lambda: 'Invalid type')          
+        for tp in numpy.unique(types):
+            XP[types == type] = getattr("Data" + tp, lambda: 'Invalid type')          
     elif type(XP) is not list | len(XP) != p:
         print("XP should be a list has the same length as types, so that each element is a set of proportion(s) correponds to a variable (feature).")
         exit()
