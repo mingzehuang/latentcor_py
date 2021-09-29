@@ -4,16 +4,21 @@ from scipy import stats
 from scipy.optimize import minimize_scalar
 from scipy.interpolate import interpn
 class fromZtoX(object):
+    """Switch between different copula"""
     def copula_switch(self, copula, z):
         method_name = copula
         method = getattr(self, method_name, lambda: 'Invalid copula')
         return method(self = fromZtoX, z = z)
+    """Define copula for no copula case"""
     def no (self, z):
         return z
+    """Define copula for exponential copula case"""
     def expo (self, z):
         return numpy.exp(z)
+    """Define copula for cube copula case"""
     def cube (self, z):
         return z ** 3
+    
     def type_switch(self, type, copula, z, xp):
         method_name = type
         method = getattr(self, method_name, lambda: 'Invalid type')
