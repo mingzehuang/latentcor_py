@@ -18,24 +18,30 @@ class fromZtoX(object):
     """Define copula for cube copula case"""
     def cube (self, z):
         return z ** 3
-    
+    """Switch between different data types""" 
     def type_switch(self, type, copula, z, xp):
         method_name = type
         method = getattr(self, method_name, lambda: 'Invalid type')
         return method(self = fromZtoX, u = fromZtoX.copula_switch(self = fromZtoX, copula = copula, z = z), xp = xp)
+    """Define continuous data"""
     def con (self, u, xp):
         return u
+    """Define binary data"""
     def bin (self, u, xp):
         q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = 1
         return x
+    """Define truncated data"""
     def tru (self, u, xp):
         q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = u - q; x[u <= numpy.repeat(q, len(u))] = 0
         return x
+    """Define ternary data"""
     def ter (self, u, xp):
         q = numpy.quantile(u, numpy.cumsum(xp)); x = numpy.ones(len(u)); x[u > numpy.repeat(q[1], len(u))] = 2; x[u <= numpy.repeat(q[0], len(u))] = 0
         return x
+"""Test class fromZtoX"""
 print(fromZtoX.type_switch(self = fromZtoX, type = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
+"""Calculate ties for variable"""
 def n_x(x, n):
     x_info = numpy.unique(x, return_counts = True)
     if (len(x_info[0]) != n):
@@ -43,8 +49,10 @@ def n_x(x, n):
     else:
         out = 0
     return out
+"""Test function n_x"""
 print(n_x(x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
 
+"""Calculate zratios for X"""
 class zratios(object):
     def zratios_switch(self, X, type):
         method_name = type
