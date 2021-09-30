@@ -18,10 +18,10 @@ class fromZtoX(object):
     """Define copula for cube copula case"""
     def cube (self, z):
         return z ** 3
-    """Switch between different data types""" 
-    def type_switch(self, type, copula, z, xp):
-        method_name = type
-        method = getattr(self, method_name, lambda: 'Invalid type')
+    """Switch between different data tps""" 
+    def tp_switch(self, tp, copula, z, xp):
+        method_name = tp
+        method = getattr(self, method_name, lambda: 'Invalid tp')
         return method(self = fromZtoX, u = fromZtoX.copula_switch(self = fromZtoX, copula = copula, z = z), xp = xp)
     """Define continuous data"""
     def con (self, u, xp):
@@ -32,14 +32,14 @@ class fromZtoX(object):
         return x
     """Define truncated data"""
     def tru (self, u, xp):
-        q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = u - q; x[u <= numpy.repeat(q, len(u))] = 0
+        q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = u[u > q] - q
         return x
     """Define ternary data"""
     def ter (self, u, xp):
         q = numpy.quantile(u, numpy.cumsum(xp)); x = numpy.ones(len(u)); x[u > numpy.repeat(q[1], len(u))] = 2; x[u <= numpy.repeat(q[0], len(u))] = 0
         return x
 """Test class fromZtoX"""
-print(fromZtoX.type_switch(self = fromZtoX, type = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
+print(fromZtoX.tp_switch(self = fromZtoX, tp = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
 """Calculate ties for variable"""
 def n_x(x, n):
@@ -54,53 +54,63 @@ print(n_x(x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
 
 """Calculate zratios for X"""
 class zratios(object):
-    """Switch zratios calculation between different data types"""
-    def zratios_switch(self, X, type):
-        method_name = type
+    """Switch zratios calculation between different data tps"""
+    def zratios_switch(self, x, tp):
+        method_name = tp
         method = getattr(self, method_name, lambda: 'Invalid type')
-        return method(self = zratios, X = X)
+        return method(self = zratios, x = x)
     """Define zratios for continous variable"""
-    def con(self, X):
-        out = numpy.empty(X.shape[1])
+    def con(self, x):
+        out = numpy.repeat(numpy.NaN, x.shape[1])
+        out = numpy.row_stack((out, out))
         return out
     """Define zratios for binary variable"""
-    def bin(self, X):
-        out = numpy.sum((X == 0), axis = 0) / numpy.repeat(X.shape[0], X.shape[1])
+    def bin(self, x):
+        out = numpy.row_stack((numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]), numpy.repeat(numpy.NaN, x.shape[1])))
         return out
     """Define zratios for truncated variable"""
-    def tru(self, X):
-        out = numpy.sum((X == 0), axis = 0) / numpy.repeat(X.shape[0], X.shape[1])
+    def tru(self, x):
+        out = numpy.row_stack((numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]), numpy.repeat(numpy.NaN, x.shape[1])))
         return out
     """Define zratios for ternary variable"""
-    def ter(self, X):
-        out = numpy.row_stack((numpy.sum((X == 0), axis = 0), numpy.ones(X.shape[1]) - numpy.sum((X == 2), axis = 0))) / numpy.repeat(X.shape[0], X.shape[1])
+    def ter(self, x):
+        out = numpy.row_stack((numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]), numpy.ones(x.shape[1]) - (numpy.sum((x == 2), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]))))
         return out
-    """Loop types on all variables to calculate zratios"""
-    def batch(self, X, types):
-        out = numpy.empty(X.shape[1])
-        for type in numpy.unique(types):
-            out[types == type] = zratios.zratios_switch(self = zratios, X = X[ : , types == type], type = type)
+    """Loop tps on all variables to calculate zratios"""
+    def batch(self, X, tps):
+        tps = numpy.array(tps)
+        out = numpy.repeat(numpy.NaN, X.shape[1])
+        out = numpy.row_stack((out, out))
+        for tp in numpy.unique(tps):
+            out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
         return out
-contry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
-print(contry)
-bintry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
-print(bintry)
-tertry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "ter", copula = "no", z = numpy.random.standard_normal(100), xp = [0.3, 0.5])]).T
-print(tertry)
-tb = numpy.column_stack((tertry, bintry))
-print(tb)
-
-print(zratios.bin(self = zratios, X = bintry))
-
-
-print(bintry.shape[0])
-print(bintry.shape[1])
-
+contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
+print(zratios.con(self = zratios, x = contry))
+bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
+print(zratios.bin(self = zratios, x = bintry))
+trutry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
+print(zratios.tru(self = zratios, x = trutry))
+tertry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "ter", copula = "no", z = numpy.random.standard_normal(100), xp = [0.3, 0.5])]).T
+print(zratios.ter(self = zratios, x = tertry))
+print(zratios.ter(self = zratios, x = tertry))
+contry2 = numpy.column_stack((contry, contry))
+print(zratios.con(self = zratios, x = contry2))
+bintry2 = numpy.column_stack((bintry, bintry))
+print(zratios.bin(self = zratios, x = bintry2))
+trutry2 = numpy.column_stack((trutry, trutry))
+print(zratios.tru(self = zratios, x = trutry2))
+tertry2 = numpy.column_stack((tertry, tertry))
+print(zratios.ter(self = zratios, x = tertry2))
+alldata = numpy.column_stack((contry, bintry, trutry, tertry))
+print(alldata)
+print(zratios.batch(self = zratios, X = alldata, tps = ["con", "bin", "tru", "ter"]))
+alldata2 = numpy.column_stack((alldata, alldata))
+print(zratios.batch(self = zratios, X = alldata2, tps = ["con", "bin", "tru", "ter", "con", "bin", "tru", "ter"]))
 
 class r_sol(object):
     def bridge_switch(self, comb, r, zratio1, zratio2):
         method_name = comb
-        method = getattr(self, "bridge_" + str(method_name), lambda: 'Invalid mixed types')
+        method = getattr(self, "bridge_" + str(method_name), lambda: 'Invalid mixed tps')
         return method(self = r_sol, r = r, zratio1 = zratio1, zratio2 = zratio2)
     def bridge_10(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
@@ -165,7 +175,7 @@ class r_sol(object):
 class r_switch(object):
     def bound_switch(self, comb, zratio1, zratio2):
         method_name = comb
-        method = getattr(self, "bound_" + str(method_name), lambda: 'Invalid mixed types')
+        method = getattr(self, "bound_" + str(method_name), lambda: 'Invalid mixed tps')
         return method(self = r_switch, zratio1 = zratio1, zratio2 = zratio2)
     def bound_10(self, zratio1, zratio2):
         return 2 * zratio1 * (1 - zratio1)
@@ -188,7 +198,7 @@ class r_switch(object):
                        zratio2[0] * (1 - zratio2[0]) + (1 - zratio2[1]) * (zratio2[1] - zratio2[0]))
     def ipol_switch(self, comb, K, zratio1, zratio2):
         method_name = comb
-        method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed types')
+        method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed tps')
         return method(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
     def r_ml(self, K, zratio1, zratio2, comb, ratio):
         zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
