@@ -54,26 +54,48 @@ print(n_x(x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
 
 """Calculate zratios for X"""
 class zratios(object):
+    """Switch zratios calculation between different data types"""
     def zratios_switch(self, X, type):
         method_name = type
         method = getattr(self, method_name, lambda: 'Invalid type')
         return method(self = zratios, X = X)
+    """Define zratios for continous variable"""
     def con(self, X):
         out = numpy.empty(X.shape[1])
         return out
+    """Define zratios for binary variable"""
     def bin(self, X):
-        out = (X == 0).mean(axis = 1)
+        out = numpy.sum((X == 0), axis = 0) / numpy.repeat(X.shape[0], X.shape[1])
         return out
+    """Define zratios for truncated variable"""
     def tru(self, X):
-        out = (X == 0).mean(axis = 1)
-    def ter(self, X):
-        out = numpy.vstack((X == 0).mean(axis = 1), numpy.ones(X.shape[1]) - (X == 2).mean(axis = 1))
+        out = numpy.sum((X == 0), axis = 0) / numpy.repeat(X.shape[0], X.shape[1])
         return out
+    """Define zratios for ternary variable"""
+    def ter(self, X):
+        out = numpy.row_stack((numpy.sum((X == 0), axis = 0), numpy.ones(X.shape[1]) - numpy.sum((X == 2), axis = 0))) / numpy.repeat(X.shape[0], X.shape[1])
+        return out
+    """Loop types on all variables to calculate zratios"""
     def batch(self, X, types):
         out = numpy.empty(X.shape[1])
         for type in numpy.unique(types):
-            out[types == type] = zratios.zratios_switch(self = zratios, X = X, type = type)
+            out[types == type] = zratios.zratios_switch(self = zratios, X = X[ : , types == type], type = type)
         return out
+contry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
+print(contry)
+bintry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
+print(bintry)
+tertry = numpy.array([fromZtoX.type_switch(self = fromZtoX, type = "ter", copula = "no", z = numpy.random.standard_normal(100), xp = [0.3, 0.5])]).T
+print(tertry)
+tb = numpy.column_stack((tertry, bintry))
+print(tb)
+
+print(zratios.bin(self = zratios, X = bintry))
+
+
+print(bintry.shape[0])
+print(bintry.shape[1])
+
 
 class r_sol(object):
     def bridge_switch(self, comb, r, zratio1, zratio2):
