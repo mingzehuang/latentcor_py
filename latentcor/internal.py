@@ -41,6 +41,21 @@ class fromZtoX(object):
 """Test class fromZtoX"""
 print(fromZtoX.tp_switch(self = fromZtoX, tp = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
+"""Here we may add something to deal with missing value later"""
+def Kendalltau(X):
+    X_tril_indices = numpy.tril_indices(X.shape[1], -1)
+    X_tril_indices_row = X_tril_indices[0]
+    X_tril_indices_col = X_tril_indices[1]
+    for i in range(len(X_tril_indices_row)):
+        x = X[ : , X_tril_indices_row[i]]; y = X[ : , X_tril_indices_col[i]]
+        n = len(x); n0 = n * (n-1) / 2
+        n_x = n_x(x = x, n = n); n_y = n_x(x = y, n = n)
+        n_x_sqd = numpy.sqrt(n0 - n_x); n_y_sqd = numpy.sqrt(n0 - n_y)
+        k_b = stats.kendalltau(x, y)
+a = numpy.tril_indices(4, -1)
+print(numpy.row_stack((a[0], a[1])).shape[1])
+
+
 """Calculate ties for variable"""
 def n_x(x, n):
     x_info = numpy.unique(x, return_counts = True)
@@ -110,7 +125,7 @@ print(zratios.batch(self = zratios, X = alldata2, tps = ["con", "bin", "tru", "t
 class r_sol(object):
     def bridge_switch(self, comb, r, zratio1, zratio2):
         method_name = comb
-        method = getattr(self, "bridge_" + str(method_name), lambda: 'Invalid mixed tps')
+        method = getattr(self, "bridge_" + str(method_name), lambda: 'Invalid mixed types')
         return method(self = r_sol, r = r, zratio1 = zratio1, zratio2 = zratio2)
     def bridge_10(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
@@ -171,6 +186,7 @@ class r_sol(object):
             res = minimize_scalar(fun = r_sol.obj, args = [K[i], comb, zratio1[ : , i], zratio2[ : , i]], bounds = (-0.999, 0.999), method = 'bounded', tol = tol)
             res[i] = res[res.success == True].x
         return out
+
 
 class r_switch(object):
     def bound_switch(self, comb, zratio1, zratio2):
