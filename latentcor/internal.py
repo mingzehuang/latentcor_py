@@ -41,31 +41,39 @@ class fromZtoX(object):
 """Test class fromZtoX"""
 print(fromZtoX.tp_switch(self = fromZtoX, tp = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
-"""Here we may add something to deal with missing value later"""
-def Kendalltau(X):
-    X_tril_indices = numpy.tril_indices(X.shape[1], -1)
-    X_tril_indices_row = X_tril_indices[0]
-    X_tril_indices_col = X_tril_indices[1]
-    for i in range(len(X_tril_indices_row)):
-        x = X[ : , X_tril_indices_row[i]]; y = X[ : , X_tril_indices_col[i]]
-        n = len(x); n0 = n * (n-1) / 2
-        n_x = n_x(x = x, n = n); n_y = n_x(x = y, n = n)
-        n_x_sqd = numpy.sqrt(n0 - n_x); n_y_sqd = numpy.sqrt(n0 - n_y)
-        k_b = stats.kendalltau(x, y)
 a = numpy.tril_indices(4, -1)
 print(numpy.row_stack((a[0], a[1])).shape[1])
 
+class Kendalltau(object):
+    def n_x(self, x, n):
+        x_info = numpy.unique(x, return_counts = True)
+        if (len(x_info[0]) != n):
+            x_counts = x_info[1]; t_x = x_counts[x_counts > 1]; out = numpy.sum(t_x * (t_x - 1) / 2)
+        else:
+            out = 0
+        return out
 
-"""Calculate ties for variable"""
-def n_x(x, n):
-    x_info = numpy.unique(x, return_counts = True)
-    if (len(x_info[0]) != n):
-        x_counts = x_info[1]; t_x = x_counts[x_counts > 1]; out = numpy.sum(t_x * (t_x - 1) / 2)
-    else:
-        out = 0
-    return out
+    def Kendalltau(self, X):
+        X_tril_indices = numpy.tril_indices(X.shape[1], -1)
+        X_tril_indices_row = X_tril_indices[0]
+        X_tril_indices_col = X_tril_indices[1]
+        tril_len = len(X_tril_indices_row)
+        K_a_lower = numpy.repeat(numpy.NaN, tril_len)
+        for i in range(tril_len):
+            x = X[ : , X_tril_indices_row[i]]; y = X[ : , X_tril_indices_col[i]]
+            n = len(x); n0 = n * (n-1) / 2
+            n_x = Kendalltau.n_x(self = Kendalltau, x = x, n = n)
+            n_y = Kendalltau.n_x(self = Kendalltau, x = y, n = n)
+            n_x_sqd = numpy.sqrt(n0 - n_x); n_y_sqd = numpy.sqrt(n0 - n_y)
+            k_b = stats.kendalltau(x, y)[0]
+            btoa = n_x_sqd * n_y_sqd /n0
+            k_a = k_b * btoa
+            K_a_lower[i] = k_a
+        return(K_a_lower)
+
 """Test function n_x"""
-print(n_x(x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
+print(Kendalltau.n_x(self = Kendalltau, x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
+
 
 """Calculate zratios for X"""
 class zratios(object):
@@ -121,6 +129,9 @@ print(alldata)
 print(zratios.batch(self = zratios, X = alldata, tps = ["con", "bin", "tru", "ter"]))
 alldata2 = numpy.column_stack((alldata, alldata))
 print(zratios.batch(self = zratios, X = alldata2, tps = ["con", "bin", "tru", "ter", "con", "bin", "tru", "ter"]))
+"""test Kendall tau"""
+print(Kendalltau.Kendalltau(self = Kendalltau, X = alldata2))
+print(stats.kendalltau(contry, bintry)[0])
 
 class r_sol(object):
     def bridge_switch(self, comb, r, zratio1, zratio2):
