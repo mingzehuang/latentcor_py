@@ -28,11 +28,11 @@ class fromZtoX(object):
         return u
     """Define binary data"""
     def bin (self, u, xp):
-        q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = 1
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u)); x[u > q] = 1
         return x
     """Define truncated data"""
     def tru (self, u, xp):
-        q = numpy.quantile(u, xp); x = numpy.zeros(len(u)); x[u > q] = u[u > q] - q
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u)); x[u > q] = u[u > q] - q
         return x
     """Define ternary data"""
     def ter (self, u, xp):
