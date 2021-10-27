@@ -2,7 +2,7 @@
 import internal
 import numpy
 
-def latentcor(X, tps, method, nu, tol, ratio):
+def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
     """Check the supplied parameters are compatible with what is expected."""
     if nu < 0 | nu > 1:
         print("nu must be between 0 and 1.")
@@ -31,6 +31,26 @@ def latentcor(X, tps, method, nu, tol, ratio):
     combs_cp = numpy.repeat(numpy.NaN, cp_col)
     for i in range(cp_col):
         combs_cp[i] = str(tps_cp[0, i]) + str(tps_cp[1, i])
-    
+    combs = numpy.unique(combs_cp)
+    R_lower = numpy.repeat(numpy.NaN, cp_col)
+    for comb in combs:
+        comb_select = combs_cp == comb
+        if comb == "00":
+            R_lower[comb_select] = sin((pi / 2) * K_a_lower)
+        else:
+            K = K_a_lower[comb_select]
+            zratio1 = zratios_cp[1, comb_select]; zratio2 = zratios_cp[2, comb_select]
+            if method == "original":
+                R_lower[comb_select] = internal.r_sol.batch(self = internal.r_sol.batch, K = K, comb = comb, zratio1 = zratio1, zratio2 = zratio2, tol = tol)
+            elif method == "approx":
+                R_lower[comb_select] = internal.r_switch.r_approx(self = internal.r_switch.r_approx, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio  = ratio)
+    K = numpy.repeat(numpy.zeros, p * p).reshape(p, p)
+    K[cp] = K_a_lower; K = K + K.T; numpy.fill_diagonal(K, 1)
+    R[cp] = R + R.T; numpy.fill_diagonal(R, 1)
+    Rpointwise = R
+    if use_nearPD is True:
+        R = (1 - nu) * R; numpy.fill_diagonal(R, nu)
+    return zratios, K, R, Rpointwise 
 
+    
     
