@@ -16,7 +16,7 @@ def gen_data(n, rhos, copulas, tps, XP):
         XP = numpy.repeat(numpy.NaN, 2 * p).reshape((2, p))
         XP[0, tps == "bin"] = .5; XP[0, tps == "tru"] = .5
         XP[0, tps == "ter"] = .3; XP[1, tps == "ter"] = .5
-    elif XP.shape(1) != p:
+    elif XP.shape[1] != p:
         print("XP should be a list has the same length as tps, so that each element is a set of proportion(s) correponds to a variable (feature).")
         exit()
     elif numpy.logical_not(XP > 0) | numpy.logical_not(XP < 1):

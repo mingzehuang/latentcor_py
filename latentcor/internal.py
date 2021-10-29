@@ -107,9 +107,9 @@ class zratios(object):
         for tp in numpy.unique(tps):
             out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
         return out
-"""contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
+contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
 print(zratios.con(self = zratios, x = contry))
-bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
+"""bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.bin(self = zratios, x = bintry))
 trutry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.tru(self = zratios, x = trutry))
