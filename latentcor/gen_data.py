@@ -3,7 +3,7 @@ import internal
 import numpy
 from scipy import stats
 def gen_data(n, rhos, copulas, tps, XP):
-    if (type(n) is not int) | n <= 0:
+    if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
         exit()
     copulas = numpy.array(copulas); tps = numpy.array(tps)
@@ -27,10 +27,13 @@ def gen_data(n, rhos, copulas, tps, XP):
     else:
         if len(copulas) == 1:
             copulas = numpy.repeat(copulas, p)
-        lowertri = numpy.tril_indices(p)
+        lowertri = numpy.tril_indices(p, -1)
         rhos = numpy.array([rhos])
-        if len(rhos) != len(lowertri):
+        if len(rhos) == 1:
+            rhos = numpy.repeat(rhos, len(lowertri[1]))
+        elif len(rhos) != len(lowertri[1]):
             print("Length of rhos should fit for lower triangular part of latent correlation matrix.")
+            exit()
         Sigma_lower = numpy.zeros((p, p)); Sigma_lower[lowertri] = rhos; Sigma = Sigma_lower + Sigma_lower.transpose()
         numpy.fill_diagonal(Sigma, 1)
         Z = stats.multivariate_normal.rvs(cov = Sigma, size = n)
@@ -40,17 +43,17 @@ def gen_data(n, rhos, copulas, tps, XP):
     return X
   
 
-print(stats.multivariate_normal.rvs(cov = [[1,.5],[.5,1]], size = 100))
+"""print(stats.multivariate_normal.rvs(cov = [[1,.5],[.5,1]], size = 100))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["bin"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["tru"], XP = None))
-print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["ter"], XP = None))
-a=numpy.matrix([[1,2],[3,4]])
+print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["ter"], XP = None))"""
+"""a=numpy.matrix([[1,2],[3,4]])
 print(a)
-b=numpy.array(["con", "bin"])
-print(len(b))
+b=numpy.array(["con", "bin"])"""
+"""print(len(b))
 print(a[0,b=="bin"])
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["bin", "tru"], XP = None))
-print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["tru", "ter"], XP = None))
+print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["tru", "ter"], XP = None))"""
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None))

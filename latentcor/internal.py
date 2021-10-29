@@ -107,7 +107,7 @@ class zratios(object):
         for tp in numpy.unique(tps):
             out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
         return out
-contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
+"""contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
 print(zratios.con(self = zratios, x = contry))
 bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.bin(self = zratios, x = bintry))
@@ -129,9 +129,9 @@ print(alldata)
 print(zratios.batch(self = zratios, X = alldata, tps = ["con", "bin", "tru", "ter"]))
 alldata2 = numpy.column_stack((alldata, alldata))
 print(zratios.batch(self = zratios, X = alldata2, tps = ["con", "bin", "tru", "ter", "con", "bin", "tru", "ter"]))
-"""test Kendall tau"""
+test Kendall tau
 print(Kendalltau.Kendalltau(self = Kendalltau, X = alldata2))
-print(stats.kendalltau(contry, bintry)[0])
+print(stats.kendalltau(contry, bintry)[0])"""
 
 class r_sol(object):
     def bridge_switch(self, comb, r, zratio1, zratio2):
@@ -205,7 +205,7 @@ class r_sol(object):
             out[i] = res
         return out
 """Test bridge binary/continuous"""
-print(r_sol.bridge_10(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = numpy.NaN))
+"""print(r_sol.bridge_10(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = numpy.NaN))
 print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "10", zratio1 = [.5, numpy.NaN], zratio2 = numpy.NaN))
 print(r_sol.bridge_11(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = [.5, numpy.NaN]))
 print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "11", zratio1 = [.5, numpy.NaN], zratio2 = [.5, numpy.NaN]))
@@ -222,7 +222,7 @@ print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "31", zratio1 = [.3, .8],
 print(r_sol.bridge_32(self = r_sol, r = .5, zratio1 = [.3, .8], zratio2 = [.5, numpy.NaN]))
 print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "32", zratio1 = [.3, .8], zratio2 = [.5, numpy.NaN]))
 print(r_sol.bridge_33(self = r_sol, r = .5, zratio1 = [.3, .8], zratio2 = [.3, .8]))
-print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "33", zratio1 = [.3, .8], zratio2 = [.3, .8]))
+print(r_sol.bridge_switch(self = r_sol, r = .5, comb = "33", zratio1 = [.3, .8], zratio2 = [.3, .8]))"""
 """print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "10", zratio1 = .5, zratio2 = numpy.NaN))
 print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "11", zratio1 = .5, zratio2 = .5))
 print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "20", zratio1 = .5, zratio2 = numpy.NaN))
@@ -233,12 +233,12 @@ print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "31", zratio1 = [.3, .8], z
 print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "32", zratio1 = [.3, .8], zratio2 = .5))
 print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "33", zratio1 = [.3, .8], zratio2 = [.3, .8]))"""
 
-K = Kendalltau.Kendalltau(self = Kendalltau, X = bintry2)
+"""K = Kendalltau.Kendalltau(self = Kendalltau, X = bintry2)
 zratios = zratios.batch(self = zratios, X = bintry2, tps = ["bin", "bin"])
 X_tril_indices = numpy.tril_indices(bintry2.shape[1], -1)
 X_tril_indices_row = X_tril_indices[0]; X_tril_indices_col = X_tril_indices[1]
-zratio1 = zratios[ : , X_tril_indices_row]; zratio2 = zratios[ : , X_tril_indices_col]
-print(K)
+zratio1 = zratios[ : , X_tril_indices_row]; zratio2 = zratios[ : , X_tril_indices_col]"""
+"""print(K)
 print(zratio1)
 print(zratio1)
 print(*zratio1[1])
@@ -251,7 +251,7 @@ print((r_sol.bridge_switch(self = r_sol, r = .5, comb = "11", zratio1 = zratio1[
 print(fminbound(obj, -.99, .99, xtol = .001))
 print(r_sol.bridge_11(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = [.5, numpy.NaN]))
 print(r_sol.bridge_11(self = r_sol, r = .5, zratio1 = zratio1, zratio2 = zratio2))
-print(r_sol.batch(self = r_sol, K = K, comb = "11", zratio1 = zratio1, zratio2 = zratio2, tol = 0.0001))
+print(r_sol.batch(self = r_sol, K = K, comb = "11", zratio1 = zratio1, zratio2 = zratio2, tol = 0.0001))"""
 
 class r_switch(object):
     def bound_switch(self, comb, zratio1, zratio2):
@@ -301,7 +301,7 @@ class r_switch(object):
             out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol, ratio = ratio)
             out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , revcutoff], zratio2 = zratio2[ : , revcutoff], comb = comb, ratio = ratio)
         return out
-print(r_switch.bound_10(self = r_switch, zratio1 = zratio1, zratio2 = numpy.NaN))
+"""print(r_switch.bound_10(self = r_switch, zratio1 = zratio1, zratio2 = numpy.NaN))
 print(r_switch.bound_switch(self = r_switch, comb = "10", zratio1 = zratio1, zratio2 = numpy.NaN))
 print(r_switch.bound_11(self = r_switch, zratio1 = zratio1, zratio2 = zratio2))
 print(r_switch.bound_switch(self = r_switch, comb = "11", zratio1 = zratio1, zratio2 = zratio2))
@@ -319,4 +319,4 @@ print(r_switch.bound_32(self = r_switch, zratio1 = numpy.array([[.3], [.8]]), zr
 print(r_switch.bound_switch(self = r_switch, comb = "32", zratio1 = numpy.array([[.3], [.8]]), zratio2 = zratio2))
 print(r_switch.bound_33(self = r_switch, zratio1 = numpy.array([[.3], [.8]]), zratio2 = numpy.array([[.3], [.8]])))
 print(r_switch.bound_switch(self = r_switch, comb = "33", zratio1 = numpy.array([[.3], [.8]]), zratio2 = numpy.array([[.3], [.8]])))
-
+"""

@@ -1,16 +1,17 @@
 
 import internal
+import gen_data
 import numpy
 
 def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
     """Check the supplied parameters are compatible with what is expected."""
-    if nu < 0 | nu > 1:
+    if (nu < 0) | (nu > 1):
         print("nu must be between 0 and 1.")
         exit()
     elif tol <= 0:
         print("tol for optimization should be a positive value.")
         exit()
-    elif ratio < 0 | ratio > 1:
+    elif (ratio < 0) | (ratio > 1):
         print("ratio must be between 0 and 1.")
         exit()
     """Here I'll find some convenient way to check numeric matrix."""
@@ -36,7 +37,7 @@ def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
     for comb in combs:
         comb_select = combs_cp == comb
         if comb == "00":
-            R_lower[comb_select] = sin((pi / 2) * K_a_lower)
+            R_lower[comb_select] = numpy.sin((numpy.pi / 2) * K_a_lower)
         else:
             K = K_a_lower[comb_select]
             zratio1 = zratios_cp[1, comb_select]; zratio2 = zratios_cp[2, comb_select]
@@ -50,7 +51,12 @@ def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
     Rpointwise = R
     if use_nearPD is True:
         R = (1 - nu) * R; numpy.fill_diagonal(R, nu)
-    return zratios, K, R, Rpointwise 
+    return zratios, K, R, Rpointwise
 
-    
-    
+"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = -1, tol = .0001, ratio = .5))
+"""
+"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = 0, ratio = .5))    
+"""
+"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = 0.001, ratio = -1))"""
+X = gen_data.gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None)    
+   
