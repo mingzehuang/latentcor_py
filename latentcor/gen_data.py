@@ -6,7 +6,7 @@ def gen_data(n, rhos, copulas, tps, XP):
     if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
         exit()
-    copulas = numpy.array(copulas); tps = numpy.array(tps)
+    n = int(n); rhos = float(rhos); copulas = numpy.array(copulas, dtype = str, ndmin = 1); tps = numpy.array(tps, dtype = str, ndmin = 1)
     p = len(tps); p_copulas = len(copulas)
     if p_copulas == 1:
         copulas = numpy.repeat(copulas, p)
@@ -22,19 +22,20 @@ def gen_data(n, rhos, copulas, tps, XP):
     elif numpy.logical_not(XP > 0) | numpy.logical_not(XP < 1):
         print("The proportion(s) should always between 0 and 1. Otherwise please consider to degenerate your data tp.")
         exit()
+    XP = numpy.array(XP, dtype = float, ndmin = 2)
     if p == 1:
         Z = stats.norm.rvs(size = n).reshape((n, p))
     else:
         if len(copulas) == 1:
             copulas = numpy.repeat(copulas, p)
         lowertri = numpy.tril_indices(p, -1)
-        rhos = numpy.array([rhos])
+        rhos = numpy.array([rhos], dtype = float, ndmin = 1)
         if len(rhos) == 1:
             rhos = numpy.repeat(rhos, len(lowertri[1]))
         elif len(rhos) != len(lowertri[1]):
             print("Length of rhos should fit for lower triangular part of latent correlation matrix.")
             exit()
-        Sigma_lower = numpy.zeros((p, p)); Sigma_lower[lowertri] = rhos; Sigma = Sigma_lower + Sigma_lower.transpose()
+        Sigma_lower = numpy.zeros((p, p), dtype = float); Sigma_lower[lowertri] = rhos; Sigma = Sigma_lower + Sigma_lower.transpose()
         numpy.fill_diagonal(Sigma, 1)
         Z = stats.multivariate_normal.rvs(cov = Sigma, size = n)
     X = Z
@@ -48,7 +49,7 @@ print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["bin"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["tru"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["ter"], XP = None))"""
-"""a=numpy.matrix([[1,2],[3,4]])
+"""a=numpy.array([[1,2],[3,4]])
 print(a)
 b=numpy.array(["con", "bin"])"""
 """print(len(b))

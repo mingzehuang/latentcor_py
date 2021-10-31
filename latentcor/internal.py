@@ -1,5 +1,5 @@
 """Main module."""
-import numpy
+import numpy 
 from scipy import stats
 from scipy.optimize import fminbound
 from scipy.interpolate import interpn
@@ -28,11 +28,11 @@ class fromZtoX(object):
         return u
     """Define binary data"""
     def bin (self, u, xp):
-        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u)); x[u > q] = 1
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = int); x[u > q] = 1
         return x
     """Define truncated data"""
     def tru (self, u, xp):
-        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u)); x[u > q] = u[u > q] - q
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = int); x[u > q] = u[u > q] - q
         return x
     """Define ternary data"""
     def ter (self, u, xp):
@@ -101,13 +101,12 @@ class zratios(object):
         return out
     """Loop tps on all variables to calculate zratios"""
     def batch(self, X, tps):
-        tps = numpy.array(tps)
-        out = numpy.repeat(numpy.NaN, X.shape[1])
-        out = numpy.row_stack((out, out))
+        tps = numpy.array(tps, dtype = str, ndmin = 1)
+        out = numpy.repeat(numpy.NaN, 2 * X.shape[1]).reshape(2, X.shape[1])
         for tp in numpy.unique(tps):
             out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
         return out
-contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)]).T
+contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)], dtype = float).T
 print(zratios.con(self = zratios, x = contry))
 """bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.bin(self = zratios, x = bintry))
@@ -140,62 +139,62 @@ class r_sol(object):
         return method(self = r_sol, r = r, zratio1 = zratio1, zratio2 = zratio2)
     def bridge_10(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0])
-        mat1 = numpy.array([[1, r / numpy.sqrt(2) - 2 * zratio1[0]], [r / numpy.sqrt(2) - 2 * zratio1[0], 1]])
-        res = 4 * stats.multivariate_normal.pdf(x = [de1, 0], cov = mat1)
+        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        res = float(4 * stats.multivariate_normal.cdf(x = [de1, 0], cov = mat1) - 2 * zratio1[0])
         return res
     def bridge_11(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
-        res = 2 * (stats.multivariate_normal.pdf(x = [de1, de2], cov = numpy.array([[1, r], [r, 1]])) - zratio1[0] * zratio2[0])
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = float, ndmin = 2)
+        res = float(2 * (stats.multivariate_normal.cdf(x = [de1, de2], cov = mat1) - zratio1[0] * zratio2[0]))
         return res
     def bridge_20(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0])
-        mat1 = numpy.array([[1, 1 / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1]])
-        mat2 = numpy.array([[1, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), r, 1]])
-        res = - 2 * stats.multivariate_normal.pdf(x = [- de1, 0], cov = mat1) \
-              + 4 * stats.multivariate_normal.pdf(x = [- de1, 0, 0], cov = mat2)
+        mat1 = numpy.array([[1, 1 / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        mat2 = numpy.array([[1, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), r, 1]], dtype = float, ndmin = 2)
+        res = float(- 2 * stats.multivariate_normal.cdf(x = [- de1, 0], cov = mat1) + 4 * stats.multivariate_normal.cdf(x = [- de1, 0, 0], cov = mat2))
         return res
     def bridge_21(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, - r, 1 / numpy.sqrt(2)], [- r, 1, - r / numpy.sqrt(2)], [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]])
-        mat2 = numpy.array([[1, 0, - 1 / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [- 1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]])
-        res = 2 * (1 - zratio1[0]) * zratio2[0] - 2 * stats.multivariate_normal.pdf(x = [- de1, de2, 0], cov = mat1) \
-             - 2 * stats.multivariate_normal.pdf(x = [-de1, de2, 0], cov = mat2)
+        mat1 = numpy.array([[1, - r, 1 / numpy.sqrt(2)], [- r, 1, - r / numpy.sqrt(2)], [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        mat2 = numpy.array([[1, 0, - 1 / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [- 1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        res = float(2 * (1 - zratio1[0]) * zratio2[0] - 2 * stats.multivariate_normal.cdf(x = [- de1, de2, 0], cov = mat1) \
+            - 2 * stats.multivariate_normal.cdf(x = [-de1, de2, 0], cov = mat2))
         return res
     def bridge_22(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
         mat1 = numpy.array([[1, 0 , 1 / numpy.sqrt(2), - r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2), 1 / numpy.sqrt(2)], \
-               [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1, - r], [- r / numpy.sqrt(2), 1 / numpy.sqrt(2), - r, 1]])
+               [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1, - r], [- r / numpy.sqrt(2), 1 / numpy.sqrt(2), - r, 1]], dtype = float, ndmin = 2)
         mat2 = numpy.array([[1, r, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [r, 1, r / numpy.sqrt(2), 1 / numpy.sqrt(2)], \
-               [1 / numpy.sqrt(2), r /numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), 1 / numpy.sqrt(2), r, 1]])
-        res = - 2 * stats.multivariate_normal.pdf(x = [- de1, - de2, 0, 0], cov = mat1) + 2 * stats.multivariate_normal.pdf(x = [- de1, - de2, 0, 0], cov = mat2)
+               [1 / numpy.sqrt(2), r /numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), 1 / numpy.sqrt(2), r, 1]], dtype = float, ndmin = 2)
+        res = float(- 2 * stats.multivariate_normal.cdf(x = [- de1, - de2, 0, 0], cov = mat1) \
+            + 2 * stats.multivariate_normal.cdf(x = [- de1, - de2, 0, 0], cov = mat2))
         return res
     def bridge_30(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
-        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]])
-        mat2 = numpy.array([[1, 0, r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [r / numpy.sqrt(2), - r / numpy.sqrt(2), 1]])
-        res = 4 * stats.multivariate_normal.pdf(x = [de1[1], 0], cov = mat1) - 2 * zratio1[1] \
-              + 4 * stats.multivariate_normal.pdf(x = [de1[0], de1[1], 0], cov = mat2) - 2 * zratio1[0] * zratio1[1]
+        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        mat2 = numpy.array([[1, 0, r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [r / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        res = float(4 * stats.multivariate_normal.cdf(x = [de1[1], 0], cov = mat1) - 2 * zratio1[1] \
+            + 4 * stats.multivariate_normal.cdf(x = [de1[0], de1[1], 0], cov = mat2) - 2 * zratio1[0] * zratio1[1])
         return res
     def bridge_31(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, r], [r, 1]])
-        mat2 = numpy.array([[1, r], [r, 1]])
-        res = 2 * stats.multivariate_normal.pdf(x = [de2, de1[1]], cov = mat1) * (1 - zratio1[0]) \
-              - 2 * zratio1[1] * (zratio2 - stats.multivariate_normal.pdf(x = [de2, de1[0]], cov = mat2))
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = float, ndmin = 2)
+        res = float(2 * stats.multivariate_normal.cdf(x = [de2, de1[1]], cov = mat1) * (1 - zratio1[0]) \
+            - 2 * zratio1[1] * (zratio2[0] - stats.multivariate_normal.cdf(x = [de2, de1[0]], cov = mat1)))
         return res
     def bridge_32(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, 0, 0], [0, 1, r], [0, r, 1]])
-        mat2 = numpy.array([[1, 0, 0, r / numpy.sqrt(2)], [0, 1, - r, r / numpy.sqrt(2)], [0, - r, 1, - 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), - 1 / numpy.sqrt(2), 1]])
-        mat3 = numpy.array([[1, 0, r, r / numpy.sqrt(2)], [0, 1, 0, r / numpy.sqrt(2)], [r, 0, 1, 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), 1 / numpy.sqrt(2), 1]])
-        res = - 2 * (1 - zratio1[0]) * zratio1[1] + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], de2], cov = mat1) \
-              + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], - de2, 0], cov = mat2) + 2 * stats.multivariate_normal.pdf(x = [- de1[0], de1[1], - de2, 0], cov = mat3)
+        mat1 = numpy.array([[1, 0, 0], [0, 1, r], [0, r, 1]], dtype = float, ndmin = 2)
+        mat2 = numpy.array([[1, 0, 0, r / numpy.sqrt(2)], [0, 1, - r, r / numpy.sqrt(2)], [0, - r, 1, - 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), - 1 / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        mat3 = numpy.array([[1, 0, r, r / numpy.sqrt(2)], [0, 1, 0, r / numpy.sqrt(2)], [r, 0, 1, 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), 1 / numpy.sqrt(2), 1]], dtype = float, ndmin = 2)
+        res = float(- 2 * (1 - zratio1[0]) * zratio1[1] + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], de2], cov = mat1) \
+              + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], - de2, 0], cov = mat2) + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], - de2, 0], cov = mat3))
         return res
     def bridge_33(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
-        mat1 = numpy.array([[1, r], [r, 1]])
-        mat2 = numpy.array([[1, r], [r, 1]])
-        res = 2 * stats.multivariate_normal.pdf(x = [de1[1], de2[1]], cov = mat1) * stats.multivariate_normal.pdf(x = [- de1[0], - de2[0]], cov = mat2)
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = float, ndmin = 2)
+        res = float(2 * stats.multivariate_normal.cdf(x = [de1[1], de2[1]], cov = mat1) * stats.multivariate_normal.cdf(x = [- de1[0], - de2[0]], cov = mat1) \
+            - 2 * (zratio1[1] - stats.multivariate_normal.cdf(x = [de1[1], de2[0]], cov = mat1)) * (zratio2[1] - stats.multivariate_normal.cdf(x = [de1[0], de2[1]], cov = mat1)))
         return res
     def batch(self, K, comb, zratio1, zratio2, tol):
         K_len = len(K); out = numpy.repeat(numpy.NaN, K_len)
