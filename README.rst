@@ -42,8 +42,7 @@ No Python software package is currently available that allows accurate and fast 
 Installation
 *************
 
-If you already have a working installation of numpy and scipy,
-the easiest way to install ``latentcor`` is using ``pip``   ::
+The easiest way to install ``latentcor`` is using ``pip``   ::
 
     pip install latentcor
 
