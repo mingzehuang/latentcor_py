@@ -18,7 +18,7 @@ latentcor: Latent Correlation for Mixed Types of Data
 Introduction
 *************
 
-*latentcor* is an Python package for estimation of latent correlations with mixed data types (continuous, binary, truncated, and ternary) under the latent Gaussian copula model. For references on the estimation framework, see
+``latentcor`` is an Python package for estimation of latent correlations with mixed data types (continuous, binary, truncated, and ternary) under the latent Gaussian copula model. For references on the estimation framework, see
 
 * `Fan, J., Liu, H., Ning, Y., and Zou, H. (2017), “High Dimensional Semiparametric Latent Graphical Model for Mixed Data.” <https://doi.org/10.1111/rssb.12168>`_ *JRSS B*. **Continuous/binary** types.
 
@@ -41,6 +41,11 @@ No Python software package is currently available that allows accurate and fast 
 *************
 Installation
 *************
+
+If you already have a working installation of numpy and scipy,
+the easiest way to install ``latentcor`` is using ``pip``   ::
+
+    pip install latentcor
 
 
 *************
