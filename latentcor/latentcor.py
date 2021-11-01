@@ -1,6 +1,7 @@
 
 import internal
 import gen_data
+import get_tps
 import numpy
 from statsmodels.stats.correlation_tools import corr_nearest
 
