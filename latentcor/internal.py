@@ -32,14 +32,14 @@ class fromZtoX(object):
         return x
     """Define truncated data"""
     def tru (self, u, xp):
-        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = int); x[u > q] = u[u > q] - q
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = float); x[u > q] = u[u > q] - q
         return x
     """Define ternary data"""
     def ter (self, u, xp):
-        q = numpy.quantile(u, numpy.cumsum(xp)); x = numpy.ones(len(u)); x[u > numpy.repeat(q[1], len(u))] = 2; x[u <= numpy.repeat(q[0], len(u))] = 0
+        q = numpy.quantile(u, numpy.cumsum(xp)); x = numpy.ones(len(u), dtype = int); x[u > numpy.repeat(q[1], len(u))] = 2; x[u <= numpy.repeat(q[0], len(u))] = 0
         return x
 """Test class fromZtoX"""
-print(fromZtoX.tp_switch(self = fromZtoX, tp = "ter", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
+print(fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
 a = numpy.tril_indices(4, -1)
 print(numpy.row_stack((a[0], a[1])).shape[1])
