@@ -2,8 +2,9 @@
 import internal
 import gen_data
 import numpy
+from statsmodels.stats.correlation_tools import corr_nearest
 
-def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
+def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.5):
     X = numpy.array(X, dtype = float); tps = numpy.array(tps, dtype = str); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
@@ -53,6 +54,7 @@ def latentcor(X, tps, method, use_nearPD, nu, tol, ratio):
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
     Rpointwise = R
     if use_nearPD is True:
+        R = corr_nearest(R)
         R = (1 - nu) * R; numpy.fill_diagonal(R, nu)
     return zratios, K, R, Rpointwise
 
@@ -139,6 +141,10 @@ print(K_a_lower)
 print(K)
 print(R)
 K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
+print(K)
 Rpointwise = R
+print(Rpointwise)
 if use_nearPD is True:
+    R = corr_nearest(R)
     R = (1 - nu) * R; numpy.fill_diagonal(R, nu)
+print(R)

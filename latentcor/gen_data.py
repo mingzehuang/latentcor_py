@@ -2,7 +2,7 @@
 import internal
 import numpy
 from scipy import stats
-def gen_data(n, rhos, copulas, tps, XP):
+def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None, showplot = False):
     if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
         exit()
