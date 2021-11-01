@@ -26,7 +26,7 @@ Introduction
 
 * `Yoon G., Carroll R.J. and Gaynanova I. (2020). “Sparse semiparametric canonical correlation analysis for data of mixed types.” <https://doi.org/10.1093/biomet/asaa007>`_ *Biometrika*. **Truncated** type for zero-inflated data.
 
-* `Yoon G., Müller C.L. and Gaynanova I. (2021). “Fast computation of latent correlations.” <https://doi.org/10.1080/10618600.2021.1882468>`_ *JCGS*. **Approximation method of computation**, see `math framework <https://mingzehuang.github.io/latentcor/articles/latentcor.html>`_ for details.
+* `Yoon G., Müller C.L. and Gaynanova I. (2021). “Fast computation of latent correlations.” <https://doi.org/10.1080/10618600.2021.1882468>`_. **Approximation method of computation**, see `math framework <https://mingzehuang.github.io/latentcor/articles/latentcor_math.html>`_ for details.
 
 *************
 Statement of need
