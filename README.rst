@@ -20,13 +20,13 @@ Introduction
 
 *latentcor* is an Python package for estimation of latent correlations with mixed data types (continuous, binary, truncated, and ternary) under the latent Gaussian copula model. For references on the estimation framework, see
 
-* `Fan, J., Liu, H., Ning, Y., and Zou, H. (2017), “High Dimensional Semiparametric Latent Graphical Model for Mixed Data.” *JRSS B* <https://doi.org/10.1111/rssb.12168>`_ **Continuous/binary** types.
+* `Fan, J., Liu, H., Ning, Y., and Zou, H. (2017), “High Dimensional Semiparametric Latent Graphical Model for Mixed Data.” <https://doi.org/10.1111/rssb.12168>`_ *JRSS B*. **Continuous/binary** types.
 
-* `Quan X., Booth J.G. and Wells M.T. “Rank-based approach for estimating correlations in mixed ordinal data.” *arXiv* <https://arxiv.org/abs/1809.06255>`_ **Ternary** type.
+* `Quan X., Booth J.G. and Wells M.T. “Rank-based approach for estimating correlations in mixed ordinal data.” <https://arxiv.org/abs/1809.06255>`_ *arXiv*. **Ternary** type.
 
-* `Yoon G., Carroll R.J. and Gaynanova I. (2020). “Sparse semiparametric canonical correlation analysis for data of mixed types.” *Biometrika* <https://doi.org/10.1093/biomet/asaa007>`_ **Truncated** type for zero-inflated data.
+* `Yoon G., Carroll R.J. and Gaynanova I. (2020). “Sparse semiparametric canonical correlation analysis for data of mixed types.” <https://doi.org/10.1093/biomet/asaa007>`_ *Biometrika*. **Truncated** type for zero-inflated data.
 
-* `Yoon G., Müller C.L. and Gaynanova I. (2021). “Fast computation of latent correlations” *JCGS* <https://doi.org/10.1080/10618600.2021.1882468>`_ **Approximation method of computation**, see [vignette](https://mingzehuang.github.io/latentcor/articles/latentcor.html) for details.
+* `Yoon G., Müller C.L. and Gaynanova I. (2021). “Fast computation of latent correlations.” <https://doi.org/10.1080/10618600.2021.1882468>`_ *JCGS*. **Approximation method of computation**, see `math framework <https://mingzehuang.github.io/latentcor/articles/latentcor.html>`` for details.
 
 *************
 Statement of need
