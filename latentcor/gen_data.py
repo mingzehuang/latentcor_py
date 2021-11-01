@@ -1,7 +1,10 @@
 
 import internal
 import numpy
+import seaborn
+from matplotlib import pyplot
 from scipy import stats
+
 def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None, showplot = False):
     if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
@@ -41,7 +44,14 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     X = Z
     for i in range(p):
         X[ : , i] = internal.fromZtoX.tp_switch(self = internal.fromZtoX, tp = tps[i], copula = copulas[i], z = Z[ : , i], xp = XP[ : , i])
-    return X
+    plotX = None
+    if (p == 1) & (showplot is True):
+        plotX = seaborn.histplot(X)
+        pyplot.show()
+    elif (p == 2) & (showplot is True):
+        plotX = seaborn.scatterplot(X)
+        pyplot.show()
+    return X, plotX
   
 
 """print(stats.multivariate_normal.rvs(cov = [[1,.5],[.5,1]], size = 100))
