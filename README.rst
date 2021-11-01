@@ -1,6 +1,8 @@
-=========
+#############
 latentcor: Latent Correlation for Mixed Types of Data
-=========
+#############
+
+
 
 .. image:: https://img.shields.io/pypi/v/latentcor.svg
         :target: https://pypi.python.org/pypi/latentcor
