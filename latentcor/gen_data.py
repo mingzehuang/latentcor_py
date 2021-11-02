@@ -22,7 +22,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     elif XP.shape[1] != p:
         print("XP should be a list has the same length as tps, so that each element is a set of proportion(s) correponds to a variable (feature).")
         exit()
-    elif numpy.logical_not(XP > 0) | numpy.logical_not(XP < 1):
+    elif ((numpy.sum(XP <= 0)) > 0) | ((numpy.sum(XP >= 1)) > 0):
         print("The proportion(s) should always between 0 and 1. Otherwise please consider to degenerate your data tp.")
         exit()
     XP = numpy.array(XP, dtype = float, ndmin = 2)
@@ -50,7 +50,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
         pyplot.show()
     elif (p == 2) & (showplot is True):
         plotX = seaborn.scatterplot(X)
-        pyplot.show()
+        pyplot.show()   
     return X, plotX
   
 
@@ -67,4 +67,4 @@ print(a[0,b=="bin"])
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["bin", "tru"], XP = None))
 print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["tru", "ter"], XP = None))"""
-print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None))
+print(gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None)[0])

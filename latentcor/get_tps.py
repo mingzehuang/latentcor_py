@@ -29,6 +29,6 @@ def get_tps(X, tru_prop = 0.05):
                 tps[i] = "con"
     return tps
 
-X = gen_data.gen_data(n = 100, rhos = .5, copulas = "no", tps = ["con", "bin", "tru", "ter"], XP = None)
+X = gen_data.gen_data(n = 100, rhos = .5, copulas = "no", tps = ["con", "bin", "tru", "ter"], XP = None)[0]
 print(X)
 print(get_tps(X))
