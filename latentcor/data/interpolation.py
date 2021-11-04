@@ -3,7 +3,7 @@ import internal
 import latentcor
 import gen_data
 import get_tps
-from numba import vectorize, float64
+from numba import vectorize, float32
 
 @vectorize([float32(float32, float32)], target = 'parallel')
 
