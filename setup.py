@@ -36,6 +36,7 @@ setup(
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
+    package_data={'latentcor': ['data/*']}
     keywords='latentcor',
     name='latentcor',
     packages=find_packages(include=['latentcor', 'latentcor.*']),

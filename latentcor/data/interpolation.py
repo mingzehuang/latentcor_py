@@ -7,6 +7,12 @@ import latentcor
 import gen_data
 import get_tps
 from scipy.interpolate import interpn
+import bz2
+import pickle
+import zlib
+import lzma
+import tarfile
+from scipy import stats
 
 def BC_value(tau, zratio1_1):
     zratio1 = zratio2 = numpy.full((2, 1), numpy.nan)
@@ -63,20 +69,35 @@ def NN_value(tau, zratio1_1, zratio1_2, zratio2_1, zratio2_2):
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "33", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = numpy.linspace(-.5, .5, 10)
-zratio1_1_grid = numpy.linspace(.1, .9, 10)
+tau_grid = stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5) * 2 - 1
+zratio1_1_grid = stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5)
 points_BC = (tau_grid, zratio1_1_grid)
 points_BC_meshgrid = numpy.meshgrid(*points_BC, indexing='ij')
 points_BC_tau_grid = points_BC_meshgrid[0]
 points_BC_zratio1_1_grid = points_BC_meshgrid[1]
-value_BC = numpy.full(points_BC_tau_grid.shape, numpy.nan)
+value_BC = numpy.full(points_BC_tau_grid.shape, numpy.nan, dtype = numpy.int32)
 for i in range(points_BC_tau_grid.shape[0]):
     for j in range(points_BC_tau_grid.shape[1]):
-        value_BC[i, j] = BC_value(tau = points_BC_tau_grid[i, j], zratio1_1 = points_BC_zratio1_1_grid[i, j])
-print(value_BC)
+        """zratio1 = zratio2 = numpy.full((2, 1), numpy.nan)
+        zratio1[0, : ] = points_BC_zratio1_1_grid[i, j]
+        value_BC[i, j] = BC_value(tau = points_BC_tau_grid[i, j] / internal.r_switch.bound_switch(self = internal.r_switch, comb = "10", zratio1 = zratio1, zratio2 = zratio2), zratio1_1 = points_BC_zratio1_1_grid[i, j])
+        """
+        value_BC[i, j] = BC_value(tau = points_BC_tau_grid[i, j], zratio1_1 = points_BC_zratio1_1_grid[i, j]) * (10 ** 7)
+
+print(value_BC[25,25])
 """Test"""
 point = numpy.array([.3, .2])
 print(interpn(points_BC, value_BC, point))
+
+with lzma.open("value_BC.xz", "wb", preset = 9) as f:
+    pickle.dump(value_BC, f)
+
+with lzma.open("value_BC.xz", "rb") as f:
+    value_BC = pickle.load(f)
+    
+print(value_BC)
+
+
 
 """
 tau_grid = numpy.linspace(-.5, .5, by = .01)
