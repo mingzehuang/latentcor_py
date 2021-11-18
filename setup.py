@@ -4,10 +4,10 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.rst', encoding="utf8") as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open('HISTORY.rst', encoding="utf8") as history_file:
     history = history_file.read()
 
 requirements = [ ]
@@ -36,14 +36,14 @@ setup(
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    package_data={'latentcor': ['data/*']}
+    package_data={'': ['data/*']},
     keywords='latentcor',
     name='latentcor',
     packages=find_packages(include=['latentcor', 'latentcor.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/mingzehuang/latentcor',
+    url='https://github.com/mingzehuang/latentcor_py',
     version='1.0.0',
     zip_safe=False,
 )

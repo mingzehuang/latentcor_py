@@ -2,7 +2,36 @@
 import numpy 
 from scipy import stats
 from scipy.optimize import fminbound
-from scipy.interpolate import interpn
+import pkg_resources
+import lzma
+import pickle
+
+"""ipol_10_file = pkg_resources.resource_stream(__name__, 'data/ipol_10.xz')
+with lzma.open(ipol_10_file, "rb") as f:
+    ipol_10 = pickle.load(f)
+ipol_11_file = pkg_resources.resource_stream(__name__, 'data/ipol_11.xz')
+with lzma.open(ipol_11_file, "rb") as f:
+    ipol_11 = pickle.load(f)
+ipol_20_file = pkg_resources.resource_stream(__name__, 'data/ipol_20.xz')
+with lzma.open(ipol_20_file, "rb") as f:
+    ipol_20 = pickle.load(f)
+ipol_21_file = pkg_resources.resource_stream(__name__, 'data/ipol_21.xz')
+with lzma.open(ipol_21_file, "rb") as f:
+    ipol_21 = pickle.load(f)
+ipol_22_file = pkg_resources.resource_stream(__name__, 'data/ipol_22.xz')
+with lzma.open(ipol_22_file, "rb") as f:
+    ipol_22 = pickle.load(f)
+ipol_30_file = pkg_resources.resource_stream(__name__, 'data/ipol_30.xz')
+with lzma.open(ipol_30_file, "rb") as f:
+    ipol_30 = pickle.load(f)
+ipol_31_file = pkg_resources.resource_stream(__name__, 'data/ipol_31.xz')
+with lzma.open(ipol_31_file, "rb") as f:
+    ipol_31 = pickle.load(f)
+ipol_32_file = pkg_resources.resource_stream(__name__, 'data/ipol_32.xz')
+with lzma.open(ipol_32_file, "rb") as f:
+    ipol_32 = pickle.load(f)
+ipol_33_file = pkg_resources.resource_stream(__name__, 'data/ipol_33.xz')"""
+
 class fromZtoX(object):
     """Switch between different copula"""
     def copula_switch(self, copula, z):
