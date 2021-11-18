@@ -17,8 +17,8 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="Mingze Huang, Irina Gaynanova",
-    author_email='mingzehuang@gmail.com, irinag@stat.tamu.edu',
+    author="Mingze Huang, Christian L. Müller, Irina Gaynanova",
+    author_email='mingzehuang@gmail.com, christian.mueller@stat.uni-muenchen.de, irinag@stat.tamu.edu',
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
