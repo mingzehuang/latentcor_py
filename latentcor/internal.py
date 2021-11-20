@@ -6,7 +6,7 @@ import pkg_resources
 import lzma
 import pickle
 
-ipol_10_file = pkg_resources.resource_stream(__name__, 'data/ipol_10.xz')
+"""ipol_10_file = pkg_resources.resource_stream(__name__, 'data/ipol_10.xz')
 with lzma.open(ipol_10_file, "rb") as f:
     ipol_10 = pickle.load(f)
 ipol_11_file = pkg_resources.resource_stream(__name__, 'data/ipol_11.xz')
@@ -30,7 +30,7 @@ with lzma.open(ipol_31_file, "rb") as f:
 ipol_32_file = pkg_resources.resource_stream(__name__, 'data/ipol_32.xz')
 with lzma.open(ipol_32_file, "rb") as f:
     ipol_32 = pickle.load(f)
-ipol_33_file = pkg_resources.resource_stream(__name__, 'data/ipol_33.xz')
+ipol_33_file = pkg_resources.resource_stream(__name__, 'data/ipol_33.xz')"""
 
 class fromZtoX(object):
     """Switch between different copula"""
