@@ -1,7 +1,7 @@
 import numpy
 import os
 import sys
-sys.path.append("C:/Users/mingz/Documents/latentcor_py/latentcor_py/latentcor")
+sys.path.append('/scratch/user/sharkmanhmz/latentcor_py/latentcor')
 import internal
 import pickle
 import lzma
@@ -26,10 +26,10 @@ points_TC_zratio1_1_grid = points_TC_meshgrid[1].flatten()
 def TC_par(i):
     out = TC_value(tau = points_TC_tau_grid[i], zratio1_1 = points_TC_zratio1_1_grid[i])
     return out
-value_TC = Parallel(n_jobs=8)(delayed(TC_par)(i) for i in range(len(points_TC_tau_grid)))
+value_TC = Parallel(n_jobs=48)(delayed(TC_par)(i) for i in range(len(points_TC_tau_grid)))
 value_TC = numpy.array(value_TC, dtype=numpy.float32).reshape(points_TC_meshgrid[0].shape)
 print(value_TC)
 
 ipol_20 = RegularGridInterpolator(points_TC, value_TC)
-with lzma.open(os.path.join(sys.path[0],"ipol_20.xz"), "wb", preset = 9) as f:
+with lzma.open(os.path.join(os.getcwd(), "ipol_20.xz"), "wb", preset = 9) as f:
     pickle.dump(ipol_20, f)
