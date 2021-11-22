@@ -16,8 +16,8 @@ def TB_value(tau, zratio1_1, zratio2_1):
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "21", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 41), scale = .8) * 2 - 1, dtype = numpy.float32)
-zratio1_1_grid = zratio2_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5), dtype = numpy.float32)
+tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 50), scale = .5) * 2 - 1, dtype = numpy.float32)
+zratio1_1_grid = zratio2_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 50), scale = .5), dtype = numpy.float32)
 points_TB = (tau_grid, zratio1_1_grid, zratio2_1_grid)
 points_TB_meshgrid = numpy.meshgrid(*points_TB, indexing='ij')
 points_TB_tau_grid = points_TB_meshgrid[0].flatten()

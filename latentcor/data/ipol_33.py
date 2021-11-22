@@ -16,8 +16,8 @@ def NN_value(tau, zratio1_1, zratio1_2, zratio2_1, zratio2_2):
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "33", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 41), scale = .8) * 2 - 1, dtype = numpy.float32)
-zratio1_1_grid = zratio1_2_grid = zratio2_1_grid = zratio2_2_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 41), scale = .8), dtype = numpy.float32)
+tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 25), scale = .8) * 2 - 1, dtype = numpy.float32)
+zratio1_1_grid = zratio1_2_grid = zratio2_1_grid = zratio2_2_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 13), scale = .8), dtype = numpy.float32)
 points_NN = (tau_grid, zratio1_1_grid, zratio1_2_grid, zratio2_1_grid, zratio2_2_grid)
 points_NN_meshgrid = numpy.meshgrid(*points_NN, indexing='ij')
 points_NN_tau_grid = points_NN_meshgrid[0].flatten()
