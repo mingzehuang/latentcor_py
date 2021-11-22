@@ -16,8 +16,8 @@ def TC_value(tau, zratio1_1):
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "20", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5) * 2 - 1
-zratio1_1_grid = stats.norm.cdf(numpy.linspace(.1, 2.5, 41)) *2  - 1
+tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5) * 2 - 1, dtype = numpy.float32)
+zratio1_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(.1, 2.5, 41)) *2  - 1, dtype = numpy.float32)
 points_TC = (tau_grid, zratio1_1_grid)
 points_TC_meshgrid = numpy.meshgrid(*points_TC, indexing='ij')
 points_TC_tau_grid = points_TC_meshgrid[0].flatten()
