@@ -27,7 +27,7 @@ points_TT_zratio2_1_grid = points_TT_meshgrid[2].flatten()
 def TT_par(i):
     out = TT_value(tau = points_TT_tau_grid[i], zratio1_1 = points_TT_zratio1_1_grid[i], zratio2_1 = points_TT_zratio2_1_grid[i])
     return out
-value_TT = Parallel(n_jobs=48)(delayed(TT_par)(i) for i in range(len(points_TT_tau_grid)))
+value_TT = Parallel(n_jobs=96)(delayed(TT_par)(i) for i in range(len(points_TT_tau_grid)))
 value_TT = numpy.array(value_TT, dtype=numpy.float32).reshape(points_TT_meshgrid[0].shape)
 print(value_TT)
 

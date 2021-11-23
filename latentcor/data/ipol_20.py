@@ -26,7 +26,7 @@ points_TC_zratio1_1_grid = points_TC_meshgrid[1].flatten()
 def TC_par(i):
     out = TC_value(tau = points_TC_tau_grid[i], zratio1_1 = points_TC_zratio1_1_grid[i])
     return out
-value_TC = Parallel(n_jobs=48)(delayed(TC_par)(i) for i in range(len(points_TC_tau_grid)))
+value_TC = Parallel(n_jobs=96)(delayed(TC_par)(i) for i in range(len(points_TC_tau_grid)))
 value_TC = numpy.array(value_TC, dtype=numpy.float32).reshape(points_TC_meshgrid[0].shape)
 print(value_TC)
 
