@@ -75,5 +75,8 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
 """
 """print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = 0.001, ratio = -1))"""
 X = gen_data.gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None)
+print(X[0].shape[1])
+X = gen_data.gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru"], XP = None)
 print(X[0].shape[1])    
-latentcor(X = X[0], tps = ["con", "bin", "tru", "ter"], method = "original", use_nearPD = False, nu = .1, tol = .001, ratio = .5)
+print(latentcor(X = X[0], tps = ["con", "bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])
+print(latentcor(X = X[0], tps = ["con", "bin", "tru"], method = "approx", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])

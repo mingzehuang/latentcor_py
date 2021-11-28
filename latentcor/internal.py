@@ -10,6 +10,34 @@ ipol_10_file = pkg_resources.resource_stream('data', 'ipol_10.xz')
 with lzma.open(ipol_10_file, "rb") as f:
     ipol_10 = pickle.load(f)
 
+ipol_11_file = pkg_resources.resource_stream('data', 'ipol_11.xz')
+with lzma.open(ipol_11_file, "rb") as f:
+    ipol_11 = pickle.load(f)
+
+ipol_20_file = pkg_resources.resource_stream('data', 'ipol_20.xz')
+with lzma.open(ipol_20_file, "rb") as f:
+    ipol_20 = pickle.load(f)
+
+ipol_21_file = pkg_resources.resource_stream('data', 'ipol_21.xz')
+with lzma.open(ipol_21_file, "rb") as f:
+    ipol_21 = pickle.load(f)
+
+ipol_22_file = pkg_resources.resource_stream('data', 'ipol_22.xz')
+with lzma.open(ipol_22_file, "rb") as f:
+    ipol_22 = pickle.load(f)
+
+ipol_30_file = pkg_resources.resource_stream('data', 'ipol_30.xz')
+with lzma.open(ipol_30_file, "rb") as f:
+    ipol_30 = pickle.load(f)
+
+ipol_31_file = pkg_resources.resource_stream('data', 'ipol_31.xz')
+with lzma.open(ipol_31_file, "rb") as f:
+    ipol_31 = pickle.load(f)
+
+ipol_32_file = pkg_resources.resource_stream('data', 'ipol_32.xz')
+with lzma.open(ipol_32_file, "rb") as f:
+    ipol_32 = pickle.load(f)
+
 """
 ipol_file = pkg_resources.resource_stream(__name__, 'data/all_ipol.xz')
 with lzma.open(ipol_file, "rb") as f:
@@ -52,10 +80,10 @@ class fromZtoX(object):
         q = numpy.quantile(u, numpy.cumsum(xp)); x = numpy.ones(len(u), dtype = int); x[u > numpy.repeat(q[1], len(u))] = 2; x[u <= numpy.repeat(q[0], len(u))] = 0
         return x
 """Test class fromZtoX"""
-print(fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
+"""print(fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "cube", z = numpy.random.standard_normal(100), xp = [0.3, 0.5]))
 
 a = numpy.tril_indices(4, -1)
-print(numpy.row_stack((a[0], a[1])).shape[1])
+print(numpy.row_stack((a[0], a[1])).shape[1])"""
 
 class Kendalltau(object):
     def n_x(self, x, n):
@@ -85,7 +113,7 @@ class Kendalltau(object):
         return(K_a_lower)
 
 """Test function n_x"""
-print(Kendalltau.n_x(self = Kendalltau, x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))
+"""print(Kendalltau.n_x(self = Kendalltau, x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))"""
 
 
 """Calculate zratios for X"""
@@ -119,9 +147,9 @@ class zratios(object):
         for tp in numpy.unique(tps):
             out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
         return out
-contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)], dtype = float).T
+"""contry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "con", copula = "no", z = numpy.random.standard_normal(100), xp = numpy.NaN)], dtype = float).T
 print(zratios.con(self = zratios, x = contry))
-"""bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
+bintry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "bin", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.bin(self = zratios, x = bintry))
 trutry = numpy.array([fromZtoX.tp_switch(self = fromZtoX, tp = "tru", copula = "no", z = numpy.random.standard_normal(100), xp = [0.5])]).T
 print(zratios.tru(self = zratios, x = trutry))
@@ -141,8 +169,8 @@ print(alldata)
 print(zratios.batch(self = zratios, X = alldata, tps = ["con", "bin", "tru", "ter"]))
 alldata2 = numpy.column_stack((alldata, alldata))
 print(zratios.batch(self = zratios, X = alldata2, tps = ["con", "bin", "tru", "ter", "con", "bin", "tru", "ter"]))
-test Kendall tau
-print(Kendalltau.Kendalltau(self = Kendalltau, X = alldata2))
+""""""test Kendall tau"""
+"""print(Kendalltau.Kendalltau(self = Kendalltau, X = alldata2))
 print(stats.kendalltau(contry, bintry)[0])"""
 
 class r_sol(object):
@@ -249,22 +277,26 @@ print(r_sol.obj(self = r_sol, r = .5, k = .3, comb = "33", zratio1 = [.3, .8], z
 zratios = zratios.batch(self = zratios, X = bintry2, tps = ["bin", "bin"])
 X_tril_indices = numpy.tril_indices(bintry2.shape[1], -1)
 X_tril_indices_row = X_tril_indices[0]; X_tril_indices_col = X_tril_indices[1]
-zratio1 = zratios[ : , X_tril_indices_row]; zratio2 = zratios[ : , X_tril_indices_col]"""
-"""print(K)
+zratio1 = zratios[ : , X_tril_indices_row]; zratio2 = zratios[ : , X_tril_indices_col]
+print(K)
 print(zratio1)
 print(zratio1)
 print(*zratio1[1])
 print(zratio2)
+
+
 print(stats.norm.ppf(zratio1))
 obj = lambda r: (r_sol.bridge_switch(self = r_sol, r = r, comb = "11", zratio1 = zratio1[ : , 0], zratio2 = zratio2[ : , 0]) - K[0]) ** 2
 print(obj)
 print(obj(.5))
 print((r_sol.bridge_switch(self = r_sol, r = .5, comb = "11", zratio1 = zratio1[ : , 0], zratio2 = zratio2[ : , 0]) - K) ** 2)
+""""""
 print(fminbound(obj, -.99, .99, xtol = .001))
 print(r_sol.bridge_11(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = [.5, numpy.NaN]))
 print(r_sol.bridge_11(self = r_sol, r = .5, zratio1 = zratio1, zratio2 = zratio2))
-print(r_sol.batch(self = r_sol, K = K, comb = "11", zratio1 = zratio1, zratio2 = zratio2, tol = 0.0001))"""
-
+"""
+"""print(r_sol.batch(self = r_sol, K = K, comb = "11", zratio1 = zratio1, zratio2 = zratio2, tol = 0.0001))
+"""
 class r_switch(object):
     def bound_switch(self, comb, zratio1, zratio2):
         method_name = comb
@@ -290,25 +322,41 @@ class r_switch(object):
         return 2 * min(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), \
                        zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ]))
     def ipol_switch(self, comb, K, zratio1, zratio2):
-        method_name = comb
-        method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed types')
-        grid_input = numpy.column_stack(K, zratio1, zratio2)
-        return method(grid_input)
-    def r_ml(self, K, zratio1, zratio2, comb, ratio):
+        if comb == "10":
+            out = ipol_10(numpy.column_stack((K, zratio1[0, : ])))
+        elif comb == "11":
+            out = ipol_11(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
+        elif comb == "20":
+            out = ipol_20(numpy.column_stack((K, zratio1[0, : ])))
+        elif comb == "21":
+            out = ipol_21(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
+        elif comb == "22":
+            out = ipol_22(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))           
+        elif comb == "30":
+            out = ipol_30(numpy.column_stack((K, zratio1.transpose())))
+        elif comb == "31":
+            out = ipol_31(numpy.column_stack((K, zratio1.transpose(), zratio2[0, : ])))
+        elif comb == "32":
+            out = ipol_32(numpy.column_stack((K, zratio1.transpose(), zratio2[0, : ])))
+        else:
+            print("Unrecognized type.")
+            exit()
+        return out
+    def r_ml(self, K, zratio1, zratio2, comb):
         zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
         if zratio1_nrow > 1:
             zratio1[0:(zratio1_nrow - 2), : ] = zratio1[0:(zratio1_nrow - 2), : ] / zratio1[1:(zratio1_nrow - 1), : ]
         if zratio2_nrow > 1:
             zratio2[0:(zratio2_nrow - 2), : ] = zratio2[0:(zratio2_nrow - 2), : ] / zratio2[1:(zratio2_nrow - 1), : ]
-        out = r_switch.ipol_switch(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
+        out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K, zratio1 = zratio1, zratio2 = zratio2)
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
         bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2)
         cutoff = numpy.abs(K) > ratio * bound
         if not any(cutoff):
-            out = r_switch.r_ml(self = r_switch, K = K / bound, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio = ratio)
+            out = r_switch.r_ml(self = r_switch, K = K / bound, zratio1 = zratio1, zratio2 = zratio2, comb = comb)
         elif all(cutoff):
-            out = r_sol.batch(K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio = ratio)
+            out = r_sol.batch(self = r_sol, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol)
         else:
             out = numpy.full(len(K), numpy.nan); revcutoff = numpy.logical_not(cutoff)
             out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol, ratio = ratio)
@@ -333,3 +381,12 @@ print(r_switch.bound_switch(self = r_switch, comb = "32", zratio1 = numpy.array(
 print(r_switch.bound_33(self = r_switch, zratio1 = numpy.array([[.3], [.8]]), zratio2 = numpy.array([[.3], [.8]])))
 print(r_switch.bound_switch(self = r_switch, comb = "33", zratio1 = numpy.array([[.3], [.8]]), zratio2 = numpy.array([[.3], [.8]])))
 """
+"""print(ipol_11(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ]))))
+print(r_switch.r_ml(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = "11"))
+print(r_sol.batch(self = r_sol, K = K, comb = "11", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8))
+print(K)
+print(zratio1)
+print(zratio2)
+print(numpy.abs(K) > 1 * r_switch.bound_switch(self = r_switch, comb = "11", zratio1 = zratio1, zratio2 = zratio2))
+print(r_switch.r_approx(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = "11", tol = 1e-8, ratio = 1))
+print(r_switch.r_approx(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = "11", tol = 1e-8, ratio = 0))"""
