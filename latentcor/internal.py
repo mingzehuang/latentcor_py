@@ -6,6 +6,10 @@ import pkg_resources
 import lzma
 import pickle
 
+ipol_10_file = pkg_resources.resource_stream('data', 'ipol_10.xz')
+with lzma.open(ipol_10_file, "rb") as f:
+    ipol_10 = pickle.load(f)
+
 """
 ipol_file = pkg_resources.resource_stream(__name__, 'data/all_ipol.xz')
 with lzma.open(ipol_file, "rb") as f:
@@ -288,13 +292,14 @@ class r_switch(object):
     def ipol_switch(self, comb, K, zratio1, zratio2):
         method_name = comb
         method = getattr(self, "ipol_" + str(method_name), lambda: 'Invalid mixed types')
-        return method(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
+        grid_input = numpy.column_stack(K, zratio1, zratio2)
+        return method(grid_input)
     def r_ml(self, K, zratio1, zratio2, comb, ratio):
         zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
         if zratio1_nrow > 1:
-            zratio1[0:(zratio1_nrow - 2), ] = zratio1[0:(zratio1_nrow - 2), ] / zratio1[1:(zratio1_nrow - 1), ]
+            zratio1[0:(zratio1_nrow - 2), : ] = zratio1[0:(zratio1_nrow - 2), : ] / zratio1[1:(zratio1_nrow - 1), : ]
         if zratio2_nrow > 1:
-            zratio2[0:(zratio2_nrow - 2), ] = zratio2[0:(zratio2_nrow - 2), ] / zratio2[1:(zratio2_nrow - 1), ]
+            zratio2[0:(zratio2_nrow - 2), : ] = zratio2[0:(zratio2_nrow - 2), : ] / zratio2[1:(zratio2_nrow - 1), : ]
         out = r_switch.ipol_switch(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2)
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
@@ -305,7 +310,7 @@ class r_switch(object):
         elif all(cutoff):
             out = r_sol.batch(K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio = ratio)
         else:
-            out = numpy.empty(len(K)); revcutoff = numpy.logical_not(cutoff)
+            out = numpy.full(len(K), numpy.nan); revcutoff = numpy.logical_not(cutoff)
             out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol, ratio = ratio)
             out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , revcutoff], zratio2 = zratio2[ : , revcutoff], comb = comb, ratio = ratio)
         return out
