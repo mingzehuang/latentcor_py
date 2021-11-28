@@ -7,7 +7,7 @@ from statsmodels.stats.correlation_tools import corr_nearest
 import seaborn
 from matplotlib import pyplot
 
-def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.5, showplot = False):
+def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.9, showplot = False):
     X = numpy.array(X, dtype = float); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
