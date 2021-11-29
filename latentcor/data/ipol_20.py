@@ -17,7 +17,7 @@ def TC_value(tau, zratio1_1):
     return output
 
 tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 50), scale = .5) * 2 - 1, dtype = numpy.float32)
-zratio1_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(.1, 2.5, 50)) *2  - 1, dtype = numpy.float32)
+zratio1_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(.1, 2.5, 50)) * 2  - 1, dtype = numpy.float32)
 points_TC = (tau_grid, zratio1_1_grid)
 points_TC_meshgrid = numpy.meshgrid(*points_TC, indexing='ij')
 points_TC_tau_grid = points_TC_meshgrid[0].flatten()

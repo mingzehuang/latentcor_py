@@ -8,38 +8,15 @@ from matplotlib import pyplot
 from scipy import stats
 
 
-"""Ternary vs. Continuous"""
+"""Need more check"""
+"""Ternary vs. Binary"""
 rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
 Rrep = numpy.repeat(numpy.nan, len(rhos) * 3).reshape(len(rhos), 3)
 for r in range(len(rhos)):
-    X = gen_data.gen_data(n = 100, tps = ["ter", "con"], rhos = rhos[r], XP = numpy.array([[.3, numpy.nan], [.5, numpy.nan]], dtype = float, ndmin = 2), showplot = False)[0]
-    R_nc_org = latentcor.latentcor(X = X, tps = ["ter", "con"], method = "original", use_nearPD = False)[1]
-    R_nc_approx = latentcor.latentcor(X = X, tps = ["ter", "con"], method = "approx", ratio = .9, use_nearPD = False)[1]
-    rhorep[r] = rhos[r]; Rrep[r, 0] = R_nc_org[1, 0]; Rrep[r, 1] = R_nc_approx[1, 0]; Rrep[r, 2] = numpy.corrcoef(X)[0,1]
-print(Rrep)
-print(rhorep)
-data = {"True latent correlation": rhorep, "Estimated latent correlation (original)": Rrep[ : , 0]}
-plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (original)")
-pyplot.plot(rhos, rhos, color = "r")
-pyplot.title("Ternary vs. Continuous (original)")
-pyplot.show()
-
-data = {"True latent correlation": rhorep, "Estimated latent correlation (approx)": Rrep[ : , 1]}
-plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (approx)")
-pyplot.plot(rhos, rhos, color = "r")
-pyplot.title("Ternary vs. Continuous (approx)")
-pyplot.show()
-
-
-"""Need more check"""
-"""Ternary vs. Binary"""
-"""rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
-Rrep = numpy.repeat(numpy.nan, len(rhos) * 3).reshape(len(rhos), 3)
-for r in range(len(rhos)):
-    X = gen_data.gen_data(n = 100, tps = ["ter", "bin"], rhos = rhos[r], XP = numpy.array([[.3, .5], [.5, numpy.nan]], dtype = float, ndmin = 2), showplot = False)[0]
+    X = gen_data.gen_data(n = 1000, tps = ["ter", "bin"], rhos = rhos[r], XP = numpy.array([[.3, .5], [.5, numpy.nan]], dtype = float, ndmin = 2), showplot = False)[0]
     R_nc_org = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "original", use_nearPD = False)[1]
-    R_nc_approx = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "approx", use_nearPD = False)[1]
-    rhorep[r] = rhos[r]; Rrep[r, 0] = R_nc_org[1, 0]; Rrep[r, 1] = R_nc_approx[1, 0]; Rrep[r, 2] = numpy.corrcoef(X)[0,1]
+    R_nc_approx = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "approx", ratio = .9, use_nearPD = False)[1]
+    rhorep[r] = rhos[r]; Rrep[r, 0] = R_nc_org[1, 0]; Rrep[r, 1] = R_nc_approx[1, 0]
 print(Rrep)
 print(rhorep)
 data = {"True latent correlation": rhorep, "Estimated latent correlation (original)": Rrep[ : , 0]}
@@ -52,7 +29,7 @@ data = {"True latent correlation": rhorep, "Estimated latent correlation (approx
 plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (approx)")
 pyplot.plot(rhos, rhos, color = "r")
 pyplot.title("Ternary vs. Binary (approx)")
-pyplot.show()"""
+pyplot.show()
 
 """
 """"""Need more check""""""
