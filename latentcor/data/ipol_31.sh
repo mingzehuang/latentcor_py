@@ -9,7 +9,7 @@
 #SBATCH --time=02:00:00               #Set the wall clock limit to 6hr and 30min
 #SBATCH --nodes=1                    #Request 1 node
 #SBATCH --ntasks-per-node=48         #Request 8 tasks/cores per node
-#SBATCH --mem=300GB                     #Request 8GB per node
+#SBATCH --mem=100GB                     #Request 8GB per node
 #SBATCH --output=ipol_31.%j            #Send stdout/err to "Example2Out.[jobID]"
 
 ##OPTIONAL JOB SPECIFICATIONS

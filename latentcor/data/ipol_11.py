@@ -27,7 +27,7 @@ points_BB_zratio2_1_grid = points_BB_meshgrid[2].flatten()
 def BB_par(i):
     out = BB_value(tau = points_BB_tau_grid[i], zratio1_1 = points_BB_zratio1_1_grid[i], zratio2_1 = points_BB_zratio2_1_grid[i])
     return out
-value_BB = Parallel(n_jobs=72)(delayed(BB_par)(i) for i in range(len(points_BB_tau_grid)))
+value_BB = Parallel(n_jobs=48)(delayed(BB_par)(i) for i in range(len(points_BB_tau_grid)))
 value_BB = numpy.array(value_BB, dtype=numpy.float32).reshape(points_BB_meshgrid[0].shape)
 print(value_BB)
 

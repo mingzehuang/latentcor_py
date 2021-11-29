@@ -27,7 +27,7 @@ points_NC_zratio1_2_grid = points_NC_meshgrid[2].flatten()
 def NC_par(i):
     out = NC_value(tau = points_NC_tau_grid[i], zratio1_1 = points_NC_zratio1_1_grid[i], zratio1_2 = points_NC_zratio1_2_grid[i])
     return out
-value_NC = Parallel(n_jobs=72)(delayed(NC_par)(i) for i in range(len(points_NC_tau_grid)))
+value_NC = Parallel(n_jobs=48)(delayed(NC_par)(i) for i in range(len(points_NC_tau_grid)))
 value_NC = numpy.array(value_NC, dtype=numpy.float32).reshape(points_NC_meshgrid[0].shape)
 print(value_NC)
 

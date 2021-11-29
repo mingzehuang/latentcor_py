@@ -29,7 +29,7 @@ def NB_par(i):
     out = NB_value(tau = points_NB_tau_grid[i], zratio1_1 = points_NB_zratio1_1_grid[i], \
                                                 zratio1_2 = points_NB_zratio1_2_grid[i], zratio2_1 = points_NB_zratio2_1_grid[i])
     return out
-value_NB = Parallel(n_jobs=72)(delayed(NB_par)(i) for i in range(len(points_NB_tau_grid)))
+value_NB = Parallel(n_jobs=48)(delayed(NB_par)(i) for i in range(len(points_NB_tau_grid)))
 value_NB = numpy.array(value_NB, dtype=numpy.float32).reshape(points_NB_meshgrid[0].shape)
 print(value_NB)
 
