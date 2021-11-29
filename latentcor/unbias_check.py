@@ -15,7 +15,7 @@ Rrep = numpy.repeat(numpy.nan, len(rhos) * 3).reshape(len(rhos), 3)
 for r in range(len(rhos)):
     X = gen_data.gen_data(n = 1000, tps = ["ter", "bin"], rhos = rhos[r], XP = numpy.array([[.3, .5], [.5, numpy.nan]], dtype = float, ndmin = 2), showplot = False)[0]
     R_nc_org = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "original", use_nearPD = False)[1]
-    R_nc_approx = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "approx", ratio = .7, use_nearPD = False)[1]
+    R_nc_approx = latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "approx", ratio = .9, use_nearPD = False)[1]
     rhorep[r] = rhos[r]; Rrep[r, 0] = R_nc_org[1, 0]; Rrep[r, 1] = R_nc_approx[1, 0]
 print(Rrep)
 print(rhorep)
