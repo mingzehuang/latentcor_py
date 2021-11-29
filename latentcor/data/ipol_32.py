@@ -30,7 +30,7 @@ def NT_par(i):
     out = NT_value(tau = points_NT_tau_grid[i], zratio1_1 = points_NT_zratio1_1_grid[i], \
                                                 zratio1_2 = points_NT_zratio1_2_grid[i], zratio2_1 = points_NT_zratio2_1_grid[i])
     return out
-value_NT = Parallel(n_jobs=80)(delayed(NT_par)(i) for i in range(len(points_NT_tau_grid)))
+value_NT = Parallel(n_jobs=72)(delayed(NT_par)(i) for i in range(len(points_NT_tau_grid)))
 value_NT = numpy.array(value_NT, dtype=numpy.float32).reshape(points_NT_meshgrid[0].shape)
 print(value_NT)
 

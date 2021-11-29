@@ -26,7 +26,7 @@ points_BC_zratio1_1_grid = points_BC_meshgrid[1].flatten()
 def BC_par(i):
     out = BC_value(tau = points_BC_tau_grid[i], zratio1_1 = points_BC_zratio1_1_grid[i])
     return out
-value_BC = Parallel(n_jobs=96)(delayed(BC_par)(i) for i in range(len(points_BC_tau_grid)))
+value_BC = Parallel(n_jobs=72)(delayed(BC_par)(i) for i in range(len(points_BC_tau_grid)))
 value_BC = numpy.array(value_BC, dtype=numpy.float32).reshape(points_BC_meshgrid[0].shape)
 print(value_BC)
 
