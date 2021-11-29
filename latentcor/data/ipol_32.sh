@@ -2,11 +2,11 @@
 ##ENVIRONMENT SETTINGS; CHANGE WITH CAUTION
 #SBATCH --export=NONE                #Do not propagate environment
 #SBATCH --get-user-env=L             #Replicate login environment
-#SBATCH --partition=short
+#SBATCH --partition=medium
 
 ##NECESSARY JOB SPECIFICATIONS
 #SBATCH --job-name=ipol_32            #Set the job name to
-#SBATCH --time=02:00:00               #Set the wall clock limit to 6hr and 30min
+#SBATCH --time=04:00:00               #Set the wall clock limit to 6hr and 30min
 #SBATCH --nodes=1                    #Request 1 node
 #SBATCH --ntasks-per-node=48         #Request 8 tasks/cores per node
 #SBATCH --mem=100GB                     #Request 8GB per node
