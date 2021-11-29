@@ -11,13 +11,13 @@ from joblib import Parallel, delayed
 
 def NB_value(tau, zratio1_1, zratio1_2, zratio2_1):
     zratio1 = zratio2 = numpy.full((2, 1), numpy.nan)
-    zratio1[ : , 0] = [zratio1_1, zratio1_2]; zratio2[0, 0] = zratio2_1
+    zratio1[ : , 0] = [zratio1_1 * zratio1_2, zratio1_2]; zratio2[0, 0] = zratio2_1
     tau = tau * internal.r_switch.bound_switch(self = internal.r_switch, comb = "31", zratio1 = zratio1, zratio2 = zratio2)
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "31", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 50), scale = .5) * 2 - 1, dtype = numpy.float32)
-zratio1_1_grid = zratio1_2_grid = zratio2_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 50), scale = .8), dtype = numpy.float32)
+tau_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.2, 1.2, 25), scale = .5) * 2 - 1, dtype = numpy.float32)
+zratio1_1_grid = zratio1_2_grid = zratio2_1_grid = numpy.array(stats.norm.cdf(numpy.linspace(-1.8, 1.8, 25), scale = .8), dtype = numpy.float32)
 points_NB = (tau_grid, zratio1_1_grid, zratio1_2_grid, zratio2_1_grid)
 points_NB_meshgrid = numpy.meshgrid(*points_NB, indexing='ij')
 points_NB_tau_grid = points_NB_meshgrid[0].flatten()
