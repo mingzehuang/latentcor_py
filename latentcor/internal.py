@@ -38,6 +38,10 @@ ipol_32_file = pkg_resources.resource_stream('data', 'ipol_32.xz')
 with lzma.open(ipol_32_file, "rb") as f:
     ipol_32 = pickle.load(f)
 
+ipol_33_file = pkg_resources.resource_stream('data', 'ipol_33.xz')
+with lzma.open(ipol_33_file, "rb") as f:
+    ipol_33 = pickle.load(f)
+
 """
 ipol_file = pkg_resources.resource_stream(__name__, 'data/all_ipol.xz')
 with lzma.open(ipol_file, "rb") as f:
@@ -130,16 +134,16 @@ class zratios(object):
     """Define zratios for binary variable"""
     def bin(self, x):
         out = numpy.full((2, x.shape[1]), numpy.nan)
-        out[0, : ] = numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1])
+        out[0, : ] = numpy.sum((x == 0), axis = 0) / x.shape[0]
         return out
     """Define zratios for truncated variable"""
     def tru(self, x):
         out = numpy.full((2, x.shape[1]), numpy.nan)
-        out[0, : ] = numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1])
+        out[0, : ] = numpy.sum((x == 0), axis = 0) / x.shape[0]
         return out
     """Define zratios for ternary variable"""
     def ter(self, x):
-        out = numpy.row_stack((numpy.sum((x == 0), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]), numpy.ones(x.shape[1]) - (numpy.sum((x == 2), axis = 0) / numpy.repeat(x.shape[0], x.shape[1]))))
+        out = numpy.row_stack((numpy.sum((x == 0), axis = 0) / x.shape[0], 1 - (numpy.sum((x == 2), axis = 0) / x.shape[0])))
         return out
     """Loop tps on all variables to calculate zratios"""
     def batch(self, X, tps):
@@ -334,21 +338,22 @@ class r_switch(object):
         elif comb == "22":
             out = ipol_22(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))           
         elif comb == "30":
-            out = ipol_30(numpy.column_stack((K, zratio1.transpose())))
+            out = ipol_30(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ])))
         elif comb == "31":
-            out = ipol_31(numpy.column_stack((K, zratio1.transpose(), zratio2[0, : ])))
+            out = ipol_31(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
         elif comb == "32":
-            out = ipol_32(numpy.column_stack((K, zratio1.transpose(), zratio2[0, : ])))
+            out = ipol_32(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
+        elif comb == "33":
+            out = ipol_33(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ], zratio2[1, : ])))
         else:
             print("Unrecognized type.")
             exit()
         return out
     def r_ml(self, K, zratio1, zratio2, comb):
-        zratio1_nrow = zratio1.shape[0]; zratio2_nrow = zratio2.shape[0]
-        if zratio1_nrow > 1:
-            zratio1[0:(zratio1_nrow - 2), : ] = zratio1[0:(zratio1_nrow - 2), : ] / zratio1[1:(zratio1_nrow - 1), : ]
-        if zratio2_nrow > 1:
-            zratio2[0:(zratio2_nrow - 2), : ] = zratio2[0:(zratio2_nrow - 2), : ] / zratio2[1:(zratio2_nrow - 1), : ]
+        if comb == "30" or comb == "31" or comb == "32" or comb == "33":
+            zratio1[0, : ] = zratio1[0, : ] / zratio1[1, : ]
+        if comb == "33":
+            zratio2[0, : ] = zratio2[0, : ] / zratio2[1, : ]
         out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K, zratio1 = zratio1, zratio2 = zratio2)
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
@@ -360,8 +365,8 @@ class r_switch(object):
             out = r_sol.batch(self = r_sol, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol)
         else:
             out = numpy.full(len(K), numpy.nan); revcutoff = numpy.logical_not(cutoff)
-            out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol, ratio = ratio)
-            out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , revcutoff], zratio2 = zratio2[ : , revcutoff], comb = comb, ratio = ratio)
+            out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , [cutoff]], zratio2 = zratio2[ : , [cutoff]], comb = comb, tol = tol, ratio = ratio)
+            out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , [revcutoff]], zratio2 = zratio2[ : , [revcutoff]], comb = comb, ratio = ratio)
         return out
 """print(r_switch.bound_10(self = r_switch, zratio1 = zratio1, zratio2 = numpy.NaN))
 print(r_switch.bound_switch(self = r_switch, comb = "10", zratio1 = zratio1, zratio2 = numpy.NaN))
