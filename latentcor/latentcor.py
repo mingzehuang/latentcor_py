@@ -18,7 +18,7 @@ print(len(numpy.sum(ampdata_mat==0, axis = 0)))
 print(ampdata_mat.shape[1])
 
 def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.9, showplot = False):
-    X = numpy.array(X, dtype = float); nu = float(nu); tol = float(tol); ratio = float(ratio)
+    X = numpy.array(X, dtype = numpy.float32); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
         print("nu must be between 0 and 1.")
@@ -35,7 +35,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         tps = numpy.array(tps, dtype = str, ndmin = 1)
     """Here I'll find some convenient way to check numeric matrix."""
     p = X.shape[1]
-    R = numpy.zeros((p, p), dtype = float)
+    R = numpy.zeros((p, p), dtype = numpy.float32)
     cp = numpy.tril_indices(p, -1); cp_col = len(cp[1])
     """Here I'll deal with NaN value."""
     K_a_lower = internal.Kendalltau.Kendalltau(self = internal.Kendalltau, X = X)
@@ -65,7 +65,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
                 R_lower[comb_select] = internal.r_sol.batch(self = internal.r_sol, K = K, comb = comb, zratio1 = zratio1, zratio2 = zratio2, tol = tol)
             elif method == "approx":
                 R_lower[comb_select] = internal.r_switch.r_approx(self = internal.r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio  = ratio)
-    K = numpy.zeros((p, p), dtype = float)
+    K = numpy.zeros((p, p), dtype = numpy.float32)
     K[cp] = K_a_lower; R[cp] = R_lower
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
     Rpointwise = R
