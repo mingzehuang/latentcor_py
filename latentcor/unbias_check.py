@@ -9,6 +9,7 @@ from scipy import stats
 import pyreadr
 import os
 from rpy2 import robjects
+import pandas
 
 result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 ampdata = result['amgutpruned']
@@ -18,7 +19,14 @@ print(numpy.sum(ampdata_mat==0, axis = 0))
 print(len(numpy.sum(ampdata_mat==0, axis = 0)))
 print(ampdata_mat.shape[1])
 
-latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], ratio = .5)
+"""ampdata_org = latentcor.latentcor(X = ampdata_mat[ : , 0:10], tps = ["tru"] * 10, method = "original")"""
+ampdata_approx = latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], method = "approx", use_nearPD = False)
+"""print(ampdata_org)"""
+print(ampdata_approx)
+"""print(internal.Kendalltau.Kendalltau(self = internal.Kendalltau, X = ampdata_mat[:,0:100]))"""
+"""pd_X = pandas.DataFrame(ampdata_mat[:,0:100])
+print(pd_X.corr(method = 'kendall'))"""
+
 
 """ampdata = robjects.r.load(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 print(ampdata[0])"""
@@ -156,7 +164,7 @@ for tp1 in range(4):
         for r in range(len(rhos)):
             X = gen_data.gen_data(n = 1000, tps = tp_comb, rhos = rhos[r])[0]
             R_org = latentcor.latentcor(X = X, tps = tp_comb, method = "original", use_nearPD = False)[1]
-            R_approx = latentcor.latentcor(X = X, tps = tp_comb, method = "approx", ratio = 1, use_nearPD = False)[1]
+            R_approx = latentcor.latentcor(X = X, tps = tp_comb, method = "approx", use_nearPD = False)[1]
             rhorep[r] = rhos[r]; Rrep[r, 0] = R_org[1, 0]; Rrep[r, 1] = R_approx[1, 0]
         data = {"True latent correlation": rhorep, "Estimated latent correlation (original)": Rrep[ : , 0]}
         plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (original)")

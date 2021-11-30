@@ -246,7 +246,7 @@ class r_sol(object):
         K_len = len(K); out = numpy.repeat(numpy.NaN, K_len)
         for i in range(K_len):
             obj = lambda r: (r_sol.bridge_switch(self = r_sol, r = r, comb = comb, zratio1 = zratio1[ : , i], zratio2 = zratio2[ : , i]) - K[i]) ** 2
-            res = fminbound(obj, -0.999, 0.999, xtol = tol)
+            res = fminbound(obj, -0.99, 0.99, xtol = tol)
             out[i] = res
         return out
 """Test bridge binary/continuous"""
@@ -310,22 +310,22 @@ class r_switch(object):
     def bound_10(self, zratio1, zratio2):
         return 2 * zratio1[0, : ] * (1 - zratio1[0, : ])
     def bound_11(self, zratio1, zratio2):
-        return 2 * numpy.minimum(zratio1[0, : ], zratio2[0, : ]) * (1 - numpy.maximum(zratio1[0, : ], zratio2[0, : ]))
+        return 2 * numpy.minimum.reduce([zratio1[0, : ], zratio2[0, : ]]) * (1 - numpy.maximum.reduce([zratio1[0, : ], zratio2[0, : ]]))
     def bound_20(self, zratio1, zratio2):
         return 1 - zratio1[0, : ] ** 2
     def bound_21(self, zratio1, zratio2):
-        return 2 * numpy.maximum(zratio2[0, : ], 1 - zratio2[0, : ]) * (1 - numpy.maximum(zratio2[0, : ], 1 - zratio2[0, : ], zratio1[0, : ]))
+        return 2 * numpy.maximum.reduce([zratio2[0, : ], 1 - zratio2[0, : ]]) * (1 - numpy.maximum.reduce([zratio2[0, : ], 1 - zratio2[0, : ], zratio1[0, : ]]))
     def bound_22(self, zratio1, zratio2):
-        return 1 - numpy.maximum(zratio1[0, : ], zratio2[0, : ]) ** 2
+        return 1 - numpy.maximum.reduce([zratio1[0, : ], zratio2[0, : ]]) ** 2
     def bound_30(self, zratio1, zratio2):
         return 2 * (zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]))
     def bound_31(self, zratio1, zratio2):
-        return 2 * numpy.minimum(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), zratio2[0, : ] * (1 - zratio2[0, : ]))
+        return 2 * numpy.minimum.reduce([zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), zratio2[0, : ] * (1 - zratio2[0, : ])])
     def bound_32(self, zratio1, zratio2):
-        return 1 - numpy.maximum(zratio1[0, : ], zratio1[1, : ] - zratio1[0, : ], 1 - zratio1[1, : ], zratio2[0, : ]) ** 2
+        return 1 - numpy.maximum.reduce([zratio1[0, : ], zratio1[1, : ] - zratio1[0, : ], 1 - zratio1[1, : ], zratio2[0, : ]]) ** 2
     def bound_33(self, zratio1, zratio2):
-        return 2 * numpy.minimum(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), \
-                       zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ]))
+        return 2 * numpy.minimum.reduce([zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), \
+                       zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ])])
     def ipol_switch(self, comb, K, zratio1, zratio2):
         if comb == "10":
             out = ipol_10(numpy.column_stack((K, zratio1[0, : ])))
@@ -357,7 +357,7 @@ class r_switch(object):
         out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K, zratio1 = zratio1, zratio2 = zratio2)
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
-        bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2)
+        bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2).flatten()
         cutoff = numpy.abs(K) > ratio * bound
         if not any(cutoff):
             out = r_switch.r_ml(self = r_switch, K = K / bound, zratio1 = zratio1, zratio2 = zratio2, comb = comb)
