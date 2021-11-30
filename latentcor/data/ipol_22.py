@@ -16,8 +16,8 @@ def TT_value(tau, zratio1_1, zratio2_1):
     output = internal.r_sol.batch(self = internal.r_sol, K = tau, comb = "22", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
-tau_grid = numpy.array([-1, *stats.norm.cdf(numpy.linspace(-1.2, 1.2, 50), scale = .5) * 2 - 1, 1], dtype = numpy.float32)
-zratio1_1_grid = zratio2_1_grid = numpy.array([0, *stats.norm.cdf(numpy.linspace(.1, 2.5, 50)) * 2 - 1, 1], dtype = numpy.float32)
+tau_grid = numpy.array([-1, *stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5) * 2 - 1, 1], dtype = numpy.float32)
+zratio1_1_grid = zratio2_1_grid = numpy.array([0, *stats.norm.cdf(numpy.linspace(.1, 2.5, 41)) * 2 - 1, 1], dtype = numpy.float32)
 points_TT = (tau_grid, zratio1_1_grid, zratio2_1_grid)
 points_TT_meshgrid = numpy.meshgrid(*points_TT, indexing='ij')
 points_TT_tau_grid = points_TT_meshgrid[0].flatten()
@@ -27,7 +27,7 @@ points_TT_zratio2_1_grid = points_TT_meshgrid[2].flatten()
 def TT_par(i):
     out = TT_value(tau = points_TT_tau_grid[i], zratio1_1 = points_TT_zratio1_1_grid[i], zratio2_1 = points_TT_zratio2_1_grid[i])
     return out
-value_TT = Parallel(n_jobs=48)(delayed(TT_par)(i) for i in range(len(points_TT_tau_grid)))
+value_TT = Parallel(n_jobs=72)(delayed(TT_par)(i) for i in range(len(points_TT_tau_grid)))
 value_TT = numpy.array(value_TT, dtype=numpy.float32).reshape(points_TT_meshgrid[0].shape)
 print(value_TT)
 
