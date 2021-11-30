@@ -6,11 +6,27 @@ import numpy
 import seaborn
 from matplotlib import pyplot
 from scipy import stats
+import pyreadr
+import os
+from rpy2 import robjects
+
+result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
+ampdata = result['amgutpruned']
+ampdata_mat = numpy.array(ampdata)
+print(ampdata_mat)
+print(numpy.sum(ampdata_mat==0, axis = 0))
+print(len(numpy.sum(ampdata_mat==0, axis = 0)))
+print(ampdata_mat.shape[1])
+
+latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], ratio = .5)
+
+"""ampdata = robjects.r.load(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
+print(ampdata[0])"""
 
 
 """Need more check"""
 """Ternary vs. Binary"""
-rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
+"""rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
 Rrep = numpy.repeat(numpy.nan, len(rhos) * 3).reshape(len(rhos), 3)
 for r in range(len(rhos)):
     X = gen_data.gen_data(n = 1000, tps = ["ter", "bin"], rhos = rhos[r], XP = numpy.array([[.3, .5], [.5, numpy.nan]], dtype = float, ndmin = 2), showplot = False)[0]
@@ -29,7 +45,7 @@ data = {"True latent correlation": rhorep, "Estimated latent correlation (approx
 plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (approx)")
 pyplot.plot(rhos, rhos, color = "r")
 pyplot.title("Ternary vs. Binary (approx)")
-pyplot.show()
+pyplot.show()"""
 
 """
 """"""Need more check""""""
@@ -130,8 +146,8 @@ pyplot.show()"""
 
 
 """All Combination"""
-"""
-rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
+
+"""rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
 Rrep = numpy.full((len(rhos), 2), numpy.nan)
 tps = ["con", "bin", "tru", "ter"]
 for tp1 in range(4):
@@ -151,6 +167,6 @@ for tp1 in range(4):
         plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (approx)")
         pyplot.plot(rhos, rhos, color = "r")
         pyplot.title(tp_comb[0] + " vs. " + tp_comb[1] + " (approx)")
-        pyplot.show()
-"""            
+        pyplot.show()"""
+            
 
