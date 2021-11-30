@@ -308,24 +308,24 @@ class r_switch(object):
         method = getattr(self, "bound_" + str(method_name), lambda: 'Invalid mixed types')
         return method(self = r_switch, zratio1 = zratio1, zratio2 = zratio2)
     def bound_10(self, zratio1, zratio2):
-        return numpy.array(2 * zratio1[0, : ] * (1 - zratio1[0, : ]), dtype = numpy.float32, ndmin = 2)
+        return 2 * zratio1[0, : ] * (1 - zratio1[0, : ])
     def bound_11(self, zratio1, zratio2):
-        return numpy.array(2 * min(zratio1[0, : ], zratio2[0, : ]) * (1 - max(zratio1[0, : ], zratio2[0, : ])), dtype = numpy.float32, ndmin = 2)
+        return 2 * numpy.minimum(zratio1[0, : ], zratio2[0, : ]) * (1 - numpy.maximum(zratio1[0, : ], zratio2[0, : ]))
     def bound_20(self, zratio1, zratio2):
-        return numpy.array(1 - zratio1[0, : ] ** 2, dtype = numpy.float32, ndmin = 2)
+        return 1 - zratio1[0, : ] ** 2
     def bound_21(self, zratio1, zratio2):
-        return numpy.array(2 * max(zratio2[0, : ], 1 - zratio2[0, : ]) * (1 - max(zratio2[0, : ], 1 - zratio2[0, : ], zratio1[0, : ])), dtype = numpy.float32, ndmin = 2)
+        return 2 * numpy.maximum(zratio2[0, : ], 1 - zratio2[0, : ]) * (1 - numpy.maximum(zratio2[0, : ], 1 - zratio2[0, : ], zratio1[0, : ]))
     def bound_22(self, zratio1, zratio2):
-        return numpy.array(1 - max(zratio1[0, : ], zratio2[0, : ]) ** 2, dtype = numpy.float32, ndmin = 2)
+        return 1 - numpy.maximum(zratio1[0, : ], zratio2[0, : ]) ** 2
     def bound_30(self, zratio1, zratio2):
-        return numpy.array(2 * (zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ])), dtype = numpy.float32, ndmin = 2)
+        return 2 * (zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]))
     def bound_31(self, zratio1, zratio2):
-        return numpy.array(2 * min(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), zratio2[0, : ] * (1 - zratio2[0, : ])), dtype = numpy.float32, ndmin = 2)
+        return 2 * numpy.minimum(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), zratio2[0, : ] * (1 - zratio2[0, : ]))
     def bound_32(self, zratio1, zratio2):
-        return numpy.array(1 - max(zratio1[0, : ], zratio1[1, : ] - zratio1[0, : ], 1 - zratio1[1, : ], zratio2[0, : ]) ** 2, dtype = numpy.float32, ndmin = 2)
+        return 1 - numpy.maximum(zratio1[0, : ], zratio1[1, : ] - zratio1[0, : ], 1 - zratio1[1, : ], zratio2[0, : ]) ** 2
     def bound_33(self, zratio1, zratio2):
-        return numpy.array(2 * min(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), \
-                       zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ])), dtype = numpy.float32, ndmin = 2)
+        return 2 * numpy.minimum(zratio1[0, : ] * (1 - zratio1[0, : ]) + (1 - zratio1[1, : ]) * (zratio1[1, : ] - zratio1[0, : ]), \
+                       zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ]))
     def ipol_switch(self, comb, K, zratio1, zratio2):
         if comb == "10":
             out = ipol_10(numpy.column_stack((K, zratio1[0, : ])))
@@ -365,8 +365,8 @@ class r_switch(object):
             out = r_sol.batch(self = r_sol, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol)
         else:
             out = numpy.full(len(K), numpy.nan); revcutoff = numpy.logical_not(cutoff)
-            out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , [cutoff]], zratio2 = zratio2[ : , [cutoff]], comb = comb, tol = tol, ratio = ratio)
-            out[revcutoff] = r_switch.r_ml(K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , [revcutoff]], zratio2 = zratio2[ : , [revcutoff]], comb = comb, ratio = ratio)
+            out[cutoff] = r_sol.batch(self = r_sol, K = K[cutoff], zratio1 = zratio1[ : , cutoff], zratio2 = zratio2[ : , cutoff], comb = comb, tol = tol)
+            out[revcutoff] = r_switch.r_ml(self = r_switch, K = K[revcutoff] / bound[revcutoff], zratio1 = zratio1[ : , revcutoff], zratio2 = zratio2[ : , revcutoff], comb = comb)
         return out
 """print(r_switch.bound_10(self = r_switch, zratio1 = zratio1, zratio2 = numpy.NaN))
 print(r_switch.bound_switch(self = r_switch, comb = "10", zratio1 = zratio1, zratio2 = numpy.NaN))
