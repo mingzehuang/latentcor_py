@@ -10,6 +10,8 @@ import pyreadr
 import os
 from rpy2 import robjects
 import pandas
+import timeit
+from numba import jit
 
 result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 ampdata = result['amgutpruned']
@@ -20,12 +22,101 @@ print(len(numpy.sum(ampdata_mat==0, axis = 0)))
 print(ampdata_mat.shape[1])
 
 """ampdata_org = latentcor.latentcor(X = ampdata_mat[ : , 0:10], tps = ["tru"] * 10, method = "original")"""
-ampdata_approx = latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], method = "approx", use_nearPD = False)
+"""ampdata_approx = latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], method = "approx", use_nearPD = False)"""
 """print(ampdata_org)"""
-print(ampdata_approx)
+"""print(ampdata_approx)"""
 """print(internal.Kendalltau.Kendalltau(self = internal.Kendalltau, X = ampdata_mat[:,0:100]))"""
 """pd_X = pandas.DataFrame(ampdata_mat[:,0:100])
 print(pd_X.corr(method = 'kendall'))"""
+
+import_module = '''
+import internal
+import latentcor
+import get_tps
+import gen_data
+import numpy
+import seaborn
+from matplotlib import pyplot
+from scipy import stats
+import pyreadr
+import os
+from rpy2 import robjects
+import pandas
+import timeit
+result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
+ampdata = result['amgutpruned']
+ampdata_mat = numpy.array(ampdata)
+'''
+
+amp_org_20 = '''
+def amp_org_20():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:20], tps = ["tru"] * 20, method = "original")
+'''
+amp_approx_20 = '''
+def amp_approx_20():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:20], tps = ["tru"] * 20, method = "approx")
+'''
+
+print("amp original p = 10: ", timeit.timeit(stmt = amp_org_20, setup = import_module))
+print("amp approx p = 10: ", timeit.timeit(stmt = amp_approx_20, setup = import_module))
+
+amp_org_50 = '''
+def amp_org_50():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "original")
+'''
+amp_approx_50 = '''
+def amp_approx_50():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "approx")
+'''
+
+print("amp original p = 50: ", timeit.timeit(stmt = amp_org_50, setup = import_module))
+print("amp approx p = 50: ", timeit.timeit(stmt = amp_approx_50, setup = import_module))
+
+amp_org_100 = '''
+def amp_org_100():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:100], tps = ["tru"] * 100, method = "original")
+'''
+amp_approx_100 = '''
+def amp_approx_100():
+    latentcor.latentcor(X = ampdata_mat[ : , 0:100], tps = ["tru"] * 100, method = "approx")
+'''
+
+print("amp original p = 100: ", timeit.timeit(stmt = amp_org_100, setup = import_module))
+print("amp approx p = 100: ", timeit.timeit(stmt = amp_approx_100, setup = import_module))
+
+
+"""starttime = timeit.default_timer()
+print("start time original p = 20 is: ", starttime)
+latentcor.latentcor(X = ampdata_mat[ : , 0:20], tps = ["tru"] * 20, method = "original", use_nearPD=False)
+print("time difference original p = 20 is: ", timeit.default_timer() - starttime)
+starttime = timeit.default_timer()
+print("start time approx p = 20 is: ", starttime)
+latentcor.latentcor(X = ampdata_mat[ : , 0:20], tps = ["tru"] * 20, method = "approx", use_nearPD=False)
+print("time difference approx p = 20 is: ", timeit.default_timer() - starttime)
+
+starttime = timeit.default_timer()
+print("start time original p = 50 is: ", starttime)
+latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "original", use_nearPD=False)
+print("time difference original p = 50 is: ", timeit.default_timer() - starttime)
+starttime = timeit.default_timer()
+print("start time approx p = 50 is: ", starttime)
+latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "approx", use_nearPD=False)
+print("time difference approx p = 50 is: ", timeit.default_timer() - starttime)"""
+
+
+all_p = [20, 50, 100, 200, 300, 400, 481]; all_n = [100, 6482]
+original_time = approx_time =  numpy.full((len(all_p), len(all_n)), numpy.nan)
+for j in range(len(all_p)):
+    for i in range(len(all_n)):
+        p = all_p[j]; n = all_n[i]
+        print("p = ", p, "n = ", n)
+        starttime = timeit.default_timer()
+        latentcor.latentcor(X = ampdata_mat[0:n, 0:p], tps = ["tru"] * p, method = "original", use_nearPD=False, tol = 1e-5)
+        original_time[j, i] = timeit.default_timer() - starttime
+        starttime = timeit.default_timer()
+        latentcor.latentcor(X = ampdata_mat[0:n, 0:p], tps = ["tru"] * p, method = "approx", use_nearPD=False, tol = 1e-5)
+        approx_time[j, i] = timeit.default_timer() - starttime
+
 
 
 """ampdata = robjects.r.load(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
