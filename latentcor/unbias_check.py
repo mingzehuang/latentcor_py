@@ -12,6 +12,10 @@ from rpy2 import robjects
 import pandas
 import timeit
 from numba import jit
+import lzma
+import pickle
+import pkg_resources
+import pandas
 
 result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 ampdata = result['amgutpruned']
@@ -60,30 +64,6 @@ def amp_approx_20():
 print("amp original p = 10: ", timeit.timeit(stmt = amp_org_20, setup = import_module))
 print("amp approx p = 10: ", timeit.timeit(stmt = amp_approx_20, setup = import_module))
 
-amp_org_50 = '''
-def amp_org_50():
-    latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "original")
-'''
-amp_approx_50 = '''
-def amp_approx_50():
-    latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "approx")
-'''
-
-print("amp original p = 50: ", timeit.timeit(stmt = amp_org_50, setup = import_module))
-print("amp approx p = 50: ", timeit.timeit(stmt = amp_approx_50, setup = import_module))
-
-amp_org_100 = '''
-def amp_org_100():
-    latentcor.latentcor(X = ampdata_mat[ : , 0:100], tps = ["tru"] * 100, method = "original")
-'''
-amp_approx_100 = '''
-def amp_approx_100():
-    latentcor.latentcor(X = ampdata_mat[ : , 0:100], tps = ["tru"] * 100, method = "approx")
-'''
-
-print("amp original p = 100: ", timeit.timeit(stmt = amp_org_100, setup = import_module))
-print("amp approx p = 100: ", timeit.timeit(stmt = amp_approx_100, setup = import_module))
-
 
 """starttime = timeit.default_timer()
 print("start time original p = 20 is: ", starttime)
@@ -104,20 +84,41 @@ latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "ap
 print("time difference approx p = 50 is: ", timeit.default_timer() - starttime)"""
 
 
-all_p = [20, 50, 100, 200, 300, 400, 481]; all_n = [100, 6482]
-original_time = approx_time =  numpy.full((len(all_p), len(all_n)), numpy.nan)
+all_p = [10, 20, 50, 100, 200, 300, 400, 481]; all_n = [100, 6482]
+
+timing = numpy.full((len(all_p), len(all_n) * 2), numpy.nan)
 for j in range(len(all_p)):
     for i in range(len(all_n)):
         p = all_p[j]; n = all_n[i]
         print("p = ", p, "n = ", n)
         starttime = timeit.default_timer()
         latentcor.latentcor(X = ampdata_mat[0:n, 0:p], tps = ["tru"] * p, method = "original", use_nearPD=False, tol = 1e-5)
-        original_time[j, i] = timeit.default_timer() - starttime
+        timing[j, 2 * i] = timeit.default_timer() - starttime
+        print(timing[j, 2 * i])
         starttime = timeit.default_timer()
         latentcor.latentcor(X = ampdata_mat[0:n, 0:p], tps = ["tru"] * p, method = "approx", use_nearPD=False, tol = 1e-5)
-        approx_time[j, i] = timeit.default_timer() - starttime
+        timing[j, 2 * i + 1] = timeit.default_timer() - starttime
+        print(timing[j, 2 * i + 1])
 
+print(timing)
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
+    pickle.dump(timing, f)
 
+timing_all = pkg_resources.resource_stream('data', 'timing_all')
+with lzma.open(timing_all, "rb") as f:
+    timing = pickle.load(f)
+print(timing)
+
+data = {"log10 of time (original n = 100)": numpy.log10(timing[ : , 0]), "log10 of time (approx n = 100)": numpy.log10(timing[ : , 1]), "log10 of time (original n = 6482)": numpy.log10(timing[ : , 2]), "log10 of time (approx n = 6482)": numpy.log10(timing[ : , 3])}
+dfdata = pandas.DataFrame(data, index = numpy.log10(all_p))
+print(dfdata)
+
+plot = seaborn.lineplot(data = dfdata, marker="o")
+"""pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 1]), color = "red", marker = "o")
+pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 2]), color = "blue", marker = "o")
+pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 3]), color = "red", marker = "o")"""
+pyplot.title("timing_all")
+pyplot.show()
 
 """ampdata = robjects.r.load(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 print(ampdata[0])"""
