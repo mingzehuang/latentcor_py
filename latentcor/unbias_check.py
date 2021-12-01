@@ -118,7 +118,11 @@ plot = seaborn.lineplot(data = dfdata, marker="o")
 pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 2]), color = "blue", marker = "o")
 pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 3]), color = "red", marker = "o")"""
 pyplot.title("timing_all")
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_plot"), "wb", preset = 9) as f:
+    pickle.dump(plot, f)
 pyplot.show()
+
+
 
 """ampdata = robjects.r.load(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
 print(ampdata[0])"""
