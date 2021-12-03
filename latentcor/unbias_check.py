@@ -101,7 +101,7 @@ for j in range(len(all_p)):
         print(timing[j, 2 * i + 1])
 
 print(timing)
-with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
+"""with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
     pickle.dump(timing, f)
 
 timing_all = pkg_resources.resource_stream('data', 'timing_all')
@@ -114,13 +114,11 @@ dfdata = pandas.DataFrame(data, index = numpy.log10(all_p))
 print(dfdata)
 
 plot = seaborn.lineplot(data = dfdata, marker="o")
-"""pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 1]), color = "red", marker = "o")
-pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 2]), color = "blue", marker = "o")
-pyplot.plot(numpy.log10(all_p), numpy.log10(timing[ : , 3]), color = "red", marker = "o")"""
+
 pyplot.title("timing_all")
 with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_plot"), "wb", preset = 9) as f:
     pickle.dump(plot, f)
-pyplot.show()
+pyplot.show()"""
 
 
 
