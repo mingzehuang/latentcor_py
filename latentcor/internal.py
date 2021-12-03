@@ -1,5 +1,5 @@
 """Main module."""
-import numpy 
+import numpy
 from scipy import stats
 from scipy.optimize import fminbound
 import pkg_resources
