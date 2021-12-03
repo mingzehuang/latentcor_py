@@ -5,6 +5,7 @@ from scipy.optimize import fminbound
 import pkg_resources
 import lzma
 import pickle
+from joblib import Parallel, delayed
 
 ipol_10_file = pkg_resources.resource_stream('data', 'ipol_10.xz')
 with lzma.open(ipol_10_file, "rb") as f:
@@ -97,24 +98,23 @@ class Kendalltau(object):
         else:
             out = 0
         return out
-
+    def kendalltau(i, X, X_tril_indices_row, X_tril_indices_col):
+        x = X[ : , X_tril_indices_row[i]]; y = X[ : , X_tril_indices_col[i]]
+        n = len(x); n0 = n * (n-1) / 2
+        n_x = Kendalltau.n_x(self = Kendalltau, x = x, n = n)
+        n_y = Kendalltau.n_x(self = Kendalltau, x = y, n = n)
+        n_x_sqd = numpy.sqrt(n0 - n_x); n_y_sqd = numpy.sqrt(n0 - n_y)
+        k_b = stats.kendalltau(x, y)[0]
+        btoa = n_x_sqd * n_y_sqd /n0
+        k_a = k_b * btoa
+        return k_a
     def Kendalltau(self, X):
         X_tril_indices = numpy.tril_indices(X.shape[1], -1)
         X_tril_indices_row = X_tril_indices[0]
         X_tril_indices_col = X_tril_indices[1]
         tril_len = len(X_tril_indices_row)
-        K_a_lower = numpy.full(tril_len, numpy.nan)
-        for i in range(tril_len):
-            x = X[ : , X_tril_indices_row[i]]; y = X[ : , X_tril_indices_col[i]]
-            n = len(x); n0 = n * (n-1) / 2
-            n_x = Kendalltau.n_x(self = Kendalltau, x = x, n = n)
-            n_y = Kendalltau.n_x(self = Kendalltau, x = y, n = n)
-            n_x_sqd = numpy.sqrt(n0 - n_x); n_y_sqd = numpy.sqrt(n0 - n_y)
-            k_b = stats.kendalltau(x, y)[0]
-            btoa = n_x_sqd * n_y_sqd /n0
-            k_a = k_b * btoa
-            K_a_lower[i] = k_a
-        return(K_a_lower)
+        K_a_lower = Parallel(n_jobs=-1)(delayed(Kendalltau.kendalltau)(i, X, X_tril_indices_row, X_tril_indices_col) for i in range(tril_len))
+        return numpy.array(K_a_lower)
 
 """Test function n_x"""
 """print(Kendalltau.n_x(self = Kendalltau, x = [1, 3, 4, 5, 6, 7, 3, 2], n = 8))"""
@@ -242,12 +242,13 @@ class r_sol(object):
         res = numpy.float32(2 * stats.multivariate_normal.cdf(x = [de1[1], de2[1]], cov = mat1) * stats.multivariate_normal.cdf(x = [- de1[0], - de2[0]], cov = mat1) \
             - 2 * (zratio1[1] - stats.multivariate_normal.cdf(x = [de1[1], de2[0]], cov = mat1)) * (zratio2[1] - stats.multivariate_normal.cdf(x = [de1[0], de2[1]], cov = mat1)))
         return res
-    def batch(self, K, comb, zratio1, zratio2, tol):
-        K_len = len(K); out = numpy.repeat(numpy.NaN, K_len)
-        for i in range(K_len):
+    def solver(i, K, comb, zratio1, zratio2, tol):
             obj = lambda r: (r_sol.bridge_switch(self = r_sol, r = r, comb = comb, zratio1 = zratio1[ : , i], zratio2 = zratio2[ : , i]) - K[i]) ** 2
             res = fminbound(obj, -0.99, 0.99, xtol = tol)
-            out[i] = res
+            return res
+    def batch(self, K, comb, zratio1, zratio2, tol):
+        K_len = len(K)
+        out = Parallel(n_jobs=-1)(delayed(r_sol.solver)(i, K, comb, zratio1, zratio2, tol) for i in range(K_len))
         return out
 """Test bridge binary/continuous"""
 """print(r_sol.bridge_10(self = r_sol, r = .5, zratio1 = [.5, numpy.NaN], zratio2 = numpy.NaN))

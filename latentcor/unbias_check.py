@@ -25,6 +25,14 @@ print(numpy.sum(ampdata_mat==0, axis = 0))
 print(len(numpy.sum(ampdata_mat==0, axis = 0)))
 print(ampdata_mat.shape[1])
 
+"""starttime = timeit.default_timer()
+internal.Kendalltau.Kendalltau(self = internal.Kendalltau, X = ampdata_mat[ : , : ])
+print(timeit.default_timer() - starttime)
+starttime = timeit.default_timer()
+ampdata_df = pandas.DataFrame(ampdata_mat[ : , : ])
+ampdata_df.corr(method = "kendall")
+print(timeit.default_timer() - starttime)"""
+
 """ampdata_org = latentcor.latentcor(X = ampdata_mat[ : , 0:10], tps = ["tru"] * 10, method = "original")"""
 """ampdata_approx = latentcor.latentcor(X = ampdata_mat, tps = ["tru"] * ampdata_mat.shape[1], method = "approx", use_nearPD = False)"""
 """print(ampdata_org)"""
@@ -249,7 +257,7 @@ pyplot.show()"""
 
 """All Combination"""
 
-rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
+"""rhos = numpy.linspace(-1,1,100); rhorep = numpy.repeat(numpy.nan, len(rhos))
 Rrep = numpy.full((len(rhos), 2), numpy.nan)
 tps = ["con", "bin", "tru", "ter"]
 for tp1 in range(4):
@@ -269,6 +277,6 @@ for tp1 in range(4):
         plot = seaborn.scatterplot(data = data, x = "True latent correlation", y = "Estimated latent correlation (approx)")
         pyplot.plot(rhos, rhos, color = "r")
         pyplot.title(tp_comb[0] + " vs. " + tp_comb[1] + " (approx)")
-        pyplot.show()
+        pyplot.show()"""
             
 
