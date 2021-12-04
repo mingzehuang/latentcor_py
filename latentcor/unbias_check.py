@@ -92,7 +92,7 @@ latentcor.latentcor(X = ampdata_mat[ : , 0:50], tps = ["tru"] * 50, method = "ap
 print("time difference approx p = 50 is: ", timeit.default_timer() - starttime)"""
 
 
-"""all_p = [10, 20, 50, 100, 200, 300, 400, 481]; all_n = [100, 6482]
+all_p = [10, 20, 50, 100, 200, 300, 400, 481]; all_n = [100, 6482]
 
 timing = numpy.full((len(all_p), len(all_n) * 2), numpy.nan)
 for j in range(len(all_p)):
@@ -108,8 +108,8 @@ for j in range(len(all_p)):
         timing[j, 2 * i + 1] = timeit.default_timer() - starttime
         print(timing[j, 2 * i + 1])
 
-print(timing)"""
-"""with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
+print(timing)
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
     pickle.dump(timing, f)
 
 timing_all = pkg_resources.resource_stream('data', 'timing_all')
@@ -126,7 +126,7 @@ plot = seaborn.lineplot(data = dfdata, marker="o")
 pyplot.title("timing_all")
 with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_plot"), "wb", preset = 9) as f:
     pickle.dump(plot, f)
-pyplot.show()"""
+pyplot.show()
 
 
 
