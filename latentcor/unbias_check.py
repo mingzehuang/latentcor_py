@@ -11,7 +11,6 @@ import os
 from rpy2 import robjects
 import pandas
 import timeit
-from numba import jit
 import lzma
 import pickle
 import pkg_resources
