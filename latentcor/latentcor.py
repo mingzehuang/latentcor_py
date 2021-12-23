@@ -18,6 +18,31 @@ print(len(numpy.sum(ampdata_mat==0, axis = 0)))
 print(ampdata_mat.shape[1])
 
 def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.9, showplot = False):
+    """
+
+    Parameters
+    ----------
+    X :
+        
+    tps :
+         (Default value = None)
+    method :
+         (Default value = "approx")
+    use_nearPD :
+         (Default value = True)
+    nu :
+         (Default value = 0.001)
+    tol :
+         (Default value = 1e-8)
+    ratio :
+         (Default value = 0.9)
+    showplot :
+         (Default value = False)
+
+    Returns
+    -------
+
+    """
     X = numpy.array(X, dtype = numpy.float32); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
