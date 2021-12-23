@@ -3,6 +3,19 @@ import internal
 import gen_data
 
 def get_tps(X, tru_prop = 0.05):
+    """
+
+    Parameters
+    ----------
+    X :
+        
+    tru_prop :
+         (Default value = 0.05)
+
+    Returns
+    -------
+
+    """
     X = numpy.array(X, dtype = float, ndmin = 2)
     p = X.shape[1]; tps = numpy.repeat("NAN", p)
     for i in range(p):

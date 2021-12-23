@@ -6,6 +6,29 @@ from matplotlib import pyplot
 from scipy import stats
 
 def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None, showplot = False):
+    """
+
+    Parameters
+    ----------
+    n :
+         (Default value = 100)
+    tps :
+         (Default value = ["ter")
+    "con"] :
+        
+    rhos :
+         (Default value = .5)
+    copulas :
+         (Default value = "no")
+    XP :
+         (Default value = None)
+    showplot :
+         (Default value = False)
+
+    Returns
+    -------
+
+    """
     if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
         exit()
