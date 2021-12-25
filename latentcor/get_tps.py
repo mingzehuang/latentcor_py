@@ -12,14 +12,14 @@ def get_tps(X, tru_prop = 0.05):
         A numeric data matrix (n by p), where n is number of samples, and p is number of variables. Missing values (numpy.na) are allowed.
         
     tru_prop : float
-               (Default value = 0.05)
-               A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as `"tru"` (truncated type or zero-inflated) rather than as `"con"` (continuous type). The default value 0.05 means any variable with more than 5\% of zero values among n samples is treated as truncated or zero-inflated.
+        (Default value = 0.05)
+        A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as `"tru"` (truncated type or zero-inflated) rather than as `"con"` (continuous type). The default value 0.05 means any variable with more than 5\% of zero values among n samples is treated as truncated or zero-inflated.
 
     Returns
     -------
 
     tps: numpy.array
-         A vector of length p indicating the type of each of the p variables in `X`. Each element is one of `"con"` (continuous), `"bin"` (binary), `"ter"` (ternary) or `"tru"` (truncated).
+        A vector of length p indicating the type of each of the p variables in `X`. Each element is one of `"con"` (continuous), `"bin"` (binary), `"ter"` (ternary) or `"tru"` (truncated).
 
     """
 
