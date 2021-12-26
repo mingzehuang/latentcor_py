@@ -1,6 +1,5 @@
 import numpy
-import internal
-import gen_data
+from . import gen_data
 
 def get_tps(X, tru_prop = 0.05):
     """

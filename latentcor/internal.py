@@ -3,7 +3,6 @@
 import numpy
 from scipy import stats
 from scipy.optimize import fminbound
-import pkg_resources
 import lzma
 import pickle
 from joblib import Parallel, delayed
@@ -48,8 +47,7 @@ with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "ipol_33.xz"), "rb
     ipol_33 = pickle.load(f)
 
 """
-ipol_file = pkg_resources.resource_stream(__name__, 'data/all_ipol.xz')
-with lzma.open(ipol_file, "rb") as f:
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "all_ipol.xz"), "rb") as f:
     ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33 = pickle.load(f)
 """
 
