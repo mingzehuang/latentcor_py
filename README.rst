@@ -52,6 +52,15 @@ Example
 *************
 
 *************
+Reproducibility (for Developer)
+*************
+..
+  The easiest way to replicate development environment of ``latentcor`` is using ``pip``   ::
+
+    pip install -r requirements_dev.txt
+
+
+*************
 Community Guidelines
 *************
 
