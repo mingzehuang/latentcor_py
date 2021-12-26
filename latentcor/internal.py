@@ -6,7 +6,6 @@ from scipy.optimize import fminbound
 import lzma
 import pickle
 from joblib import Parallel, delayed
-from importlib import machinery
 import os
 
 
