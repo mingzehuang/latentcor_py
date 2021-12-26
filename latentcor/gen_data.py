@@ -1,5 +1,5 @@
 
-import internal
+from . import internal
 import numpy
 import seaborn
 from matplotlib import pyplot
