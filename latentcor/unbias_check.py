@@ -13,7 +13,6 @@ import pandas
 import timeit
 import lzma
 import pickle
-import pkg_resources
 import pandas
 
 result = pyreadr.read_r(os.path.join(os.getcwd(), "latentcor", "data", "amgutpruned.rdata"))
@@ -111,8 +110,7 @@ print(timing)
 with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "wb", preset = 9) as f:
     pickle.dump(timing, f)
 
-timing_all = pkg_resources.resource_stream('data', 'timing_all')
-with lzma.open(timing_all, "rb") as f:
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "timing_all"), "rb") as f:
     timing = pickle.load(f)
 print(timing)
 
