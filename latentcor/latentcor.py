@@ -139,13 +139,6 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     return R, Rpointwise, plot, K, zratios
 
 
-
-
-
- 
-
-"""print(latentcor(X = X[0], tps = ["con", "bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])
-"""
 """print(latentcor(X = X[0], tps = ["con", "bin", "tru", "ter"], method = "approx", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])
 """
 
