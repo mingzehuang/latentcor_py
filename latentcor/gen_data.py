@@ -1,5 +1,6 @@
 
-from . import internal
+"""from . import internal"""
+from latentcor import internal
 import numpy
 import seaborn
 from matplotlib import pyplot

@@ -1,6 +1,9 @@
 
-from . import internal
-from . import get_tps
+"""from latentcor import internal
+from latentcor import get_tps"""
+from latentcor import internal
+from latentcor import get_tps
+from latentcor import gen_data
 import numpy
 from statsmodels.stats.correlation_tools import corr_nearest
 import seaborn
@@ -135,13 +138,10 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         pyplot.show()
     return R, Rpointwise, plot, K, zratios
 
-"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = -1, tol = .0001, ratio = .5))
-"""
-"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = 0, ratio = .5))    
-"""
-"""print(latentcor(X = [[1,2], [3,4]], tps = ["bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = 0.001, ratio = -1))"""
-"""X = gen_data.gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None)
-print(X[0].shape[1])"""
+
+
+
+
  
 
 """print(latentcor(X = X[0], tps = ["con", "bin", "tru"], method = "original", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])

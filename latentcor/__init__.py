@@ -19,4 +19,4 @@ __author__ = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 __email__ = 'mingzehuang@gmail.com, christian.mueller@stat.uni-muenchen.de, irinag@stat.tamu.edu'
 __version__ = '0.1.0'
 
-print(latentcor.__version__)
+print(__version__)
