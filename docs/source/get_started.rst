@@ -1,9 +1,9 @@
 
 Get started
------------
+===========
 
 A simple example with two variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 First, we will generate a pair of variables with different types using a sample size $n=100$ which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
@@ -77,7 +77,7 @@ heatmap::
 
 
 Example with mtcars dataset
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 We use the build-in dataset `mtcars`:
 
@@ -143,7 +143,7 @@ mtcars_heatmap::
 
 
 Example using latentcor with subsampling
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
 
 While `latentcor` can determine the types of each variable automatically, it is recommended to call `get_types` first and then supply `types` explicitly to save the computation time, especially when using latentcor with sub-sampling (which we illustrate below).
 
