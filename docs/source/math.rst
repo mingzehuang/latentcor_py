@@ -1,0 +1,2 @@
+Mathematical Framework for latentcor
+====================================

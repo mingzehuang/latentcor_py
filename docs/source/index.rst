@@ -8,9 +8,8 @@ latentcor: Latent Correlation for Mixed Types of Data
 
 .. toctree::
    :caption: Contents
-   Introduction
-   Statement of Need
-   Get Started
+   get_started
+   math
 
 Introduction
 ------------
@@ -24,14 +23,6 @@ Statement of Need
 No R software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The R package `latentcor`, introduced here, thus represents the first stand-alone R package for 
 computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, 
 and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation. 
-
-
-Getting Started
----------------
-
-
-
-
 
 
 
