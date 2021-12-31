@@ -8,8 +8,8 @@ latentcor: Latent Correlation for Mixed Types of Data
 
 .. toctree::
 
-    get_started
-    latentcor_math
+* :doc:`get_started`
+* :doc:`latentcor_math`
 
 
 Introduction
