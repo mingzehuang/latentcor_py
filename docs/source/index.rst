@@ -7,7 +7,7 @@ latentcor: Latent Correlation for Mixed Types of Data
 =====================================================
 
 .. toctree::
-
+   :caption: Contents
    Introduction
    Statement of Need
    Get Started
