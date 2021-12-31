@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to latentcor's documentation!
+latentcor: Latent Correlation for Mixed Types of Data
 =====================================
 
 .. toctree::
@@ -13,6 +13,7 @@ Welcome to latentcor's documentation!
    usage/latentcor
    usage/latentcor_math
    ...
+
 
 ============
 Introduction
