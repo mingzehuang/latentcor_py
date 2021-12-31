@@ -12,7 +12,6 @@
 #
 import os
 import sys
-import murray
 sys.path.insert(0, os.path.abspath('../latentcor'))
 
 
