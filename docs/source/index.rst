@@ -7,10 +7,9 @@ latentcor: Latent Correlation for Mixed Types of Data
 =====================================================
 
 .. toctree::
-   :maxdepth: 2
 
-   get_started
-   latentcor_math
+    get_started
+    latentcor_math
 
 
 Introduction
