@@ -10,6 +10,10 @@ Welcome to latentcor's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   usage/latentcor
+   usage/latentcor_math
+   ...
+
 ============
 Introduction
 ============
