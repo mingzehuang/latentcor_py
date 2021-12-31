@@ -10,9 +10,8 @@ latentcor: Latent Correlation for Mixed Types of Data
    :maxdepth: 2
    :caption: Contents:
 
-   usage/latentcor
-   usage/latentcor_math
-   ...
+* :ref:`get_started`
+* :ref:`latentcor_math`
 
 
 ============
