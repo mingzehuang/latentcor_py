@@ -4,37 +4,36 @@
    contain the root `toctree` directive.
 
 latentcor: Latent Correlation for Mixed Types of Data
-=====================================
+=====================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-* :ref:`get_started`
-* :ref:`latentcor_math`
+   get_started
+   latentcor_math
 
 
-============
 Introduction
-============
+------------
 
 R package `latentcor` utilizes the powerful semi-parametric latent Gaussian copula models to estimate latent correlations between mixed data types. The package allows to estimate correlations between any of continuous/binary/ternary/zero-inflated (truncated) variable types. The underlying implementation takes advantage of fast multi-linear interpolation scheme with a clever choice of grid points that give the package a small memory footprint, and allows to use the latent correlations with sub-sampling and bootstrapping.
 
-=================
+
 Statement of need
-=================
+-----------------
 
 No R software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The R package `latentcor`, introduced here, thus represents the first stand-alone R package for 
 computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, 
 and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation. 
 
-===============
-Getting started
-===============
 
-***********************************
+Getting started
+---------------
+
+
 A simple example with two variables
-***********************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, we will generate a pair of variables with different types using a sample size $n=100$ which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
@@ -106,9 +105,9 @@ heatmap::
    
    estimate$plotR
 
-***************************
+
 Example with mtcars dataset
-***************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We use the build-in dataset `mtcars`:
 
@@ -172,9 +171,9 @@ mtcars_heatmap::
 
    estimate_mtcars$plotR
 
-****************************************
+
 Example using latentcor with subsampling
-****************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 While `latentcor` can determine the types of each variable automatically, it is recommended to call `get_types` first and then supply `types` explicitly to save the computation time, especially when using latentcor with sub-sampling (which we illustrate below).
 
