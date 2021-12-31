@@ -34,71 +34,71 @@ A simple example with two variables
 
 First, we will generate a pair of variables with different types using a sample size $n=100$ which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
-.. r data_generation::
+data_generation::
 
    simdata = gen_data(n = 100, types = c("ter", "con"))
 
 
 The output of `gen_data` is a list with 2 elements:
 
-.. r data_output::
+data_output::
 
    names(simdata)
 
 `X`: a matrix ($100\times 2$), the first column is the ternary variable; the second column is the continuous variable.
   
-.. r data_matrix::
+data_matrix::
 
    X = simdata$X
    head(X, n = 6L)
 
 `plotX`: NULL (`showplot = FALSE`, can be changed to display the plot of generated data in`gen_data` input).
 
-.. r data_plot::
+data_plot::
 
    simdata$plotX
 
 
 Then we can estimate the latent correlation matrix based on these 2 variables using `latentcor` function.
 
-.. r estimation::
+estimation::
 
    estimate = latentcor(X, types = c("ter", "con"))
 
 The output of `latentcor` is a list with several elements:
 
-.. r estimation_output::
+estimation_output::
 
    names(estimate)
 
 
 `zratios` is a list has the same length as the number of variables. Here the first element is a ($2\times1$) vector indicating the cumulative proportions for zeros and ones in the ternary variable (e.g. first element in vector is the proportion of zeros, second element in vector is the proportion of zeros and ones.) The second element of the list is NA for continuous variable.
 
-.. r zratios::
+zratios::
 
    estimate$zratios
 
 `K`: Kendall $\tau$ ($\tau_{a}$) correlation matrix for these 2 variables. 
   
-.. r Kendall::
+Kendall::
 
    estimate$K 
 
 `Rpointwise`: matrix of pointwise estimated correlations. Due to pointwise estimation, `Rpointwise` is not guaranteed to be positive semi-definite
 
-.. r latent_correlation_pointwise::
+latent_correlation_pointwise::
 
    estimate$Rpointwise
 
 `R`: estimated final latent correlation matrix, this matrix is guaranteed to be strictly positive definite (through `nearPD` projection and parameter `nu`, see Mathematical framework for estimation) if `use.nearPD = TRUE`.
 
-.. r latent_correlation::
+latent_correlation::
 
    estimate$R
 
 `plotR`: NULL by default as `showplot = FALSE` in `latentcor`. Otherwise displays a heatmap of latent correlation matrix.
 
-.. r heatmap::
+heatmap::
    
    estimate$plotR
 
@@ -108,25 +108,25 @@ Example with mtcars dataset
 
 We use the build-in dataset `mtcars`:
 
-.. r mtcars::
+mtcars::
 
    head(mtcars, n = 6L)
 
 Let's take a look at the unique values for each variable to determine the corresponding data type.
 
-.. r unique::
+unique::
 
    apply(mtcars, 2, table)
 
 Then we can estimate the latent correlation matrix for all variables of `mtcars` by using `latentcor` function.
 
-.. r mtcars_estimation::
+mtcars_estimation::
 
    estimate_mtcars = latentcor(mtcars, types = c("con", "ter", "con", "con", "con", "con", "con", "bin", "bin", "ter", "con"))
 
 Note that the determination of variable types can also be done automatically by `latentcor` package using `get_types` function:
 
-.. r mtcars_types::
+mtcars_types::
 
    get_types(mtcars)
 
@@ -134,37 +134,37 @@ This function is run automatically inside `latentcor` if the `types` are not sup
 
 The output of `latentcor` for `mtcars`:
 
-.. r mtcars_estimation_output::
+mtcars_estimation_output::
 
    names(estimate_mtcars)
 
 `zratios`: zratios for corresponding variables in `mtcars`.
 
-.. r mtcars_zratios::
+mtcars_zratios::
 
    estimate_mtcars$zratios
 
 `K`: Kendall $\tau$ ($\tau_{a}$) correlation matrix for variables in `mtcars`. 
   
-.. r mtcars_Kendall::
+mtcars_Kendall::
 
    estimate_mtcars$K
 
 `Rpointwise`: matrix of pointwise estimated correlations for `mtcars`.
 
-.. r mtcars_latent_correlation_pointwise::
+mtcars_latent_correlation_pointwise::
 
    estimate_mtcars$Rpointwise
 
 `R`: estimated final latent correlation matrix for `mtcars`.
 
-.. r mtcars_latent_correlation::
+mtcars_latent_correlation::
 
    estimate_mtcars$R
 
 `plotR`: NULL by default as `showplot = FALSE` in `latentcor`. Otherwise displays a heatmap of latent correlation matrix for `mtcars` (See [heatmap of latent correlation (approx) for mtcars](https://rpubs.com/mingzehuang/797937)).
 
-.. r mtcars_heatmap::
+mtcars_heatmap::
 
    estimate_mtcars$plotR
 
@@ -176,26 +176,26 @@ While `latentcor` can determine the types of each variable automatically, it is 
 
 First, we will generate variables with different types using a sample size $n=100$ which will serve as an example data for subsampling. 
 
-.. r data_generation 2::
+data_generation 2::
 
    simdata2 = gen_data(n = 100, types = c(rep("ter", 3), "con", rep("bin", 3)))
 
 To use the data with subsampling, we recommend to first run `get_types` on the full data
 
-.. r types subsampling::
+types subsampling::
 
    types = get_types(simdata2$X)
    types
 
 Then, when doing subsampling, we recommend to explicitly supply identified types to `latentcor`. We illustrate using 10 subsamples, each of size 80.
 
-.. r subsampling::
+subsampling::
 
 start_time
 
 Compared with
 
-.. r subsampling 2::
+subsampling 2::
 
 start_time
 
