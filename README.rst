@@ -12,9 +12,6 @@ latentcor: Latent Correlation for Mixed Types of Data
 .. image:: https://img.shields.io/travis/mingzehuang/latentcor.svg
         :target: https://travis-ci.com/mingzehuang/latentcor
 
-.. image:: https://readthedocs.org/projects/latentcor/badge/?version=latest
-        :target: https://latentcor.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
 
 *************
 Introduction
