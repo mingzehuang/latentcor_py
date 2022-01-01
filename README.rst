@@ -50,6 +50,12 @@ The easiest way to install `latentcor` is using `pip`
 Example
 -------
 
+Let's import module :code:`latentcor`.
+
+.. code::
+
+    import latentcor
+
 First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
 .. code::
@@ -59,7 +65,7 @@ First, we will generate a pair of variables with different types using a sample 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
 .. code::
-        
+
     latentcor(simdata[0], tps = ["ter", "con"])[0]
 
 Community Guidelines
