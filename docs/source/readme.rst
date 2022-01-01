@@ -34,22 +34,18 @@ Statement of Need
 No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The Python package :code:`latentcor`, introduced here, thus represents the first stand-alone Python package for computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, 
 and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation.
 
-Reproducibility (for Developer)
--------------------------------
-
-The easiest way to replicate development environment of :code:`latentcor` is using :code:`pip`:
-
-.. code::
-
-    pip install -r requirements_dev.txt
-
 Community Guidelines
 --------------------
 
 * Contributions and suggestions to the software are always welcome. Please consult our `contribution guidelines <https://github.com/mingzehuang/latentcor_py/blob/master/CONTRIBUTING.rst>`_ prior to submitting a pull request.
 * Report issues or problems with the software using github’s `issue tracker <https://github.com/mingzehuang/latentcor_py/issues>`_.
 * Contributors must adhere to the `Code of Conduct <https://github.com/mingzehuang/latentcor_py/blob/master/CODE_OF_CONDUCT.rst>`_.
+* The easiest way to replicate development environment of `latentcor` is using `pip`:
 
+.. code::
+
+    pip install -r requirements_dev.txt
+    
 Credits
 -------
 
