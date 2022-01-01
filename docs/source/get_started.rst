@@ -4,7 +4,9 @@ Get started
 A simple example with two variables
 -----------------------------------
 
-First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous::
+First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
+
+.. code::
     
     simdata = gen_data(n = 100, tps = ["ter", "con"])
 
@@ -14,7 +16,9 @@ The output of `gen_data` is a list with 2 elements:
 
 * :code:`simdata[1]`: :code:`None` (:code:`showplot = False`, can be changed to display the plot of generated data in :code:`gen_data` input).
 
-Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function::
+Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
+
+.. code::
 
     estimate = latentcor(simdata[0], tps = ["ter", "con"])
 
