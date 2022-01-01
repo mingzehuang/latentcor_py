@@ -49,3 +49,4 @@ Reference
 ---------
 
 .. bibliography::
+   :all:
