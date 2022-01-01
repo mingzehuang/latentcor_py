@@ -60,13 +60,13 @@ First, we will generate a pair of variables with different types using a sample 
 
 .. code::
     
-    gen_data(n = 100, tps = ["ter", "con"])[0]
+    latentcor.gen_data(n = 100, tps = ["ter", "con"])[0]
 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
 .. code::
 
-    latentcor(simdata[0], tps = ["ter", "con"])[0]
+    latentcor.latentcor(simdata[0], tps = ["ter", "con"])[0]
 
 Community Guidelines
 --------------------
