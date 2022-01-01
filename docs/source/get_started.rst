@@ -10,7 +10,7 @@ First, we will generate a pair of variables with different types using a sample 
 
 The output of `gen_data` is a list with 2 elements:
 
-* :code:`simdata[0]`: a matrix (..math::`100\times 2`), the first column is the ternary variable; the second column is the continuous variable.
+* :code:`simdata[0]`: a matrix (:math:`100\times 2`), the first column is the ternary variable; the second column is the continuous variable.
 
 * :code:`simdata[1]`: :code:`None` (:code:`showplot = False`, can be changed to display the plot of generated data in :code:`gen_data` input).
 
