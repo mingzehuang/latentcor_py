@@ -50,7 +50,7 @@ The estimation of latent correlation matrix :math:`\Sigma` is achieved via the *
 
 Given observed :math:`\mathbf{x}_{j}, \mathbf{x}_{k}\in\cal{R}^{n}`,
 
-..math::
+.. math::
 
     \hat{\tau}_{jk}=\hat{\tau}(\mathbf{x}_{j}, \mathbf{x}_{k})=\frac{2}{n(n-1)}\sum_{1\le i<i'\le n}sign(x_{ij}-x_{i'j})sign(x_{ik}-x_{i'k}),
 
@@ -72,7 +72,7 @@ Below we provide an explicit form of $F$ for each combination.
 
 Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{3}\in\cal{R}^{p_{3}}`, :math:`W_{4}\in\cal{R}^{p_{4}}` be such that :math:`W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)` with :math:`p=p_{1}+p_{2}+p_{3}+p_{4}`. Let :math:`X=(X_{1}, X_{2}, X_{3}, X_{4})\in\cal{R}^{p}` satisfy :math:`X_{j}=W_{j}$ for $j=1,...,p_{1}`, :math:`X_{j}=I(W_{j}>c_{j})` for :math:`j=p_{1}+1, ..., p_{1}+p_{2}`, :math:`X_{j}=I(W_{j}>c_{j})+I(W_{j}>c'_{j})` for :math:`j=p_{1}+p_{2}+1, ..., p_{3}` and :math:`X_{j}=I(W_{j}>c_{j})W_{j}` for :math:`j=p_{1}+p_{2}+p_{3}+1, ..., p` with :math:`\Delta_{j}=f(c_{j})`. The rank-based estimator of :math:`\Sigma` based on the observed :math:`n` realizations of :math:`X` is the matrix :math:`\mathbf{\hat{R}}` with :math:`\hat{r}_{jj}=1`, :math:`\hat{r}_{jk}=\hat{r}_{kj}=F^{-1}(\hat{\tau}_{jk})` with block structure
 
-..math::
+.. math::
 
     \mathbf{\hat{R}}=\begin{pmatrix}
     F_{CC}^{-1}(\hat{\tau}) & F_{CB}^{-1}(\hat{\tau}) & F_{CN}^{-1}(\hat{\tau}) & F_{CT}^{-1}(\hat{\tau})\\
@@ -81,7 +81,7 @@ Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{
     F_{TC}^{-1}(\hat{\tau}) & F_{TB}^{-1}(\hat{\tau}) & F_{TN}^{-1}(\hat{\tau}) & F_{TT}^{-1}(\hat{\tau})
     \end{pmatrix}
 
-..math::
+.. math::
     
     F(\cdot)=\begin{cases}
     CC:\ 2\sin^{-1}(r)/\pi \\
@@ -108,7 +108,7 @@ Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{
 
 where :math:`\Delta_{j}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{k}=\Phi^{-1}(\pi_{0k})`, :math:`\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})`, :math:`\Delta_{k}^{1}=\Phi^{-1}(\pi_{0k})`, :math:`\Delta_{k}^{2}=\Phi^{-1}(\pi_{0k}+\pi_{1k})`,
 
-..math::
+.. math::
 
     \Sigma_{3a}(r)=
     \begin{pmatrix}
@@ -129,7 +129,7 @@ where :math:`\Delta_{j}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{k}=\Phi^{-1}(\pi_{0
     \frac{1}{\sqrt{2}} & -\frac{r}{\sqrt{2}} & 1
     \end{pmatrix},
 
-..math::
+.. math::
 
     \Sigma_{3d}(r)=
     \begin{pmatrix}
@@ -151,7 +151,7 @@ where :math:`\Delta_{j}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{k}=\Phi^{-1}(\pi_{0
     \frac{r}{\sqrt{2}} & \frac{r}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 1
     \end{pmatrix},
 
-..math::
+.. math::
 
     \Sigma_{4b}(r)=
     \begin{pmatrix}
@@ -191,7 +191,7 @@ Original method (`method = "original"`) {original}
 
 Original estimation approach relies on numerical inversion of :math:`F` based on solving uni-root optimization problem. Given the calculated :math:`\widehat \tau_{jk}` (sample Kendall's :math:`\tau` between variables :math:`j` and :math:`k`), the estimate of latent correlation :math:`\widehat \sigma_{jk}` is obtained by calling :code:`scipy.optimize.fminbound` function to solve the following optimization problem:
 
-..math::
+.. math::
 
     \widehat r_{jk} = \arg\min_{r} \{F(r) - \widehat \tau_{jk}\}^2.
 
@@ -242,7 +242,7 @@ In short, d-dimensional multi-linear interpolation uses a weighted average of :m
 
 To avoid interpolation in areas with high approximation errors close to the boundary, we use hybrid scheme in *Step 3*. The parameter :code:`ratio` controls the size of the region where the interpolation is performed (:code:`ratio = 0` means no interpolation, :code:`ratio = 1` means interpolation is always performed). For the derivation of approximate bound for BC, BB, TC, TB, TT cases see @yoon2021fast. The derivation of approximate bound for NC, NB, NN, NT case is in the Appendix.
 
-..math::
+.. math::
 
     \bar{\tau}_{jk}(\cdot)=
     \begin{cases}
@@ -316,13 +316,13 @@ Derivation of bridge function :math:`F` for ternary/truncated case
 
 Without loss of generality, let :math:`j=1` and :math:`k=2`. By the definition of Kendall's :math:`\tau`,
 
-..math::
+.. math::
 
     \tau_{12}=E(\hat{\tau}_{12})=E[\frac{2}{n(n-1)}\sum_{1\leq i\leq i' \leq n} sign\{(X_{i1}-X_{i'1})(X_{i2}-X_{i'2})\}].
 
 Since :math:`X_{1}` is ternary,
 
-..math::
+.. math::
 
     \begin{align}
     &sign(X_{1}-X_{1}') \nonumber\\ =&[I(U_{1}>C_{11},U_{1}'\leq C_{11})+I(U_{1}>C_{12},U_{1}'\leq C_{12})-I(U_{1}>C_{12},U_{1}'\leq C_{11})] \nonumber\\
@@ -337,7 +337,7 @@ Since :math:`X_{1}` is ternary,
 
 Since :math:`X_{2}` is truncated, :math:`C_{1}>0` and
 
-..math::
+.. math::
 
     \begin{align}
     sign(X_{2}-X_{2}')=&-I(X_{2}=0,X_{2}'>0)+I(X_{2}>0,X_{2}'=0) \nonumber\\
@@ -347,7 +347,7 @@ Since :math:`X_{2}` is truncated, :math:`C_{1}>0` and
 
 Since :math:`f` is monotonically increasing, :math:`sign(X_{2}-X_{2}')=sign(Z_{2}-Z_{2}')`,
 
-..math::
+.. math::
 
     \begin{align}
     \tau_{12}=&E[I(U_{1}>C_{11},U_{1}'\leq C_{12}) sign(X_{2}-X_{2}')] \nonumber\\ &-E[I(U_{1}'>C_{11},U_{1}\leq C_{12}) sign(X_{2}-X_{2}')] \nonumber\\
@@ -365,7 +365,7 @@ Since :math:`f` is monotonically increasing, :math:`sign(X_{2}-X_{2}')=sign(Z_{2
 
 From the definition of :math:`U`, let :math:`Z_{j}=f_{j}(U_{j})` and :math:`\Delta_{j}=f_{j}(C_{j})` for :math:`j=1,2`. Using :math:`sign(x)=2I(x>0)-1`, we obtain
 
-..math::
+.. math::
 
     \begin{align}
     \tau_{12}=&-2E[I(Z_{1}>\Delta_{11},Z_{1}'\leq \Delta_{12},Z_{2}\leq \Delta_{2})]+2E[I(Z_{1}>\Delta_{11},Z_{1}'\leq \Delta_{12},Z_{2}'\leq \Delta_{2})] \nonumber\\
@@ -378,7 +378,7 @@ From the definition of :math:`U`, let :math:`Z_{j}=f_{j}(U_{j})` and :math:`\Del
 
 Since :math:`\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, -Z{1}\}`, :math:`\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, Z{1}'\}` and :math:`\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, -Z{2}'\}` are standard bivariate normally distributed variables with correlation :math:`-\frac{1}{\sqrt{2}}$, $r/\sqrt{2}` and :math:`-\frac{r}{\sqrt{2}}`, respectively, by the definition of :math:`\Phi_3(\cdot,\cdot, \cdot;\cdot)` and :math:`\Phi_4(\cdot,\cdot, \cdot,\cdot;\cdot)` we have
 
-..math::
+.. math::
 
     \begin{align}
     F_{NT}(r;\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k})= & -2\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k};\begin{pmatrix}
@@ -407,7 +407,7 @@ Since :math:`\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, -Z{1}\}`, :math:`\{\frac{Z_{2}'-Z_
 
 Using the facts that
 
-..math::
+.. math::
 
     \begin{align}
     &\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
@@ -430,7 +430,7 @@ Using the facts that
 
 and
 
-..math::
+.. math::
 
     \begin{align}
     &\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k};\begin{pmatrix}
@@ -448,7 +448,7 @@ and
 
 So that,
 
-..math::
+.. math::
 
     \begin{align}
     F_{NT}(r;\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k})= & -2\Phi(-\Delta_{j}^{1})\Phi(\Delta_{j}^{2}) \nonumber\\
@@ -478,7 +478,7 @@ Derivation of approximate bound for the ternary/continuous case
 
 Let :math:`n_{0x}=\sum_{i=1}^{n_x}I(x_{i}=0)`, :math:`n_{2x}=\sum_{i=1}^{n_x}I(x_{i}=2)`, :math:`\pi_{0x}=\frac{n_{0x}}{n_{x}}` and :math:`\pi_{2x}=\frac{n_{2x}}{n_{x}}`, then
 
-..math::
+.. math::
 
     \begin{align}
     |\tau(\mathbf{x})|\leq & \frac{n_{0x}(n-n_{0x})+n_{2x}(n-n_{0x}-n_{2x})}{\begin{pmatrix} n \\ 2 \end{pmatrix}} \nonumber\\
@@ -497,7 +497,7 @@ Let :math:`\mathbf{x}\in\mathcal{R}^{n}` and :math:`\mathbf{y}\in\mathcal{R}^{n}
 :math:`n_{0y}=\sum_{i=0}^{n}I(y_{i}=0)`, :math:`\pi_{0y}=\frac{n_{0y}}{n}`, :math:`n_{0x0y}=\sum_{i=0}^{n}I(x_{i}=0 \;\& \; y_{i}=0)`, :math:`n_{1x0y}=\sum_{i=0}^{n}I(x_{i}=1 \;\& \; y_{i}=0)` and
 :math:`n_{2x0y}=\sum_{i=0}^{n}I(x_{i}=2 \;\& \; y_{i}=0)` then
 
-..math::
+.. math::
 
     \begin{align}
     |\tau(\mathbf{x}, \mathbf{y})|\leq &
@@ -506,7 +506,7 @@ Let :math:`\mathbf{x}\in\mathcal{R}^{n}` and :math:`\mathbf{y}\in\mathcal{R}^{n}
 
 Since :math:`n_{0x0y}\leq\min(n_{0x},n_{0y})`, :math:`n_{1x0y}\leq\min(n_{1x},n_{0y})` and :math:`n_{2x0y}\leq\min(n_{2x},n_{0y})` we obtain
 
-..math::
+.. math::
 
     \begin{align}
     |\tau(\mathbf{x}, \mathbf{y})|\leq &
