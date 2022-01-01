@@ -17,7 +17,7 @@ Python package :code:`latentcor` utilizes the powerful semi-parametric latent Ga
 No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The Python package *latentcor*, introduced here, thus represents the first stand-alone R package for computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation.
 
 #. Free software: GNU General Public License v3
-#. Documentation: https://latentcor-py.readthedocs.io.
+#. Documentation: https://latentcor.readthedocs.io.
 
 Installation
 ------------
