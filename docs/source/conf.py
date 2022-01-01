@@ -12,7 +12,6 @@
 #
 import os
 import sys
-import sphinxcontrib.bibtex
 sys.path.insert(0, os.path.abspath('../latentcor'))
 
 
