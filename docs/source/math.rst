@@ -552,5 +552,3 @@ Since :math:`n_{0x0y}\leq\min(n_{0x},n_{0y})`, :math:`n_{1x0y}\leq\min(n_{1x},n_
     \end{align}
 
 It is easy to get the approximate bound for truncated/ternary case by switching :math:`\mathbf{x}` and :math:`\mathbf{y}`.
-
-.. bibliography::
