@@ -34,13 +34,13 @@ No Python software package is currently available that allows accurate and fast 
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://latentcor.readthedocs.io.
+* Documentation: https://latentcor-py.readthedocs.io.
 
 
 Installation
 ------------
 
-The easiest way to install `latentcor` is using `pip`
+The easiest way to install :code:`latentcor` is using :code:`pip`.
 
 .. code::
 
