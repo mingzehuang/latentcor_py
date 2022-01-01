@@ -6,6 +6,10 @@
 latentcor: Latent Correlation for Mixed Types of Data
 =====================================================
 
+.. image:: https://readthedocs.org/projects/latentcor-py/badge/?version=latest
+        :target: https://latentcor-py.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
 .. toctree::
 
    readme
