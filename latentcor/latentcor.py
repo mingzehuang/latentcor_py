@@ -9,8 +9,50 @@ from matplotlib import pyplot
 from scipy import stats
 from scipy.optimize import fminbound
 from joblib import Parallel, delayed
-"""from latentcor import ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33
+import pickle
+import lzma
+
+"""ipol_10_file = pkg_resources.resource_stream('data', 'ipol_10.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_10.xz"), "rb") as f:
+    ipol_10 = pickle.load(f)
+
+"""ipol_11_file = pkg_resources.resource_stream('data', 'ipol_11.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_11.xz"), "rb") as f:
+    ipol_11 = pickle.load(f)
+
+"""ipol_20_file = pkg_resources.resource_stream('data', 'ipol_20.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_20.xz"), "rb") as f:
+    ipol_20 = pickle.load(f)
+
+"""ipol_21_file = pkg_resources.resource_stream('data', 'ipol_21.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_21.xz"), "rb") as f:
+    ipol_21 = pickle.load(f)
+
+"""ipol_22_file = pkg_resources.resource_stream('data', 'ipol_22.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_22.xz"), "rb") as f:
+    ipol_22 = pickle.load(f)
+
+"""ipol_30_file = pkg_resources.resource_stream('data', 'ipol_30.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_30.xz"), "rb") as f:
+    ipol_30 = pickle.load(f)
+
+"""ipol_31_file = pkg_resources.resource_stream('data', 'ipol_31.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_31.xz"), "rb") as f:
+    ipol_31 = pickle.load(f)
+
+"""ipol_32_file = pkg_resources.resource_stream('data', 'ipol_32.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_32.xz"), "rb") as f:
+    ipol_32 = pickle.load(f)
+
+"""ipol_33_file = pkg_resources.resource_stream('data', 'ipol_33.xz')"""
+with lzma.open(os.path.join(os.path.abspath('../latentcor'), "data", "ipol_33.xz"), "rb") as f:
+    ipol_33 = pickle.load(f)
+
 """
+with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "all_ipol.xz"), "rb") as f:
+    ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33 = pickle.load(f)
+"""
+
 class fromZtoX(object):
     """Switch between different copula"""
     def copula_switch(self, copula, z):
@@ -75,12 +117,12 @@ class Kendalltau(object):
         return numpy.array(K_a_lower)
 
 
-class zratios(object):
+class zratio(object):
     """Switch zratios calculation between different data tps"""
     def zratios_switch(self, x, tp):
         method_name = tp
         method = getattr(self, method_name, lambda: 'Invalid type')
-        return method(self = zratios, x = x)
+        return method(self = zratio, x = x)
     """Define zratios for continous variable"""
     def con(self, x):
         out = numpy.full((2, x.shape[1]), numpy.nan)
@@ -104,7 +146,7 @@ class zratios(object):
         tps = numpy.array(tps, dtype = str, ndmin = 1)
         out = numpy.full((2, X.shape[1]), numpy.nan)
         for tp in numpy.unique(tps):
-            out[ : , tps == tp] = zratios.zratios_switch(self = zratios, x = X[ : , tps == tp], tp = tp)
+            out[ : , tps == tp] = zratio.zratios_switch(self = zratio, x = X[ : , tps == tp], tp = tp)
         return out
 
 class r_sol(object):
@@ -330,7 +372,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
         Z = stats.multivariate_normal.rvs(cov = Sigma, size = n)
     X = Z
     for i in range(p):
-        X[ : , i] = internal.fromZtoX.tp_switch(self = internal.fromZtoX, tp = tps[i], copula = copulas[i], z = Z[ : , i], xp = XP[ : , i])
+        X[ : , i] = fromZtoX.tp_switch(self = fromZtoX, tp = tps[i], copula = copulas[i], z = Z[ : , i], xp = XP[ : , i])
     plotX = None
     if (p == 1) & (showplot is True):
         plotX = seaborn.histplot(X)
@@ -352,7 +394,7 @@ def get_tps(X, tru_prop = 0.05):
         
     tru_prop : float
         (Default value = 0.05)
-        A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as `"tru"` (truncated type or zero-inflated) rather than as `"con"` (continuous type). The default value 0.05 means any variable with more than 5\% of zero values among n samples is treated as truncated or zero-inflated.
+        A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as `"tru"` (truncated type or zero-inflated) rather than as `"con"` (continuous type). The default value 0.05 means any variable with more than 5% of zero values among n samples is treated as truncated or zero-inflated.
 
     Returns
     -------
@@ -469,8 +511,8 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     R = numpy.zeros((p, p), dtype = numpy.float32)
     cp = numpy.tril_indices(p, -1); cp_col = len(cp[1])
     """Here I'll deal with NaN value."""
-    K_a_lower = internal.Kendalltau.Kendalltau(self = internal.Kendalltau, X = X)
-    zratios = internal.zratios.batch(self = internal.zratios, X = X, tps = tps)
+    K_a_lower = Kendalltau.Kendalltau(self = Kendalltau, X = X)
+    zratios = zratio.batch(self = zratio, X = X, tps = tps)
     tps_code = numpy.zeros(p, dtype = numpy.int32); tps_code[tps == "bin"] = 1
     tps_code[tps == "tru"] = 2; tps_code[tps == "ter"] = 3
     tps_cp = numpy.zeros((2, cp_col), dtype = numpy.int32)   
@@ -493,9 +535,9 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
             """Here I need to deal with dimension degeneration"""
             zratio1 = zratios_cp_0[ :, comb_select]; zratio2 = zratios_cp_1[ :, comb_select]
             if method == "original":
-                R_lower[comb_select] = internal.r_sol.batch(self = internal.r_sol, K = K, comb = comb, zratio1 = zratio1, zratio2 = zratio2, tol = tol)
+                R_lower[comb_select] = r_sol.batch(self = r_sol, K = K, comb = comb, zratio1 = zratio1, zratio2 = zratio2, tol = tol)
             elif method == "approx":
-                R_lower[comb_select] = internal.r_switch.r_approx(self = internal.r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio  = ratio)
+                R_lower[comb_select] = r_switch.r_approx(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio  = ratio)
     K = numpy.zeros((p, p), dtype = numpy.float32)
     K[cp] = K_a_lower; R[cp] = R_lower
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
