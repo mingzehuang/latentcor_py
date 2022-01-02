@@ -11,7 +11,8 @@ latentcor: Latent Correlation for Mixed Types of Data
    readme
    get_started
    math
-
+   latentcor
+   
 Indices and tables
 ==================
 
