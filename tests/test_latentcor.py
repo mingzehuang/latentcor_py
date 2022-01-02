@@ -3,8 +3,9 @@
 """Tests for `latentcor` package."""
 import os
 import sys
-import pytest
 sys.path.insert(0, os.path.abspath('../latentcor'))
+import pytest
+import numpy
 from latentcor import latentcor, gen_data, get_tps
 
 
@@ -16,14 +17,11 @@ def response():
     """
     # import requests
     # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-X = gen_data(n = 100, rhos = .5, copulas = ["no"], tps = ["con", "bin", "tru", "ter"], XP = None)[0]
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    
-    assert X.shape[1] == 4
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
-
-print(latentcor(X = X, tps = ["con", "bin", "tru", "ter"], method = "original", use_nearPD = False, nu = .1, tol = .001, ratio = .5)[0])
+def test_gen_data():
+    assert gen_data(tps = ["con", "bin", "tru", "ter"], XP = None)[0].shape[0] == 100
+    assert gen_data(n = 50, tps = ["con", "bin", "tru", "ter"], XP = None)[0].shape[0] == 50
+    assert gen_data(tps = ["con", "bin", "tru", "ter"], XP = None)[0].shape[1] == 4
+    assert gen_data(tps = ["bin", "bin"], XP = None)[0].shape[1] == 2
+    assert numpy.array_equiv(numpy.unique(gen_data(tps = ["bin"])[0]), numpy.array([0, 1]))
+    assert numpy.min(gen_data(tps = ["tru"])[0]) == 0
+    assert numpy.array_equiv(numpy.unique(gen_data(tps = ["ter"])[0]), numpy.array([0, 1, 2]))
