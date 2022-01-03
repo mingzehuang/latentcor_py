@@ -11,10 +11,12 @@ click==8.0.3
 colorama==0.4.4
 commonmark==0.9.1
 cycler==0.11.0
+distlib==0.3.4
 dnspython==2.1.0
 docopt==0.6.2
 docutils==0.17.1
 fett==0.3.2
+filelock==3.4.2
 fonttools==4.28.5
 ghp-import==2.0.2
 idna==3.3
@@ -26,7 +28,7 @@ Jinja2==3.0.3
 joblib==1.1.0
 keyring==23.4.0
 kiwisolver==1.3.2
--e git+https://github.com/mingzehuang/latentcor_py@b7247e3b74475887e3b6beece45f67c2f5abc2f5#egg=latentcor
+-e git+https://github.com/mingzehuang/latentcor_py@9b13a85e0724603d53c184bfb47655e76d1fea92#egg=latentcor
 latexcodec==2.0.1
 livereload==2.6.3
 Markdown==3.3.6
@@ -44,7 +46,9 @@ patsy==0.5.2
 pep517==0.12.0
 Pillow==8.4.0
 pkginfo==1.8.2
+platformdirs==2.4.1
 pluggy==1.0.0
+pockets==0.9.1
 py==1.11.0
 pybtex==0.24.0
 pybtex-docutils==1.0.1
@@ -71,6 +75,7 @@ rstcheck==3.3.1
 scipy==1.7.3
 seaborn==0.11.2
 six==1.16.0
+snooty-lextudio==1.11.5
 snowballstemmer==2.2.0
 Sphinx==4.3.2
 sphinx-autobuild==2021.3.14
@@ -92,6 +97,7 @@ typing_extensions==4.0.1
 tzdata==2021.5
 tzlocal==4.1
 urllib3==1.26.7
-watchdog==2.1.6
+virtualenv==20.12.1
+watchdog==1.0.2
 webencodings==0.5.1
 zipp==3.6.0
