@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README &mdash; latentcor 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Get started" href="get_started.html" />
+    <link rel="prev" title="latentcor: Latent Correlation for Mixed Types of Data" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> latentcor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#statement-of-need">Statement of Need</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#credits">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">Mathematical Framework for latentcor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="latentcor.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">latentcor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>README</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/readme.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The Python package <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code>, introduced here, thus represents the first stand-alone R package for computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation.
+Python package <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> utilizes the powerful semi-parametric latent Gaussian copula models to estimate latent correlations between mixed data types <span id="id1">[<a class="reference internal" href="#id6" title="Jianqing Fan, Han Liu, Yang Ning, and Hui Zou. High dimensional semiparametric latent graphical model for mixed data. Journal of the Royal Statistical Society. Series B: Statistical Methodology, 79(2):405–421, 2017.">FLNZ17</a>, <a class="reference internal" href="#id8" title="Xiaoyun Quan, James G Booth, and Martin T Wells. Rank-based approach for estimating correlations in mixed ordinal data. arXiv preprint arXiv:1809.06255, 2018.">QBW18</a>, <a class="reference internal" href="#id4" title="Grace Yoon, Raymond J Carroll, and Irina Gaynanova. Sparse semiparametric canonical correlation analysis for data of mixed types. Biometrika, 107(3):609–625, 2020.">YCG20</a>, <a class="reference internal" href="#id9" title="Grace Yoon, Christian L Müller, and Irina Gaynanova. Fast computation of latent correlations. Journal of Computational and Graphical Statistics, pages 1–8, 2021.">YMullerG21</a>]</span>. The package allows to estimate correlations between any of continuous/binary/ternary/zero-inflated (truncated) variable types. The underlying implementation takes advantage of fast multi-linear interpolation scheme with a clever choice of grid points that give the package a small memory footprint, and allows to use the latent correlations with sub-sampling and bootstrapping.</p>
+<ul class="simple">
+<li><p>Free software: <a class="reference external" href="https://github.com/mingzehuang/latentcor_py/blob/master/LICENSE">GNU General Public License v3</a></p></li>
+<li><p>Documentation: <a class="reference external" href="https://latentcor-py.readthedocs.io">https://latentcor-py.readthedocs.io</a>.</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>The easiest way to install <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> is using <code class="code docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">latentcor</span>
+</pre></div>
+</div>
+</section>
+<section id="statement-of-need">
+<h2>Statement of Need<a class="headerlink" href="#statement-of-need" title="Permalink to this headline"></a></h2>
+<p>No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The Python package <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code>, introduced here, thus represents the first stand-alone Python package for computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint,
+and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation.</p>
+</section>
+<section id="community-guidelines">
+<h2>Community Guidelines<a class="headerlink" href="#community-guidelines" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Contributions and suggestions to the software are always welcome. Please consult our <a class="reference external" href="https://github.com/mingzehuang/latentcor_py/blob/master/CONTRIBUTING.rst">contribution guidelines</a> prior to submitting a pull request.</p></li>
+<li><p>Report issues or problems with the software using github’s <a class="reference external" href="https://github.com/mingzehuang/latentcor_py/issues">issue tracker</a>.</p></li>
+<li><p>Contributors must adhere to the <a class="reference external" href="https://github.com/mingzehuang/latentcor_py/blob/master/CODE_OF_CONDUCT.rst">Code of Conduct</a>.</p></li>
+<li><p>The easiest way to replicate development environment of <cite>latentcor</cite> is using <cite>pip</cite>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements_dev</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline"></a></h2>
+<p>This package was created with <a class="reference external" href="https://github.com/audreyr/cookiecutter">Cookiecutter</a> and the <a class="reference external" href="https://github.com/audreyr/cookiecutter-pypackage">audreyr/cookiecutter-pypackage</a> project template.</p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline"></a></h2>
+<p id="id2"><dl class="citation">
+<dt class="label" id="id5"><span class="brackets">CFF13</span></dt>
+<dd><p>Christophe Croux, Peter Filzmoser, and Heinrich Fritz. Robust sparse principal component analysis. <em>Technometrics</em>, 55(2):202–214, 2013.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">FLNZ17</a></span></dt>
+<dd><p>Jianqing Fan, Han Liu, Yang Ning, and Hui Zou. High dimensional semiparametric latent graphical model for mixed data. <em>Journal of the Royal Statistical Society. Series B: Statistical Methodology</em>, 79(2):405–421, 2017.</p>
+</dd>
+<dt class="label" id="id3"><span class="brackets">HMullerG21</span></dt>
+<dd><p>Mingze Huang, Christian L Müller, and Irina Gaynanova. Latentcor: an r package for estimating latent correlations from mixed data types. <em>Journal of Open Source Software</em>, 6(65):3634, 2021.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets">LLW09</span></dt>
+<dd><p>Han Liu, John Lafferty, and Larry Wasserman. The nonparanormal: semiparametric estimation of high dimensional undirected graphs. <em>Journal of Machine Learning Research</em>, 2009.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id1">QBW18</a></span></dt>
+<dd><p>Xiaoyun Quan, James G Booth, and Martin T Wells. Rank-based approach for estimating correlations in mixed ordinal data. <em>arXiv preprint arXiv:1809.06255</em>, 2018.</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">XZ12</span></dt>
+<dd><p>Lingzhou Xue and Hui Zou. Regularized rank-based estimation of high-dimensional nonparanormal graphical models. <em>The Annals of Statistics</em>, 40(5):2541–2571, 2012. <a class="reference external" href="https://doi.org/10.1214/12-aos1041">doi:10.1214/12-aos1041</a>.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">YCG20</a></span></dt>
+<dd><p>Grace Yoon, Raymond J Carroll, and Irina Gaynanova. Sparse semiparametric canonical correlation analysis for data of mixed types. <em>Biometrika</em>, 107(3):609–625, 2020.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">YGMuller19</span></dt>
+<dd><p>Grace Yoon, Irina Gaynanova, and Christian L Müller. Microbial networks in spring-semi-parametric rank-based correlation and partial correlation estimation for quantitative microbiome data. <em>Frontiers in genetics</em>, 10:516, 2019. <a class="reference external" href="https://doi.org/10.3389/fgene.2019.00516">doi:10.3389/fgene.2019.00516</a>.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id1">YMullerG21</a></span></dt>
+<dd><p>Grace Yoon, Christian L Müller, and Irina Gaynanova. Fast computation of latent correlations. <em>Journal of Computational and Graphical Statistics</em>, pages 1–8, 2021.</p>
+</dd>
+</dl>
+</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="latentcor: Latent Correlation for Mixed Types of Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="get_started.html" class="btn btn-neutral float-right" title="Get started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Mingze Huang, Christian L. Müller, Irina Gaynanova.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

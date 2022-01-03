@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematical Framework for latentcor &mdash; latentcor 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Functions" href="latentcor.html" />
+    <link rel="prev" title="Get started" href="get_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> latentcor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mathematical Framework for latentcor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main-framework">Main Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#appendix">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="latentcor.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">latentcor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Mathematical Framework for latentcor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/math.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mathematical-framework-for-latentcor">
+<h1>Mathematical Framework for latentcor<a class="headerlink" href="#mathematical-framework-for-latentcor" title="Permalink to this headline"></a></h1>
+<section id="main-framework">
+<h2>Main Framework<a class="headerlink" href="#main-framework" title="Permalink to this headline"></a></h2>
+<p><strong>Latent Gaussian Copula Model for Mixed Data</strong></p>
+<p><code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> utilizes the powerful semi-parametric latent Gaussian copula models to estimate latent correlations between mixed data types (continuous/binary/ternary/truncated or zero-inflated). Below we review the definitions for each type.</p>
+<p><em>Definition of continuous model</em></p>
+<p>A random <span class="math notranslate nohighlight">\(X\in\cal{R}^{p}\)</span> satisfies the Gaussian copula (or nonparanormal) model if there exist monotonically increasing <span class="math notranslate nohighlight">\(f=(f_{j})_{j=1}^{p}\)</span> with <span class="math notranslate nohighlight">\(Z_{j}=f_{j}(X_{j})\)</span> satisfying <span class="math notranslate nohighlight">\(Z\sim N_{p}(0, \Sigma)\)</span>, <span class="math notranslate nohighlight">\(\sigma_{jj}=1\)</span>; we denote <span class="math notranslate nohighlight">\(X\sim NPN(0, \Sigma, f)\)</span> <span id="id1">[<a class="reference internal" href="readme.html#id6" title="Jianqing Fan, Han Liu, Yang Ning, and Hui Zou. High dimensional semiparametric latent graphical model for mixed data. Journal of the Royal Statistical Society. Series B: Statistical Methodology, 79(2):405–421, 2017.">FLNZ17</a>]</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="s2">&quot;con&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Definition of binary model</em></p>
+<p>A random <span class="math notranslate nohighlight">\(X\in\cal{R}^{p}\)</span> satisfies the binary latent Gaussian copula model if there exists <span class="math notranslate nohighlight">\(W\sim NPN(0, \Sigma, f)\)</span> such that <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})\)</span>, where <span class="math notranslate nohighlight">\(I(\cdot)\)</span> is the indicator function and <span class="math notranslate nohighlight">\(c_{j}\)</span> are constants <span id="id2">[<a class="reference internal" href="readme.html#id6" title="Jianqing Fan, Han Liu, Yang Ning, and Hui Zou. High dimensional semiparametric latent graphical model for mixed data. Journal of the Royal Statistical Society. Series B: Statistical Methodology, 79(2):405–421, 2017.">FLNZ17</a>]</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="s2">&quot;bin&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Definition of ternary model</em></p>
+<p>A random <span class="math notranslate nohighlight">\(X\in\cal{R}^{p}\)</span> satisfies the ternary latent Gaussian copula model if there exists <span class="math notranslate nohighlight">\(W\sim NPN(0, \Sigma, f)\)</span> such that <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})+I(W_{j}&gt;c'_{j})\)</span>, where <span class="math notranslate nohighlight">\(I(\cdot)\)</span> is the indicator function and <span class="math notranslate nohighlight">\(c_{j}&lt;c'_{j}\)</span> are constants <span id="id3">[<a class="reference internal" href="readme.html#id8" title="Xiaoyun Quan, James G Booth, and Martin T Wells. Rank-based approach for estimating correlations in mixed ordinal data. arXiv preprint arXiv:1809.06255, 2018.">QBW18</a>]</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="s2">&quot;ter&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Definition of truncated or zero-inflated model</em></p>
+<p>A random <span class="math notranslate nohighlight">\(X\in\cal{R}^{p}\)</span> satisfies the truncated latent Gaussian copula model if there exists <span class="math notranslate nohighlight">\(W\sim NPN(0, \Sigma, f)\)</span> such that <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})W_{j}\)</span>, where <span class="math notranslate nohighlight">\(I(\cdot)\)</span> is the indicator function and <span class="math notranslate nohighlight">\(c_{j}\)</span> are constants <span id="id4">[<a class="reference internal" href="readme.html#id4" title="Grace Yoon, Raymond J Carroll, and Irina Gaynanova. Sparse semiparametric canonical correlation analysis for data of mixed types. Biometrika, 107(3):609–625, 2020.">YCG20</a>]</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="s2">&quot;tru&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Mixed latent Gaussian copula model</em></p>
+<p>The mixed latent Gaussian copula model jointly models <span class="math notranslate nohighlight">\(W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)\)</span> such that <span class="math notranslate nohighlight">\(X_{1j}=W_{1j}\)</span>, <span class="math notranslate nohighlight">\(X_{2j}=I(W_{2j}&gt;c_{2j})\)</span>, <span class="math notranslate nohighlight">\(X_{3j}=I(W_{3j}&gt;c_{3j})+I(W_{3j}&gt;c'_{3j})\)</span> and <span class="math notranslate nohighlight">\(X_{4j}=I(W_{4j}&gt;c_{4j})W_{4j}\)</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Moment-based estimation of :math:`Sigma` based on bridge functions</strong></p>
+<p>The estimation of latent correlation matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> is achieved via the <strong>bridge function</strong> <span class="math notranslate nohighlight">\(F$\)</span> which is defined such that <span class="math notranslate nohighlight">\(E(\hat{\tau}_{jk})=F(\sigma_{jk})\)</span>, where <span class="math notranslate nohighlight">\(\sigma_{jk}\)</span> is the latent correlation between variables <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span>, and <span class="math notranslate nohighlight">\(\hat{\tau}_{jk}\)</span> is the corresponding sample Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
+<p><em>Kendall’s :math:`tau` (:math:`tau_{a}`)</em></p>
+<p>Given observed <span class="math notranslate nohighlight">\(\mathbf{x}_{j}, \mathbf{x}_{k}\in\cal{R}^{n}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\tau}_{jk}=\hat{\tau}(\mathbf{x}_{j}, \mathbf{x}_{k})=\frac{2}{n(n-1)}\sum_{1\le i&lt;i'\le n}sign(x_{ij}-x_{i'j})sign(x_{ik}-x_{i'k}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the sample size.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> calculates pairwise Kendall’s <span class="math notranslate nohighlight">\(\widehat \tau\)</span> as part of the estimation process.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Using <span class="math notranslate nohighlight">\(F\)</span> and <span class="math notranslate nohighlight">\(\widehat \tau_{jk}\)</span>, a moment-based estimator is <span class="math notranslate nohighlight">\(\hat{\sigma}_{jk}=F^{-1}(\hat{\tau}_{jk})\)</span> with the corresponding <span class="math notranslate nohighlight">\(\hat{\Sigma}\)</span> being consistent for <span class="math notranslate nohighlight">\(\Sigma\)</span> <span id="id5">[<a class="reference internal" href="readme.html#id6" title="Jianqing Fan, Han Liu, Yang Ning, and Hui Zou. High dimensional semiparametric latent graphical model for mixed data. Journal of the Royal Statistical Society. Series B: Statistical Methodology, 79(2):405–421, 2017.">FLNZ17</a>, <a class="reference internal" href="readme.html#id8" title="Xiaoyun Quan, James G Booth, and Martin T Wells. Rank-based approach for estimating correlations in mixed ordinal data. arXiv preprint arXiv:1809.06255, 2018.">QBW18</a>, <a class="reference internal" href="readme.html#id4" title="Grace Yoon, Raymond J Carroll, and Irina Gaynanova. Sparse semiparametric canonical correlation analysis for data of mixed types. Biometrika, 107(3):609–625, 2020.">YCG20</a>]</span>.</p>
+<p>The explicit form of <em>bridge function</em> <span class="math notranslate nohighlight">\(F\)</span> has been derived for all combinations of continuous(C)/binary(B)/ternary(N)/truncated(T) variable types, and we summarize the corresponding references. Each of this combinations is implemented in <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code>.</p>
+<p>Below we provide an explicit form of <span class="math notranslate nohighlight">\(F\)</span> for each combination.</p>
+<p><em>Theorem (explicit form of bridge function)</em></p>
+<p>Let <span class="math notranslate nohighlight">\(W_{1}\in\cal{R}^{p_{1}}\)</span>, <span class="math notranslate nohighlight">\(W_{2}\in\cal{R}^{p_{2}}\)</span>, <span class="math notranslate nohighlight">\(W_{3}\in\cal{R}^{p_{3}}\)</span>, <span class="math notranslate nohighlight">\(W_{4}\in\cal{R}^{p_{4}}\)</span> be such that <span class="math notranslate nohighlight">\(W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)\)</span> with <span class="math notranslate nohighlight">\(p=p_{1}+p_{2}+p_{3}+p_{4}\)</span>. Let <span class="math notranslate nohighlight">\(X=(X_{1}, X_{2}, X_{3}, X_{4})\in\cal{R}^{p}\)</span> satisfy <span class="math notranslate nohighlight">\(X_{j}=W_{j}$ for $j=1,...,p_{1}\)</span>, <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})\)</span> for <span class="math notranslate nohighlight">\(j=p_{1}+1, ..., p_{1}+p_{2}\)</span>, <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})+I(W_{j}&gt;c'_{j})\)</span> for <span class="math notranslate nohighlight">\(j=p_{1}+p_{2}+1, ..., p_{3}\)</span> and <span class="math notranslate nohighlight">\(X_{j}=I(W_{j}&gt;c_{j})W_{j}\)</span> for <span class="math notranslate nohighlight">\(j=p_{1}+p_{2}+p_{3}+1, ..., p\)</span> with <span class="math notranslate nohighlight">\(\Delta_{j}=f(c_{j})\)</span>. The rank-based estimator of <span class="math notranslate nohighlight">\(\Sigma\)</span> based on the observed <span class="math notranslate nohighlight">\(n\)</span> realizations of <span class="math notranslate nohighlight">\(X\)</span> is the matrix <span class="math notranslate nohighlight">\(\mathbf{\hat{R}}\)</span> with <span class="math notranslate nohighlight">\(\hat{r}_{jj}=1\)</span>, <span class="math notranslate nohighlight">\(\hat{r}_{jk}=\hat{r}_{kj}=F^{-1}(\hat{\tau}_{jk})\)</span> with block structure</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\hat{R}}=\begin{pmatrix}
+F_{CC}^{-1}(\hat{\tau}) &amp; F_{CB}^{-1}(\hat{\tau}) &amp; F_{CN}^{-1}(\hat{\tau}) &amp; F_{CT}^{-1}(\hat{\tau})\\
+F_{BC}^{-1}(\hat{\tau}) &amp; F_{BB}^{-1}(\hat{\tau}) &amp; F_{BN}^{-1}(\hat{\tau}) &amp; F_{BT}^{-1}(\hat{\tau})\\
+F_{NC}^{-1}(\hat{\tau}) &amp; F_{NB}^{-1}(\hat{\tau}) &amp; F_{NN}^{-1}(\hat{\tau}) &amp; F_{NT}^{-1}(\hat{\tau})\\
+F_{TC}^{-1}(\hat{\tau}) &amp; F_{TB}^{-1}(\hat{\tau}) &amp; F_{TN}^{-1}(\hat{\tau}) &amp; F_{TT}^{-1}(\hat{\tau})
+\end{pmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}F(\cdot)=\begin{cases}
+CC: &amp; 2\sin^{-1}(r)/\pi \\
+\\
+BC: &amp; 4\Phi_{2}(\Delta_{j},0;r/\sqrt{2})-2\Phi(\Delta_{j}) \\
+\\
+BB: &amp; 2\{\Phi_{2}(\Delta_{j},\Delta_{k};r)-\Phi(\Delta_{j})\Phi(\Delta_{k})\}  \\
+\\
+NC: &amp; 4\Phi_{2}(\Delta_{j}^{2},0;r/\sqrt{2})-2\Phi(\Delta_{j}^{2})+4\Phi_{3}(\Delta_{j}^{1},\Delta_{j}^{2},0;\Sigma_{3a}(r))-2\Phi(\Delta_{j}^{1})\Phi(\Delta_{j}^{2})\\
+\\
+NB: &amp; 2\Phi_{2}(\Delta_{j}^{2},\Delta_{k},r)\{1-\Phi(\Delta_{j}^{1})\}-2\Phi(\Delta_{j}^{2})\{\Phi(\Delta_{k})-\Phi_{2}(\Delta_{j}^{1},\Delta_{k},r)\} \\
+\\
+NN: &amp; 2\Phi_{2}(\Delta_{j}^{2},\Delta_{k}^{2};r)\Phi_{2}(-\Delta_{j}^{1},-\Delta_{k}^{1};r)-2\{\Phi(\Delta_{j}^{2})-\Phi_{2}(\Delta_{j}^{2},\Delta_{k}^{1};r)\}\{\Phi(\Delta_{k}^{2})\\
+&amp; -\Phi_{2}(\Delta_{j}^{1},\Delta_{k}^{2};r)\} \\
+\\
+TC: &amp; -2\Phi_{2}(-\Delta_{j},0;1/\sqrt{2})+4\Phi_{3}(-\Delta_{j},0,0;\Sigma_{3b}(r)) \\
+\\
+TB: &amp; 2\{1-\Phi(\Delta_{j})\}\Phi(\Delta_{k})-2\Phi_{3}(-\Delta_{j},\Delta_{k},0;\Sigma_{3c}(r))-2\Phi_{3}(-\Delta_{j},\Delta_{k},0;\Sigma_{3d}(r))  \\
+\\
+TN: &amp; -2\Phi(-\Delta_{k}^{1})\Phi(\Delta_{k}^{2}) + 2\Phi_{3}(-\Delta_{k}^{1},\Delta_{k}^{2},\Delta_{j};\Sigma_{3e}(r)) \\
+&amp; +2\Phi_{4}(-\Delta_{k}^{1},\Delta_{k}^{2},-\Delta_{j},0;\Sigma_{4a}(r))+2\Phi_{4}(-\Delta_{k}^{1},\Delta_{k}^{2},-\Delta_{j},0;\Sigma_{4b}(r)) \\
+\\
+TT: &amp; -2\Phi_{4}(-\Delta_{j},-\Delta_{k},0,0;\Sigma_{4c}(r))+2\Phi_{4}(-\Delta_{j},-\Delta_{k},0,0;\Sigma_{4d}(r)) \\
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta_{j}=\Phi^{-1}(\pi_{0j})\)</span>, <span class="math notranslate nohighlight">\(\Delta_{k}=\Phi^{-1}(\pi_{0k})\)</span>, <span class="math notranslate nohighlight">\(\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})\)</span>, <span class="math notranslate nohighlight">\(\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})\)</span>, <span class="math notranslate nohighlight">\(\Delta_{k}^{1}=\Phi^{-1}(\pi_{0k})\)</span>, <span class="math notranslate nohighlight">\(\Delta_{k}^{2}=\Phi^{-1}(\pi_{0k}+\pi_{1k})\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma_{3a}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; -\frac{r}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; 1
+\end{pmatrix}, \;\;\;
+\Sigma_{3b}(r)=
+\begin{pmatrix}
+1 &amp; \frac{1}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}}\\
+\frac{1}{\sqrt{2}} &amp; 1 &amp; r \\
+\frac{r}{\sqrt{2}} &amp; r &amp; 1
+\end{pmatrix},\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma_{3c}(r)=
+\begin{pmatrix}
+1 &amp; -r &amp; \frac{1}{\sqrt{2}} \\
+-r &amp; 1 &amp; -\frac{r}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; 1
+\end{pmatrix}, \;\;\;
+\Sigma_{3d}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; -\frac{1}{\sqrt{2}} \\
+0 &amp; 1 &amp; -\frac{r}{\sqrt{2}} \\
+-\frac{1}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; 1
+\end{pmatrix},\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma_{3e}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; r \\
+0 &amp; r &amp; 1
+\end{pmatrix},  \;\;\;
+\Sigma_{4a}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; -r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; -r &amp; 1 &amp; -\frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix},\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma_{4b}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+r &amp; 0 &amp; 1 &amp; \frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}, \;\;\;
+\Sigma_{4c}(r)=
+\begin{pmatrix}
+1 &amp; 0 &amp; \frac{1}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; -\frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; 1 &amp; -r \\
+-\frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; -r &amp; 1
+\end{pmatrix}\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma_{4d}(r)=
+\begin{pmatrix}
+1 &amp; r &amp; \frac{1}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} \\
+r &amp; 1 &amp; \frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; 1 &amp; r \\
+\frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; r &amp; 1
+\end{pmatrix}.\end{split}\]</div>
+<p><strong>Estimation methods</strong></p>
+<p>Given the form of bridge function <span class="math notranslate nohighlight">\(F\)</span>, obtaining a moment-based estimation <span class="math notranslate nohighlight">\(\widehat \sigma_{jk}\)</span> requires inversion of <span class="math notranslate nohighlight">\(F\)</span>. <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> implements two methods for calculation of the inversion:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;original&quot;</span></code> [Subsection describing original method and relevant parameter <code class="code docutils literal notranslate"><span class="pre">tol</span></code>](original)</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;approx&quot;</span></code> [Subsection describing approximation method and relevant parameter <code class="code docutils literal notranslate"><span class="pre">ratio</span></code>](approx)</p></li>
+</ul>
+<p>Both methods calculate inverse bridge function applied to each element of sample Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> matrix. Because the calculation is performed point-wise (separately for each pair of variables), the resulting point-wise estimator of correlation matrix may not be positive semi-definite. <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> performs projection of the pointwise-estimator to the space of positive semi-definite matrices, and allows for shrinkage towards identity matrix using the parameter <code class="code docutils literal notranslate"><span class="pre">nu</span></code> (see [Subsection describing adjustment of point-wise estimator and relevant parameter <code class="code docutils literal notranslate"><span class="pre">nu</span></code>](shrinkage)).</p>
+<p><em>Original method (:code:`method = “original”`)</em></p>
+<p>Original estimation approach relies on numerical inversion of <span class="math notranslate nohighlight">\(F\)</span> based on solving uni-root optimization problem. Given the calculated <span class="math notranslate nohighlight">\(\widehat \tau_{jk}\)</span> (sample Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> between variables <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span>), the estimate of latent correlation <span class="math notranslate nohighlight">\(\widehat \sigma_{jk}\)</span> is obtained by calling <code class="code docutils literal notranslate"><span class="pre">scipy.optimize.fminbound</span></code> function to solve the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\widehat r_{jk} = \arg\min_{r} \{F(r) - \widehat \tau_{jk}\}^2.\]</div>
+<p>The parameter <code class="code docutils literal notranslate"><span class="pre">tol</span></code> controls the desired accuracy of the minimizer and is passed to <code class="code docutils literal notranslate"><span class="pre">scipy.optimize.fminbound</span></code>, with the default precision of <span class="math notranslate nohighlight">\(1e-8\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">estimate</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;original&quot;</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Algorithm for Original method</em></p>
+<p><em>Input</em>: <span class="math notranslate nohighlight">\(F(r)=F(r, \mathbf{\Delta})\)</span> - bridge function based on the type of variables <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(k\)</span></p>
+<ul class="simple">
+<li><p><em>Step 1</em>. Calculate <span class="math notranslate nohighlight">\(\hat{\tau}_{jk}\)</span> using <span class="math notranslate nohighlight">\((1)\)</span>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">estimate</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><em>Step 2</em>. For binary/truncated variable <span class="math notranslate nohighlight">\(j\)</span>, set <span class="math notranslate nohighlight">\(\hat{\mathbf{\Delta}}_{j}=\hat{\Delta}_{j}=\Phi^{-1}(\pi_{0j})\)</span> with <span class="math notranslate nohighlight">\(\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}\)</span>. For ternary variable <span class="math notranslate nohighlight">\(j\)</span>, set <span class="math notranslate nohighlight">\(\hat{\mathbf{\Delta}}_{j}=(\hat{\Delta}_{j}^{1}, \hat{\Delta}_{j}^{2})\)</span> where <span class="math notranslate nohighlight">\(\hat{\Delta}_{j}^{1}=\Phi^{-1}(\pi_{0j})\)</span> and <span class="math notranslate nohighlight">\(\hat{\Delta}_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})\)</span> with <span class="math notranslate nohighlight">\(\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}\)</span> and <span class="math notranslate nohighlight">\(\pi_{1j}=\sum_{i=1}^{n}\frac{I(x_{ij}=1)}{n}\)</span>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">estimate</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><em>Step 3</em> Compute <span class="math notranslate nohighlight">\(F^{-1}(\hat{\tau}_{jk})\)</span> as <span class="math notranslate nohighlight">\(\hat{r}_{jk}=argmin\{F(r)-\hat{\tau}_{jk}\}^{2}\)</span> solved via <code class="code docutils literal notranslate"><span class="pre">scipy.optimize.fminbound</span></code> function with accuracy <code class="code docutils literal notranslate"><span class="pre">tol</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">estimate</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Approximation method (:code:`method = “approx”`)</em></p>
+<p>A faster approximation method is based on multi-linear interpolation of pre-computed inverse bridge function on a fixed grid of points [&#64;yoon2021fast]. This is possible as the inverse bridge function is an analytic function of at most <span class="math notranslate nohighlight">\(5\)</span> parameters:</p>
+<ul class="simple">
+<li><p>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
+<li><p>Proportion of zeros in the <span class="math notranslate nohighlight">\(1st\)</span> variable</p></li>
+<li><p>(Possibly) proportion of zeros and ones in the <span class="math notranslate nohighlight">\(1st\)</span> variable</p></li>
+<li><p>(Possibly) proportion of zeros in the <span class="math notranslate nohighlight">\(2nd\)</span> variable</p></li>
+<li><p>(Possibly) proportion of zeros and ones in the <span class="math notranslate nohighlight">\(2nd\)</span> variable</p></li>
+</ul>
+<p>In short, d-dimensional multi-linear interpolation uses a weighted average of <span class="math notranslate nohighlight">\(2^{d}\)</span> neighbors to approximate the function values at the points within the d-dimensional cube of the neighbors, and to perform interpolation, <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> takes advantage of the <em>Python</em> package <code class="code docutils literal notranslate"><span class="pre">scipy.interpolate.RegularGridInterpolator</span></code>. This approximation method has been first described in [&#64;yoon2021fast] for continuous/binary/truncated cases. In <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code>, we additionally implement ternary case, and optimize the choice of grid as well as interpolation boundary for faster computations with smaller memory footprint.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">estimate</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;approx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Algorithm for Approximation method</em></p>
+<p><em>Input</em>: Let <span class="math notranslate nohighlight">\(\check{g}=h(g)\)</span>, pre-computed values <span class="math notranslate nohighlight">\(F^{-1}(h^{-1}(\check{g}))\)</span> on a fixed grid <span class="math notranslate nohighlight">\(\check{g}\in\check{\cal{G}}\)</span> based on the type of variables <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span>. For binary/continuous case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j})\)</span>; for binary/binary case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}, \check{\Delta}_{k})\)</span>; for truncated/continuous case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j})\)</span>; for truncated/truncated case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}, \check{\Delta}_{k})\)</span>; for ternary/continuous case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}^{1}, \check{\Delta}_{j}^{2})\)</span>; for ternary/binary case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}^{1}, \check{\Delta}_{j}^{2}, \check{\Delta}_{k})\)</span>; for ternary/truncated case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}^{1}, \check{\Delta}_{j}^{2}, \check{\Delta}_{k})\)</span>; for ternay/ternary case, <span class="math notranslate nohighlight">\(\check{g}=(\check{\tau}_{jk}, \check{\Delta}_{j}^{1}, \check{\Delta}_{j}^{2}, \check{\Delta}_{k}^{1}, \check{\Delta}_{k}^{2})\)</span>.</p>
+<ul class="simple">
+<li><p><em>Step 1</em> and <em>Step 2</em> same as Original method.</p></li>
+<li><p><em>Step 3</em>. If <span class="math notranslate nohighlight">\(|\hat{\tau}_{jk}|\le \mbox{ratio}\times \bar{\tau}_{jk}(\cdot)\)</span>, apply interpolation; otherwise apply Original method.</p></li>
+</ul>
+<p>To avoid interpolation in areas with high approximation errors close to the boundary, we use hybrid scheme in <em>Step 3</em>. The parameter <code class="code docutils literal notranslate"><span class="pre">ratio</span></code> controls the size of the region where the interpolation is performed (<code class="code docutils literal notranslate"><span class="pre">ratio</span> <span class="pre">=</span> <span class="pre">0</span></code> means no interpolation, <code class="code docutils literal notranslate"><span class="pre">ratio</span> <span class="pre">=</span> <span class="pre">1</span></code> means interpolation is always performed). For the derivation of approximate bound for BC, BB, TC, TB, TT cases see &#64;yoon2021fast. The derivation of approximate bound for NC, NB, NN, NT case is in the Appendix.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{\tau}_{jk}(\cdot)=
+\begin{cases}
+2\pi_{0j}(1-\pi_{0j})  &amp;   for \; BC \; case\\
+2\min(\pi_{0j},\pi_{0k})\{1-\max(\pi_{0j}, \pi_{0k})\}  &amp;   for \; BB \; case\\
+2\{\pi_{0j}(1-\pi_{0j})+\pi_{1j}(1-\pi_{0j}-\pi_{1j})\}  &amp;   for \; NC \; case\\
+2\min(\pi_{0j}(1-\pi_{0j})+\pi_{1j}(1-\pi_{0j}-\pi_{1j}),\pi_{0k}(1-\pi_{0k}))  &amp;   for \; NB \; case\\
+2\min(\pi_{0j}(1-\pi_{0j})+\pi_{1j}(1-\pi_{0j}-\pi_{1j}), \\
+\;\;\;\;\;\;\;\;\;\;\pi_{0k}(1-\pi_{0k})+\pi_{1k}(1-\pi_{0k}-\pi_{1k}))  &amp;   for \; NN \; case\\
+1-(\pi_{0j})^{2}  &amp;   for \; TC \; case\\
+2\max(\pi_{0k},1-\pi_{0k})\{1-\max(\pi_{0k},1-\pi_{0k},\pi_{0j})\}  &amp;   for \; TB \; case\\
+1-\{\max(\pi_{0j},\pi_{0k},\pi_{1k},1-\pi_{0k}-\pi_{1k})\}^{2}  &amp;   for \; TN \; case\\
+1-\{\max(\pi_{0j},\pi_{0k})\}^{2}  &amp;   for \; TT \; case\\
+\end{cases}\end{split}\]</div>
+<p>By default, <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> uses <code class="code docutils literal notranslate"><span class="pre">ratio</span> <span class="pre">=</span> <span class="pre">0.9</span></code> as this value was recommended in &#64;yoon2021fast having a good balance of accuracy and computational speed. This value, however, can be modified by the user</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;approx&quot;</span><span class="p">,</span> <span class="n">ratio</span> <span class="o">=</span> <span class="mf">0.99</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;approx&quot;</span><span class="p">,</span> <span class="n">ratio</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;original&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The lower is the <code class="code docutils literal notranslate"><span class="pre">ratio</span></code>, the closer is the approximation method to original method (with <code class="code docutils literal notranslate"><span class="pre">ratio</span> <span class="pre">=</span> <span class="pre">0</span></code> being equivalent to <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;original&quot;</span></code>), but also the higher is the cost of computations.</p>
+<p><em>Rescaled Grid for Interpolation</em></p>
+<p>Since <span class="math notranslate nohighlight">\(|\hat{\tau}|\le \bar{\tau}\)</span>, the grid does not need to cover the whole domain <span class="math notranslate nohighlight">\(\tau\in[-1, 1]\)</span>. To optimize memory associated with storing the grid, we rescale <span class="math notranslate nohighlight">\(\tau\)</span> as follows:
+<span class="math notranslate nohighlight">\(\check{\tau}_{jk}=\tau_{jk}/\bar{\tau}_{jk}\in[-1, 1]\)</span>, where <span class="math notranslate nohighlight">\(\bar{\tau}_{jk}\)</span> is as defined above.</p>
+<p>In addition, for ternary variable <span class="math notranslate nohighlight">\(j\)</span>, it always holds that <span class="math notranslate nohighlight">\(\Delta_{j}^{2}&gt;\Delta_{j}^{1}\)</span> since <span class="math notranslate nohighlight">\(\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})\)</span> and <span class="math notranslate nohighlight">\(\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})\)</span>. Thus, the grid should not cover the the area corresponding to <span class="math notranslate nohighlight">\(\Delta_{j}^{2}\ge\Delta_{j}^{1}\)</span>. We thus rescale as follows: <span class="math notranslate nohighlight">\(\check{\Delta}_{j}^{1}=\Delta_{j}^{1}/\Delta_{j}^{2}\in[0, 1]\)</span>; <span class="math notranslate nohighlight">\(\check{\Delta}_{j}^{2}=\Delta_{j}^{2}\in[0, 1]\)</span>.</p>
+<p><em>Speed Comparison</em></p>
+<p>To illustrate the speed improvement by <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;approx&quot;</span></code>, we plot the run time scaling behavior of <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;approx&quot;</span></code> and <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;original&quot;</span></code> (setting <code class="code docutils literal notranslate"><span class="pre">tps</span></code> for <code class="code docutils literal notranslate"><span class="pre">gen_data</span></code> by replicating <code class="code docutils literal notranslate"><span class="pre">[&quot;con&quot;,</span> <span class="pre">&quot;bin&quot;,</span> <span class="pre">&quot;ter&quot;,</span> <span class="pre">&quot;tru&quot;]</span></code> multiple times) with increasing dimensions <code class="code docutils literal notranslate"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">[20,</span> <span class="pre">40,</span> <span class="pre">100,</span> <span class="pre">200,</span> <span class="pre">400]</span></code> at sample size <code class="code docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">100</span></code> using simulation data. Figure below summarizes the observed scaling in a log-log plot. For both methods we observe the expected <code class="code docutils literal notranslate"><span class="pre">O(p^2)</span></code> scaling behavior with dimension p, i.e., a linear scaling in the log-log plot. However, <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;approx&quot;</span></code> is at least one order of magnitude faster than <code class="code docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;original&quot;</span></code> independent of the dimension of the problem.</p>
+<p><strong>Adjustment of pointwise-estimator for positive-definiteness</strong></p>
+<p>Since the estimation is performed point-wise, the resulting matrix of estimated latent correlations is not guaranteed to be positive semi-definite. For example, this could be expected when the sample size is small (and so the estimation error for each pairwise correlation is larger).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> automatically corrects the pointwise estimator to be positive definite by making two adjustments. First, if <code class="code docutils literal notranslate"><span class="pre">Rpointwise</span></code> has smallest eigenvalue less than zero, the <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> projects this matrix to the nearest positive semi-definite matrix. The user is notified of this adjustment through the message (supressed in previous code chunk), e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Second, <code class="code docutils literal notranslate"><span class="pre">latentcor</span></code> shrinks the adjusted matrix of correlations towards identity matrix using the parameter <code class="code docutils literal notranslate"><span class="pre">\nu</span></code> with default value of 0.001 (<code class="code docutils literal notranslate"><span class="pre">nu</span> <span class="pre">=</span> <span class="pre">0.001</span></code>), so that the resulting <code class="code docutils literal notranslate"><span class="pre">latentcor[0]</span></code> is strictly positive definite with the minimal eigenvalue being greater or equal to <code class="code docutils literal notranslate"><span class="pre">\nu</span></code>. That is</p>
+<div class="math notranslate nohighlight">
+\[R = (1 - \nu) \widetilde R + \nu I,\]</div>
+<p>where <code class="code docutils literal notranslate"><span class="pre">\widetilde</span> <span class="pre">R</span></code> is the nearest positive semi-definite matrix to <code class="code docutils literal notranslate"><span class="pre">Rpointwise</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>As a result, <code class="code docutils literal notranslate"><span class="pre">R</span></code> and <code class="code docutils literal notranslate"><span class="pre">Rpointwise</span></code> could be quite different when sample size <code class="code docutils literal notranslate"><span class="pre">n</span></code> is small. When <code class="code docutils literal notranslate"><span class="pre">n</span></code> is large and <code class="code docutils literal notranslate"><span class="pre">p</span></code> is moderate, the difference is typically driven by parameter <code class="code docutils literal notranslate"><span class="pre">nu</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">gen_data</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">latentcor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;con&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;ter&quot;</span><span class="p">,</span> <span class="s2">&quot;tru&quot;</span><span class="p">],</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="appendix">
+<h2>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline"></a></h2>
+<p><em>Derivation of bridge function :math:`F` for ternary/truncated case</em></p>
+<p>Without loss of generality, let <span class="math notranslate nohighlight">\(j=1\)</span> and <span class="math notranslate nohighlight">\(k=2\)</span>. By the definition of Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\tau_{12}=E(\hat{\tau}_{12})=E[\frac{2}{n(n-1)}\sum_{1\leq i\leq i' \leq n} sign\{(X_{i1}-X_{i'1})(X_{i2}-X_{i'2})\}].\]</div>
+<p>Since <span class="math notranslate nohighlight">\(X_{1}\)</span> is ternary,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;sign(X_{1}-X_{1}') \nonumber\\ =&amp;[I(U_{1}&gt;C_{11},U_{1}'\leq C_{11})+I(U_{1}&gt;C_{12},U_{1}'\leq C_{12})-I(U_{1}&gt;C_{12},U_{1}'\leq C_{11})] \nonumber\\
+&amp;-[I(U_{1}\leq C_{11}, U_{1}'&gt;C_{11})+I(U_{1}\leq C_{12}, U_{1}'&gt;C_{12})-I(U_{1}\leq C_{11}, U_{1}'&gt;C_{12})] \nonumber\\
+=&amp;[I(U_{1}&gt;C_{11})-I(U_{1}&gt;C_{11},U_{1}'&gt;C_{11})+I(U_{1}&gt;C_{12})-I(U_{1}&gt;C_{12},U_{1}'&gt;C_{12}) \nonumber\\
+&amp;-I(U_{1}&gt;C_{12})+I(U_{1}&gt;C_{12},U_{1}'&gt;C_{11})] \nonumber\\
+&amp;-[I(U_{1}'&gt;C_{11})-I(U_{1}&gt;C_{11},U_{1}'&gt;C_{11})+I(U_{1}'&gt;C_{12})-I(U_{1}&gt;C_{12},U_{1}'&gt;C_{12}) \nonumber\\
+&amp;-I(U_{1}'&gt;C_{12})+I(U_{1}&gt;C_{11},U_{1}'&gt;C_{12})] \nonumber\\
+=&amp;I(U_{1}&gt;C_{11})+I(U_{1}&gt;C_{12},U_{1}'&gt;C_{11})-I(U_{1}'&gt;C_{11})-I(U_{1}&gt;C_{11},U_{1}'&gt;C_{12}) \nonumber\\
+=&amp;I(U_{1}&gt;C_{11},U_{1}'\leq C_{12})-I(U_{1}'&gt;C_{11},U_{1}\leq C_{12}).
+\end{align}\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(X_{2}\)</span> is truncated, <span class="math notranslate nohighlight">\(C_{1}&gt;0\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+sign(X_{2}-X_{2}')=&amp;-I(X_{2}=0,X_{2}'&gt;0)+I(X_{2}&gt;0,X_{2}'=0) \nonumber\\
+&amp;+I(X_{2}&gt;0,X_{2}'&gt;0)sign(X_{2}-X_{2}') \nonumber\\
+=&amp;-I(X_{2}=0)+I(X_{2}'=0)+I(X_{2}&gt;0,X_{2}'&gt;0)sign(X_{2}-X_{2}').
+\end{align}\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(f\)</span> is monotonically increasing, <span class="math notranslate nohighlight">\(sign(X_{2}-X_{2}')=sign(Z_{2}-Z_{2}')\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\tau_{12}=&amp;E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12}) sign(X_{2}-X_{2}')] \nonumber\\ &amp;-E[I(U_{1}'&gt;C_{11},U_{1}\leq C_{12}) sign(X_{2}-X_{2}')] \nonumber\\
+=&amp;-E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12}) I(X_{2}=0)] \nonumber\\
+&amp;+E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12}) I(X_{2}'=0)] \nonumber\\
+&amp;+E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12})I(X_{2}&gt;0,X_{2}'&gt;0)sign(Z_{2}-Z_{2}')] \nonumber\\
+&amp;+E[I(U_{1}'&gt;C_{11},U_{1}\leq C_{12}) I(X_{2}=0)] \nonumber\\
+&amp;-E[I(U_{1}'&gt;C_{11},U_{1}\leq C_{12}) I(X_{2}'=0)] \nonumber\\
+&amp;-E[I(U_{1}'&gt;C_{11},U_{1}\leq C_{12})I(X_{2}&gt;0,X_{2}'&gt;0)sign(Z_{2}-Z_{2}')]  \nonumber\\
+=&amp;-2E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12}) I(X_{2}=0)] \nonumber\\
+&amp;+2E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12}) I(X_{2}'=0)] \nonumber\\
+&amp;+E[I(U_{1}&gt;C_{11},U_{1}'\leq C_{12})I(X_{2}&gt;0,X_{2}'&gt;0)sign(Z_{2}-Z_{2}')] \nonumber\\
+&amp;-E[I(U_{1}'&gt;C_{11},U_{1}\leq C_{12})I(X_{2}&gt;0,X_{2}'&gt;0)sign(Z_{2}-Z_{2}')].
+\end{align}\end{split}\]</div>
+<p>From the definition of <span class="math notranslate nohighlight">\(U\)</span>, let <span class="math notranslate nohighlight">\(Z_{j}=f_{j}(U_{j})\)</span> and <span class="math notranslate nohighlight">\(\Delta_{j}=f_{j}(C_{j})\)</span> for <span class="math notranslate nohighlight">\(j=1,2\)</span>. Using <span class="math notranslate nohighlight">\(sign(x)=2I(x&gt;0)-1\)</span>, we obtain</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\tau_{12}=&amp;-2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq \Delta_{12},Z_{2}\leq \Delta_{2})]+2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq \Delta_{12},Z_{2}'\leq \Delta_{2})] \nonumber\\
+&amp;+2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq \Delta_{12})I(Z_{2}&gt;\Delta_{2},Z_{2}'&gt;\Delta_{2},Z_{2}-Z_{2}'&gt;0)] \nonumber\\
+&amp;-2E[I(Z_{1}'&gt;\Delta_{11},Z_{1}\leq \Delta_{12})I(Z_{2}&gt;\Delta_{2},Z_{2}'&gt;\Delta_{2},Z_{2}-Z_{2}'&gt;0)] \nonumber\\
+=&amp;-2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq \Delta_{12}, Z_{2}\leq \Delta_{2})]+2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq \Delta_{12}, Z_{2}'\leq \Delta_{2})] \nonumber\\
+&amp;+2E[I(Z_{1}&gt;\Delta_{11},Z_{1}'\leq\Delta_{12},Z_{2}'&gt;\Delta_{2},Z_{2}&gt;Z_{2}')] \nonumber\\
+&amp;-2E[I(Z_{1}'&gt;\Delta_{11},Z_{1}\leq\Delta_{12},Z_{2}'&gt;\Delta_{2},Z_{2}&gt;Z_{2}')].
+\end{align}\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, -Z{1}\}\)</span>, <span class="math notranslate nohighlight">\(\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, Z{1}'\}\)</span> and <span class="math notranslate nohighlight">\(\{\frac{Z_{2}'-Z_{2}}{\sqrt{2}}, -Z{2}'\}\)</span> are standard bivariate normally distributed variables with correlation <span class="math notranslate nohighlight">\(-\frac{1}{\sqrt{2}}$, $r/\sqrt{2}\)</span> and <span class="math notranslate nohighlight">\(-\frac{r}{\sqrt{2}}\)</span>, respectively, by the definition of <span class="math notranslate nohighlight">\(\Phi_3(\cdot,\cdot, \cdot;\cdot)\)</span> and <span class="math notranslate nohighlight">\(\Phi_4(\cdot,\cdot, \cdot,\cdot;\cdot)\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+F_{NT}(r;\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k})= &amp; -2\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; -r \\
+0 &amp; 1 &amp; 0 \\
+-r &amp; 0 &amp; 1
+\end{pmatrix} \right\} \nonumber\\
+&amp;+2\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; r \\
+0 &amp; r &amp; 1
+\end{pmatrix}\right\}\nonumber \\
+&amp; +2\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; -r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; -r &amp; 1 &amp; -\frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\} \nonumber\\
+&amp;-2\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; r &amp; -\frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; 0 &amp; -\frac{r}{\sqrt{2}} \\
+r &amp; 0 &amp; 1 &amp; -\frac{1}{\sqrt{2}} \\
+-\frac{r}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\}.
+\end{align}\end{split}\]</div>
+<p>Using the facts that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; r &amp; -\frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; 0 &amp; -\frac{r}{\sqrt{2}} \\
+r &amp; 0 &amp; 1 &amp; -\frac{1}{\sqrt{2}} \\
+-\frac{r}{\sqrt{2}} &amp; -\frac{r}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\} \nonumber\\ &amp;+\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+r &amp; 0 &amp; 1 &amp; \frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\} \nonumber\\
+=&amp;\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; r \\
+0 &amp; r &amp; 1
+\end{pmatrix}\right\}
+\end{align}\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; r \\
+0 &amp; r &amp; 1
+\end{pmatrix}\right\}+\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; -r \\
+0 &amp; 1 &amp; 0 \\
+-r &amp; 0 &amp; 1
+\end{pmatrix} \right\} \nonumber\\
+=&amp;\Phi_{2}(-\Delta_{j}^{1},\Delta_{j}^{2};0)
+=\Phi(-\Delta_{j}^{1})\Phi(\Delta_{j}^{2}).
+\end{align}\end{split}\]</div>
+<p>So that,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+F_{NT}(r;\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k})= &amp; -2\Phi(-\Delta_{j}^{1})\Phi(\Delta_{j}^{2}) \nonumber\\
+&amp;+2\Phi_{3}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},\Delta_{k};\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; r \\
+0 &amp; r &amp; 1
+\end{pmatrix}\right\}\nonumber \\
+&amp; +2\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; -r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; -r &amp; 1 &amp; -\frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\} \nonumber\\
+&amp;+2\Phi_{4}\left\{-\Delta_{j}^{1},\Delta_{j}^{2},-\Delta_{k},0;\begin{pmatrix}
+1 &amp; 0 &amp; r &amp; \frac{r}{\sqrt{2}} \\
+0 &amp; 1 &amp; 0 &amp; \frac{r}{\sqrt{2}} \\
+r &amp; 0 &amp; 1 &amp; \frac{1}{\sqrt{2}} \\
+\frac{r}{\sqrt{2}} &amp; \frac{r}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} &amp; 1
+\end{pmatrix}\right\}.
+\end{align}\end{split}\]</div>
+<p>It is easy to get the bridge function for truncated/ternary case by switching <span class="math notranslate nohighlight">\(j\)</span> and <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p><em>Derivation of approximate bound for the ternary/continuous case</em></p>
+<p>Let <span class="math notranslate nohighlight">\(n_{0x}=\sum_{i=1}^{n_x}I(x_{i}=0)\)</span>, <span class="math notranslate nohighlight">\(n_{2x}=\sum_{i=1}^{n_x}I(x_{i}=2)\)</span>, <span class="math notranslate nohighlight">\(\pi_{0x}=\frac{n_{0x}}{n_{x}}\)</span> and <span class="math notranslate nohighlight">\(\pi_{2x}=\frac{n_{2x}}{n_{x}}\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+|\tau(\mathbf{x})|\leq &amp; \frac{n_{0x}(n-n_{0x})+n_{2x}(n-n_{0x}-n_{2x})}{\begin{pmatrix} n \\ 2 \end{pmatrix}} \nonumber\\
+= &amp; 2\{\frac{n_{0x}}{n-1}-(\frac{n_{0x}}{n})(\frac{n_{0x}}{n-1})+\frac{n_{2x}}{n-1}-(\frac{n_{2x}}{n})(\frac{n_{0x}}{n-1})-(\frac{n_{2x}}{n})(\frac{n_{2x}}{n-1})\} \nonumber\\
+\approx &amp; 2\{\frac{n_{0x}}{n}-(\frac{n_{0x}}{n})^2+\frac{n_{2x}}{n}-(\frac{n_{2x}}{n})(\frac{n_{0x}}{n})-(\frac{n_{2x}}{n})^2\} \nonumber\\
+= &amp; 2\{\pi_{0x}(1-\pi_{0x})+\pi_{2x}(1-\pi_{0x}-\pi_{2x})\}
+\end{align}\end{split}\]</div>
+<p>For ternary/binary and ternary/ternary cases, we combine the two individual bounds.</p>
+<p><em>Derivation of approximate bound for the ternary/truncated case</em></p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{R}^{n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathcal{R}^{n}\)</span> be the observed <span class="math notranslate nohighlight">\(n\)</span> realizations of ternary and truncated variables, respectively. Let <span class="math notranslate nohighlight">\(n_{0x}=\sum_{i=0}^{n}I(x_{i}=0)\)</span>, <span class="math notranslate nohighlight">\(\pi_{0x}=\frac{n_{0x}}{n}\)</span>, <span class="math notranslate nohighlight">\(n_{1x}=\sum_{i=0}^{n}I(x_{i}=1)\)</span>, <span class="math notranslate nohighlight">\(\pi_{1x}=\frac{n_{1x}}{n}\)</span>, <span class="math notranslate nohighlight">\(n_{2x}=\sum_{i=0}^{n}I(x_{i}=2)\)</span>, <span class="math notranslate nohighlight">\(\pi_{2x}=\frac{n_{2x}}{n}\)</span>,
+<span class="math notranslate nohighlight">\(n_{0y}=\sum_{i=0}^{n}I(y_{i}=0)\)</span>, <span class="math notranslate nohighlight">\(\pi_{0y}=\frac{n_{0y}}{n}\)</span>, <span class="math notranslate nohighlight">\(n_{0x0y}=\sum_{i=0}^{n}I(x_{i}=0 \;\&amp; \; y_{i}=0)\)</span>, <span class="math notranslate nohighlight">\(n_{1x0y}=\sum_{i=0}^{n}I(x_{i}=1 \;\&amp; \; y_{i}=0)\)</span> and
+<span class="math notranslate nohighlight">\(n_{2x0y}=\sum_{i=0}^{n}I(x_{i}=2 \;\&amp; \; y_{i}=0)\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+|\tau(\mathbf{x}, \mathbf{y})|\leq &amp;
+\frac{\begin{pmatrix}n \\ 2\end{pmatrix}-\begin{pmatrix}n_{0x} \\ 2\end{pmatrix}-\begin{pmatrix}n_{1x} \\ 2\end{pmatrix}-\begin{pmatrix} n_{2x} \\ 2 \end{pmatrix}-\begin{pmatrix}n_{0y} \\ 2\end{pmatrix}+\begin{pmatrix}n_{0x0y} \\ 2 \end{pmatrix}+\begin{pmatrix}n_{1x0y} \\ 2\end{pmatrix}+\begin{pmatrix}n_{2x0y} \\ 2\end{pmatrix}}{\begin{pmatrix}n \\ 2\end{pmatrix}} \nonumber
+\end{align}\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(n_{0x0y}\leq\min(n_{0x},n_{0y})\)</span>, <span class="math notranslate nohighlight">\(n_{1x0y}\leq\min(n_{1x},n_{0y})\)</span> and <span class="math notranslate nohighlight">\(n_{2x0y}\leq\min(n_{2x},n_{0y})\)</span> we obtain</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+|\tau(\mathbf{x}, \mathbf{y})|\leq &amp;
+\frac{\begin{pmatrix}n \\ 2\end{pmatrix}-\begin{pmatrix}n_{0x} \\ 2\end{pmatrix}-\begin{pmatrix}n_{1x} \\ 2\end{pmatrix}-\begin{pmatrix} n_{2x} \\ 2 \end{pmatrix}-\begin{pmatrix}n_{0y} \\ 2\end{pmatrix}}{\begin{pmatrix}n \\ 2\end{pmatrix}} \nonumber\\
+&amp; +  \frac{\begin{pmatrix}\min(n_{0x},n_{0y}) \\ 2 \end{pmatrix}+\begin{pmatrix}\min(n_{1x},n_{0y}) \\ 2\end{pmatrix}+\begin{pmatrix}\min(n_{2x},n_{0y}) \\ 2\end{pmatrix}}{\begin{pmatrix}n \\ 2\end{pmatrix}} \nonumber\\
+\leq &amp; \frac{\begin{pmatrix}n \\ 2\end{pmatrix}-\begin{pmatrix}\max(n_{0x},n_{1x},n_{2x},n_{0y}) \\ 2\end{pmatrix}}{\begin{pmatrix}n \\ 2\end{pmatrix}} \nonumber\\
+\leq &amp; 1-\frac{\max(n_{0x},n_{1x},n_{2x},n_{0y})(\max(n_{0x},n_{1x},n_{2x},n_{0y})-1)}{n(n-1)} \nonumber\\
+\approx &amp; 1-(\frac{\max(n_{0x},n_{1x},n_{2x},n_{0y})}{n})^{2} \nonumber\\
+=&amp; 1-\{\max(\pi_{0x},\pi_{1x},\pi_{2x},\pi_{0y})\}^{2} \nonumber\\
+=&amp; 1-\{\max(\pi_{0x},(1-\pi_{0x}-\pi_{2x}),\pi_{2x},\pi_{0y})\}^{2}
+\end{align}\end{split}\]</div>
+<p>It is easy to get the approximate bound for truncated/ternary case by switching <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_started.html" class="btn btn-neutral float-left" title="Get started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="latentcor.html" class="btn btn-neutral float-right" title="Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Mingze Huang, Christian L. Müller, Irina Gaynanova.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
