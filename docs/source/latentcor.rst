@@ -5,7 +5,7 @@ gen_data
 --------
 
 .. automodule:: latentcor.gen_data
-   :members:
+   :members: gen_data
    :undoc-members:
    :show-inheritance:
 
@@ -13,7 +13,7 @@ get_tps
 -------
 
 .. automodule:: latentcor.get_tps
-   :members:
+   :members: get_tps
    :undoc-members:
    :show-inheritance:
 
@@ -21,6 +21,6 @@ latentcor
 ---------
 
 .. automodule:: latentcor.latentcor
-   :members:
+   :members: latentcor
    :undoc-members:
    :show-inheritance:
