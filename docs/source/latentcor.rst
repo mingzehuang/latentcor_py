@@ -9,4 +9,12 @@ latentcor
    :undoc-members:
    :show-inheritance:
 
+interpolants
+------------
+
+.. automodule:: data
+   :members: 
+   :undoc-members: 
+   :show-inheritance:
+
 
