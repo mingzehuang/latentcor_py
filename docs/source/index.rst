@@ -12,8 +12,4 @@ latentcor: Latent Correlation for Mixed Types of Data
    get_started
    math
    latentcor
-   
-Indices and tables
-==================
 
-* :ref:`genindex`
