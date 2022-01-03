@@ -4,7 +4,7 @@ Functions
 latentcor.gen_data
 -------------------
 
-.. automodule:: latentcor.gen_data
+.. autoclass:: latentcor.gen_data
    :members: 
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ latentcor.gen_data
 latentcor.get_tps
 -------------------
 
-.. automodule:: latentcor.get_tps
+.. autoclass:: latentcor.get_tps
    :members: 
    :undoc-members:
    :show-inheritance:
@@ -20,7 +20,7 @@ latentcor.get_tps
 latentcor.latentcor
 -------------------
 
-.. automodule:: latentcor.latentcor
+.. autoclass:: latentcor.latentcor
    :members: 
    :undoc-members:
    :show-inheritance:
