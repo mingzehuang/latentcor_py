@@ -57,27 +57,34 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `latentcor` for local development.
+Ready to contribute? Here's how to set up `latentcor_py` for local development.
 
-1. Fork the `latentcor` repo on GitHub.
-2. Clone your fork locally::
+* Fork the `latentcor_py` repo on GitHub.
 
+* Clone your fork locally.
+
+.. code::
     $ git clone git@github.com:your_name_here/latentcor.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+* Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development.
+
+.. code::
 
     $ mkvirtualenv latentcor
     $ cd latentcor/
     $ python setup.py develop
 
-4. Create a branch for local development::
+* Create a branch for local development.
+
+.. code::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
-   Now you can make your changes locally.
+Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
-   tests, including testing other Python versions with tox::
+* When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox.
+
+.. code::
 
     $ flake8 latentcor tests
     $ python setup.py test or pytest
@@ -85,33 +92,37 @@ Ready to contribute? Here's how to set up `latentcor` for local development.
 
    To get flake8 and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+* Commit your changes and push your branch to GitHub.
+
+.. code::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+* Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
+* The pull request should include tests.
+* If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.9 and 3.10, and for PyPy. Check
+* The pull request should work for Python 3.9 and 3.10, and for PyPy. Check
    https://travis-ci.com/mingzehuang/latentcor/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
 Tips
 ----
 
-To run a subset of tests::
+To run a subset of tests.
 
-$ pytest tests.test_latentcor
+.. code::
+
+    $ pytest tests.test_latentcor
 
 
 Deploying
@@ -119,10 +130,12 @@ Deploying
 
 A reminder for the maintainers on how to deploy.
 Make sure all your changes are committed (including an entry in HISTORY.rst).
-Then run::
+Then run
 
-$ bump2version patch # possible: major / minor / patch
-$ git push
-$ git push --tags
+.. code::
+
+    $ bump2version patch # possible: major / minor / patch
+    $ git push
+    $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.
