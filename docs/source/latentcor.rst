@@ -1,20 +1,29 @@
-Functions
-=========
+latentcor package
+=================
 
-latentcor
----------
+Subpackages
+-----------
 
-.. automodule:: latentcor
+.. toctree::
+   :maxdepth: 4
+
+   latentcor.data
+
+Submodules
+----------
+
+latentcor.latentcor module
+--------------------------
+
+.. automodule:: latentcor.latentcor
    :members: gen_data, get_tps, latentcor
    :undoc-members:
    :show-inheritance:
 
-interpolants
-------------
+Module contents
+---------------
 
-.. automodule:: data
-   :members: 
-   :undoc-members: 
+.. automodule:: latentcor
+   :members:
+   :undoc-members:
    :show-inheritance:
-
-
