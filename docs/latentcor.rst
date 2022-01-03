@@ -4,7 +4,7 @@ latentcor package
 gen_data
 --------
 
-.. autoexception:: latentcor.gen_data
+.. automodule:: latentcor.gen_data
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ gen_data
 get_tps
 -------
 
-.. autoexception:: latentcor.get_tps
+.. automodule:: latentcor.get_tps
    :members:
    :undoc-members:
    :show-inheritance:
@@ -20,7 +20,7 @@ get_tps
 latentcor
 ---------
 
-.. autoexception:: latentcor.latentcor
+.. automodule:: latentcor.latentcor
    :members:
    :undoc-members:
    :show-inheritance:
