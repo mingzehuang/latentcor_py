@@ -12,23 +12,23 @@ from joblib import Parallel, delayed
 import lzma
 import pickle
 import pkg_resources
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_10.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_10.xz'), "rb") as f:
     ipol_10 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_11.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_11.xz'), "rb") as f:
     ipol_11 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_20.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_20.xz'), "rb") as f:
     ipol_20 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_21.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_21.xz'), "rb") as f:
     ipol_21 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_22.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_22.xz'), "rb") as f:
     ipol_22 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_30.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_30.xz'), "rb") as f:
     ipol_30 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_31.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_31.xz'), "rb") as f:
     ipol_31 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_32.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_32.xz'), "rb") as f:
     ipol_32 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('data', 'ipol_33.xz'), "rb") as f:
+with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_33.xz'), "rb") as f:
     ipol_33 = pickle.load(f)
 
 """
