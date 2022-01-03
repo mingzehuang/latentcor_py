@@ -1,6 +1,6 @@
 alabaster==0.7.12
 atomicwrites==1.4.0
-attrs==21.2.0
+attrs==21.4.0
 Babel==2.9.1
 bleach==4.1.0
 build==0.7.0
@@ -28,7 +28,7 @@ Jinja2==3.0.3
 joblib==1.1.0
 keyring==23.4.0
 kiwisolver==1.3.2
--e git+https://github.com/mingzehuang/latentcor_py@9b13a85e0724603d53c184bfb47655e76d1fea92#egg=latentcor
+-e git+https://github.com/mingzehuang/latentcor_py@c9f4f93e5a590f0794b549bd794a21d3d5405db3#egg=latentcor
 latexcodec==2.0.1
 livereload==2.6.3
 Markdown==3.3.6
