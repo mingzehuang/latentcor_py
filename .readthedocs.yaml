@@ -35,5 +35,5 @@ python:
       extra_requirements:
         - docs
     - method: setuptools
-      path: ..
+      path: latentcor_py
 
