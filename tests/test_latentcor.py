@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../latentcor'))
 import pytest
 import numpy
-from latentcor.latentcor import latentcor, gen_data, get_tps
+from latentcor import latentcor, gen_data, get_tps
 
 
 @pytest.fixture
