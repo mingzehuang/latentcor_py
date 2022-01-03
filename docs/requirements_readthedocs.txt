@@ -1,4 +1,7 @@
+joblib==1.1.0
 numpy==1.21.5
+scipy==1.7.3
+seaborn==0.11.2
 Sphinx==4.3.2
 sphinx-autobuild==2021.3.14
 sphinx-rtd-theme==1.0.0
@@ -9,3 +12,5 @@ sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
+statsmodels==0.13.1
+matplotlib==3.5.1
