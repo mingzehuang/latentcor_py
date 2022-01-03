@@ -9,8 +9,27 @@ from matplotlib import pyplot
 from scipy import stats
 from scipy.optimize import fminbound
 from joblib import Parallel, delayed
-from __init__ import ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33
-
+import lzma
+import pickle
+import pkg_resources
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_10.xz'), "rb") as f:
+    ipol_10 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_11.xz'), "rb") as f:
+    ipol_11 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_20.xz'), "rb") as f:
+    ipol_20 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_21.xz'), "rb") as f:
+    ipol_21 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_22.xz'), "rb") as f:
+    ipol_22 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_30.xz'), "rb") as f:
+    ipol_30 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_31.xz'), "rb") as f:
+    ipol_31 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_32.xz'), "rb") as f:
+    ipol_32 = pickle.load(f)
+with lzma.open(pkg_resources.resource_stream('data', 'ipol_33.xz'), "rb") as f:
+    ipol_33 = pickle.load(f)
 
 """
 with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "all_ipol.xz"), "rb") as f:
