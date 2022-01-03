@@ -7,7 +7,7 @@
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
-sys.path.append(os.path.abspath('../../latentcor/'))
+sys.path.append(os.path.abspath('../latentcor/'))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
