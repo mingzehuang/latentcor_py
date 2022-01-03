@@ -1,27 +1,11 @@
 latentcor package
 =================
 
-gen_data
---------
-
-.. automodule:: latentcor.gen_data
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-get_tps
--------
-
-.. automodule:: latentcor.get_tps
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 latentcor
 ---------
 
 .. automodule:: latentcor.latentcor
-   :members:
+   :members: gen_data, get_tps, latentcor
    :undoc-members:
    :show-inheritance:
 
