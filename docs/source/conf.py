@@ -25,7 +25,7 @@ author = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
 
-
+autodoc_mock_imports = ["__init__"]
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

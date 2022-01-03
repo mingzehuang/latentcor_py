@@ -6,10 +6,7 @@
 version: 2
 
 submodules:
-  include: 
-    - latentcor
-    - data
-  recursive: true
+  include: all
 
 # Set the version of Python and other tools you might need
 build:
