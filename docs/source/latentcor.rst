@@ -4,7 +4,7 @@ Functions
 gen_data
 --------
 
-.. autoexception:: latentcor.gen_data
+.. autoexception:: latentcor.latentcor.gen_data
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ gen_data
 get_tps
 -------
 
-.. autoexception:: latentcor.get_tps
+.. autoexception:: latentcor.latentcor.get_tps
    :members:
    :undoc-members:
    :show-inheritance:
