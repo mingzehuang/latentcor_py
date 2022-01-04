@@ -12,7 +12,7 @@ For approximation method of computation, see Yoon G., Müller C.L. and Gaynanova
 """
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../latentcor'))
+sys.path.insert(0, os.path.abspath('.'))
 
 """from latentcor import latentcor, gen_data, get_tps"""
 
