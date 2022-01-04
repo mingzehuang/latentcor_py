@@ -1,7 +1,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../latentcor'))
+sys.path.insert(0, os.path.abspath('.'))
 import numpy
 from statsmodels.stats.correlation_tools import corr_nearest
 import seaborn
@@ -12,29 +12,9 @@ from joblib import Parallel, delayed
 import lzma
 import pickle
 import pkg_resources
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_10.xz'), "rb") as f:
-    ipol_10 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_11.xz'), "rb") as f:
-    ipol_11 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_20.xz'), "rb") as f:
-    ipol_20 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_21.xz'), "rb") as f:
-    ipol_21 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_22.xz'), "rb") as f:
-    ipol_22 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_30.xz'), "rb") as f:
-    ipol_30 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_31.xz'), "rb") as f:
-    ipol_31 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_32.xz'), "rb") as f:
-    ipol_32 = pickle.load(f)
-with lzma.open(pkg_resources.resource_stream('latentcor', 'ipol_33.xz'), "rb") as f:
-    ipol_33 = pickle.load(f)
 
-"""
-with lzma.open(os.path.join(os.getcwd(), "latentcor", "data", "all_ipol.xz"), "rb") as f:
+with lzma.open(pkg_resources.resource_stream("latentcor", "all_ipol.xz"), "rb") as f:
     ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33 = pickle.load(f)
-"""
 
 class fromZtoX(object):
     """Switch between different copula"""
