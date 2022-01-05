@@ -7,10 +7,10 @@ latentcor: Latent Correlation for Mixed Types of Data
         :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/v/latentcor.svg
-        :target: https://pypi.python.org/pypi/latentcor
+        :target: https://pypi.python.org/pypi/latentcor_py
 
-.. image:: https://img.shields.io/travis/mingzehuang/latentcor.svg
-        :target: https://travis-ci.com/mingzehuang/latentcor_py
+.. image:: https://app.travis-ci.com/mingzehuang/latentcor_py.svg?branch=master
+    :target: https://app.travis-ci.com/mingzehuang/latentcor_py
 
 
 Introduction
