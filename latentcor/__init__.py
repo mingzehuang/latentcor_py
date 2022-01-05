@@ -14,7 +14,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
 
-"""from latentcor import latentcor, gen_data, get_tps"""
+from latentcor.latentcor import gen_data, get_tps, latentcor
 
 __author__ = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 __email__ = 'mingzehuang@gmail.com, christian.mueller@stat.uni-muenchen.de, irinag@stat.tamu.edu'
