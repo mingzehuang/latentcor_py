@@ -33,21 +33,65 @@ def test_latentcor():
     X = latentcor.gen_data(tps = ["con", "con"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["con", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["con", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
     X = latentcor.gen_data(tps = ["bin", "bin"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["bin", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["bin", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
-    X = latentcor.gen_data(tps = ["bin", "bin"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["bin", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["bin", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
     X = latentcor.gen_data(tps = ["tru", "tru"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["tru", "tru"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["tru", "tru"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
-    X = latentcor.gen_data(tps = ["tru", "tru"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["tru", "tru"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["tru", "tru"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
     X = latentcor.gen_data(tps = ["ter", "ter"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "ter"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["ter", "ter"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
-    X = latentcor.gen_data(tps = ["ter", "ter"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "ter"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
                latentcor.latentcor(X = X, tps = ["ter", "ter"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["con", "bin"])[0]
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["con", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["con", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["tru", "bin"])[0]
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["tru", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["tru", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["tru", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["tru", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["tru", "con"])[0]
+    """
+    assert numpy.array_equiv(numpy.around(latentcor.latentcor(X = X, tps = ["tru", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0], 5),
+               numpy.around(latentcor.latentcor(X = X, tps = ["tru", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T, 5))
+    """
+    assert numpy.array_equiv(numpy.around(latentcor.latentcor(X = X, tps = ["tru", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0], 5),
+               numpy.around(latentcor.latentcor(X = X, tps = ["tru", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T, 5))
+    X = latentcor.gen_data(tps = ["ter", "con"])[0]
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "con"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["ter", "bin"])[0]
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "bin"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "bin"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["ter", "tru"])[0]
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "tru"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "tru"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    """
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "tru"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "tru"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    X = latentcor.gen_data(tps = ["ter", "ter"])[0]
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "ter"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "ter"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["ter", "ter"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["ter", "ter"], nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
+              
+
