@@ -12,7 +12,9 @@ latentcor: Latent Correlation for Mixed Types of Data
 .. image:: https://app.travis-ci.com/mingzehuang/latentcor_py.svg?branch=master
     :target: https://app.travis-ci.com/mingzehuang/latentcor_py
 
-
+.. image:: https://codecov.io/gh/mingzehuang/latentcor_py/branch/master/graph/badge.svg?token=SF57J6ZW0B
+    :target: https://codecov.io/gh/mingzehuang/latentcor_py
+    
 Introduction
 ------------
 
