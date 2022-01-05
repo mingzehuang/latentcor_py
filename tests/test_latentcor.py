@@ -25,3 +25,11 @@ def test_gen_data():
     assert numpy.array_equiv(numpy.unique(latentcor.gen_data(tps = ["bin"])[0]), numpy.array([0, 1]))
     assert numpy.min(latentcor.gen_data(tps = ["tru"])[0]) == 0
     assert numpy.array_equiv(numpy.unique(latentcor.gen_data(tps = ["ter"])[0]), numpy.array([0, 1, 2]))
+    
+def test_get_tps():
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data()[0]), numpy.array(["ter", "con"]))
+
+def test_latentcor():
+    X = latentcor.gen_data(tps = ["con", "con"])[0]
+    assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
+               latentcor.latentcor(X = X, tps = ["con", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0].T)
