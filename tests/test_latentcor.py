@@ -28,7 +28,17 @@ def test_gen_data():
     
 def test_get_tps():
     assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data()[0]), numpy.array(["ter", "con"]))
-
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["con", "con"])[0]), numpy.array(["con", "con"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["con", "bin"])[0]), numpy.array(["con", "bin"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["con", "tru"])[0]), numpy.array(["con", "tru"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["con", "ter"])[0]), numpy.array(["con", "ter"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["bin", "bin"])[0]), numpy.array(["bin", "bin"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["bin", "tru"])[0]), numpy.array(["bin", "tru"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["bin", "ter"])[0]), numpy.array(["bin", "ter"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["tru", "tru"])[0]), numpy.array(["tru", "tru"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["tru", "ter"])[0]), numpy.array(["tru", "ter"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["ter", "ter"])[0]), numpy.array(["ter", "ter"]))
+    assert numpy.array_equiv(latentcor.get_tps(latentcor.gen_data(tps = ["con", "bin", "tru", "ter"])[0]), numpy.array(["con", "bin", "tru", "ter"]))
 def test_latentcor():
     X = latentcor.gen_data(tps = ["con", "con"])[0]
     assert numpy.array_equiv(latentcor.latentcor(X = X, tps = ["con", "con"], method = "original", nu = 0.5, tol = 1e-8, ratio = .9, showplot = False)[0],
