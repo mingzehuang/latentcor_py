@@ -5,9 +5,14 @@ python:
   - 3.9
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -e .
+install: 
+  - pip install -e .
+  - pip install pytest-cov codecov
 
 # Command to run tests, e.g. python setup.py test
-script: pytest tests
+script:
+  - pytest tests --cov=latentcor tests
+after_success:
+  - codecov
 
 
