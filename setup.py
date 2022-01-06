@@ -39,6 +39,6 @@ setup(
     packages=find_packages(include=['latentcor', 'latentcor.*']),
     test_suite='tests',
     url='https://github.com/mingzehuang/latentcor_py',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
 )
