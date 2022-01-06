@@ -263,15 +263,15 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
         (Default value = 100)
         A positive integer indicating the sample size.
 
-    tps : {list, numpy.array}
+    tps : list or numpy.array
         (Default value = ["ter", "con"])
         A vector indicating the type of each variable, could be `"con"` (continuous), `"bin"` (binary), `"tru"` (truncated) or `"ter"` (ternary). The number of variables is determined based on the length of types, that is `p = length(tps)`. The default value `["ter", "con"]` which creates two variables: the first one is ternary, the second one is continuous.
         
-    rhos : {list, numpy.array}
+    rhos : list or numpy.array
         (Default value = .5)
         A vector with lower-triangular elements of desired correlation matrix, e.g. `rhos = [.3, .5, .7]` means the correlation matrix is `[[1, .3, .5], [.3, 1, .7], [.5, .7, 1]]`. If only a scalar is supplied (`len(rhos) = 1`), then equi-correlation matrix is assumed with all pairwise correlations being equal to `rhos`. The default value is 0.5 which means correlations between any two variables are 0.5.
 
-    copulas : {list, numpy.array}
+    copulas : list or numpy.array
         (Default value = "no")
         A vector indicating the copula transformation f for each of the p variables, e.g. U = f(Z). Each element can take value `"no"` (f is identity), `"expo"` (exponential transformation) or `"cube"` (cubic transformation). If the vector has length 1, then the same transformation is applied to all p variables. The default value is `"no"`: no copula transformation for any of the variables.
 
@@ -403,10 +403,10 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     Parameters
     ----------
 
-    X : {numpy.array, pandas.DataFrame}
+    X : numpy.array or pandas.DataFrame
         A numeric matrix or numeric data frame (n by p), where n is number of samples, and p is number of variables. Missing values (NA) are allowed, in which case the estimation is based on pairwise complete observations.
     
-    tps : {list, numpy.array}
+    tps : list or numpy.array
         (Default value = None)
         A vector of length p indicating the type of each of the p variables in `X`. Each element must be one of "con" (continuous), "bin" (binary), "ter" (ternary) or "tru" (truncated). If the vector has length 1, then all p variables are assumed to be of the same type that is supplied. The variable types are determined automatically using function `get_tps`. As automatic determination of variable types takes extra time, it is recommended to supply the types explicitly when they are known in advance.
     
@@ -443,7 +443,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     Rpointwise : numpy.array
         (p x p) Point-wise estimates of latent correlations for `X`. This matrix is not guaranteed to be semi-positive definite. This is the original estimated latent correlation matrix without adjustment for positive-definiteness.
 
-    plot : {object, None}
+    plot : seaborn object or None
         Heatmap plot of latent correlation matrix `R`, None if `showplot = FALSE`.
 
     K : numpy.array
