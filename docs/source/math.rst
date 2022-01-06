@@ -11,6 +11,10 @@ Main Framework
 latent correlations between mixed data types (continuous/binary/ternary/truncated or zero-inflated).
 Below we review the definitions for each type.
 
+.. jupyter-execute::
+
+    from latentcor import gen_data, latentcor
+
 *Definition of continuous model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the Gaussian copula (or nonparanormal) model if there
@@ -18,81 +22,49 @@ exist monotonically increasing :math:`f=(f_{j})_{j=1}^{p}` with :math:`Z_{j}=f_{
 :math:`Z\sim N_{p}(0, \Sigma)`, :math:`\sigma_{jj}=1`; we denote :math:`X\sim NPN(0, \Sigma, f)`
 :cite:p:`fan2017high`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> gen_data(n = 6, tps = "con")[0]
-    array([[ 0.39638592],
-           [-0.3926094 ],
-           [-1.11274   ],
-           [ 1.92034928],
-           [-1.81139832],
-           [ 0.65553333]])
-
+    print(gen_data(n = 6, tps = "con")[0])
 
 *Definition of binary model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the binary latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}` are constants :cite:p:`fan2017high`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> gen_data(n = 6, tps = "bin")[0]     
-    array([[1.],
-           [1.],
-           [0.],
-           [0.],
-           [1.],
-           [0.]])
-
+    print(gen_data(n = 6, tps = "bin")[0])
 
 *Definition of ternary model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the ternary latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})+I(W_{j}>c'_{j})`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}<c'_{j}` are constants :cite:p:`quan2018rank`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> gen_data(n = 6, tps = "ter")[0]  
-    array([[1.],
-           [2.],
-           [0.],
-           [0.],
-           [1.],
-           [1.]])
+    print(gen_data(n = 6, tps = "ter")[0])
 
 *Definition of truncated or zero-inflated model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the truncated latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})W_{j}`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}` are constants :cite:p:`yoon2020sparse`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> gen_data(n = 6, tps = "tru")[0]     
-    array([[0.81056225],
-           [1.02530611],
-           [0.        ],
-           [0.17744017],
-           [0.        ],
-           [0.        ]])
+    print(gen_data(n = 6, tps = "tru")[0])
 
 *Mixed latent Gaussian copula model*
 
 The mixed latent Gaussian copula model jointly models :math:`W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)` such that :math:`X_{1j}=W_{1j}`, :math:`X_{2j}=I(W_{2j}>c_{2j})`, :math:`X_{3j}=I(W_{3j}>c_{3j})+I(W_{3j}>c'_{3j})` and :math:`X_{4j}=I(W_{4j}>c_{4j})W_{4j}`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
-    >>> print(X[ :6, : ])
-    [[-0.28686695  1.          0.          0.32018176]
-     [-1.44883802  0.          1.          0.        ]
-     [-0.9170464   0.          1.          0.        ]
-     [-0.62163167  1.          1.          0.57377273]
-     [ 0.17954829  1.          2.          0.27134714]
-     [ 1.45789924  0.          2.          1.62845087]]
+    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
+    print(X[ :6, : ])
 
-**Moment-based estimation of :math:`\Sigma` based on bridge functions**
+**Moment-based estimation of latent correlation matrix based on bridge functions**
 
-The estimation of latent correlation matrix :math:`\Sigma` is achieved via the **bridge function** :math:`F$` which is defined such that :math:`E(\hat{\tau}_{jk})=F(\sigma_{jk})`, where :math:`\sigma_{jk}` is the latent correlation between variables :math:`j` and :math:`k`, and :math:`\hat{\tau}_{jk}` is the corresponding sample Kendall's :math:`\tau`. 
+The estimation of latent correlation matrix :math:`\Sigma` is achieved via the **bridge function** :math:`F` which is defined such that :math:`E(\hat{\tau}_{jk})=F(\sigma_{jk})`, where :math:`\sigma_{jk}` is the latent correlation between variables :math:`j` and :math:`k`, and :math:`\hat{\tau}_{jk}` is the corresponding sample Kendall's :math:`\tau`. 
 
 
-*Kendall's :math:`\tau` (:math:`\tau_{a}`)*
+*Kendall's correlation*
 
 Given observed :math:`\mathbf{x}_{j}, \mathbf{x}_{k}\in\cal{R}^{n}`,
 
@@ -104,14 +76,10 @@ where :math:`n` is the sample size.
 
 :code:`latentcor` calculates pairwise Kendall's :math:`\widehat \tau` as part of the estimation process.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> K = latentcor(X, tps = ["con", "bin", "ter", "tru"])[3]
-    >>> print(K)
-    [[1.         0.21737374 0.29818183 0.26565656]
-     [0.21737374 1.         0.1979798  0.17212121]
-     [0.29818183 0.1979798  1.         0.25919193]
-     [0.26565656 0.17212121 0.25919193 1.        ]]
+    K = latentcor(X, tps = ["con", "bin", "ter", "tru"])[3]
+    print(K)
 
 Using :math:`F` and :math:`\widehat \tau_{jk}`, a moment-based estimator is :math:`\hat{\sigma}_{jk}=F^{-1}(\hat{\tau}_{jk})` with the corresponding :math:`\hat{\Sigma}` being consistent for :math:`\Sigma` :cite:p:`fan2017high,quan2018rank,yoon2020sparse`. 
 
@@ -123,7 +91,16 @@ Below we provide an explicit form of :math:`F` for each combination.
 
 *Theorem (explicit form of bridge function)*
 
-Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{3}\in\cal{R}^{p_{3}}`, :math:`W_{4}\in\cal{R}^{p_{4}}` be such that :math:`W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)` with :math:`p=p_{1}+p_{2}+p_{3}+p_{4}`. Let :math:`X=(X_{1}, X_{2}, X_{3}, X_{4})\in\cal{R}^{p}` satisfy :math:`X_{j}=W_{j}$ for $j=1,...,p_{1}`, :math:`X_{j}=I(W_{j}>c_{j})` for :math:`j=p_{1}+1, ..., p_{1}+p_{2}`, :math:`X_{j}=I(W_{j}>c_{j})+I(W_{j}>c'_{j})` for :math:`j=p_{1}+p_{2}+1, ..., p_{3}` and :math:`X_{j}=I(W_{j}>c_{j})W_{j}` for :math:`j=p_{1}+p_{2}+p_{3}+1, ..., p` with :math:`\Delta_{j}=f(c_{j})`. The rank-based estimator of :math:`\Sigma` based on the observed :math:`n` realizations of :math:`X` is the matrix :math:`\mathbf{\hat{R}}` with :math:`\hat{r}_{jj}=1`, :math:`\hat{r}_{jk}=\hat{r}_{kj}=F^{-1}(\hat{\tau}_{jk})` with block structure
+Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{3}\in\cal{R}^{p_{3}}`,
+:math:`W_{4}\in\cal{R}^{p_{4}}` be such that :math:`W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)`
+with :math:`p=p_{1}+p_{2}+p_{3}+p_{4}`. Let :math:`X=(X_{1}, X_{2}, X_{3}, X_{4})\in\cal{R}^{p}`
+satisfy :math:`X_{j}=W_{j}` for `j=1,...,p_{1}`, :math:`X_{j}=I(W_{j}>c_{j})`
+for :math:`j=p_{1}+1, ..., p_{1}+p_{2}`, :math:`X_{j}=I(W_{j}>c_{j})+I(W_{j}>c'_{j})`
+for :math:`j=p_{1}+p_{2}+1, ..., p_{3}` and :math:`X_{j}=I(W_{j}>c_{j})W_{j}`
+for :math:`j=p_{1}+p_{2}+p_{3}+1, ..., p` with :math:`\Delta_{j}=f(c_{j})`.
+The rank-based estimator of :math:`\Sigma` based on the observed :math:`n` realizations of
+:math:`X` is the matrix :math:`\mathbf{\hat{R}}` with :math:`\hat{r}_{jj}=1`,
+:math:`\hat{r}_{jk}=\hat{r}_{kj}=F^{-1}(\hat{\tau}_{jk})` with block structure
 
 .. math::
 
@@ -161,7 +138,9 @@ Let :math:`W_{1}\in\cal{R}^{p_{1}}`, :math:`W_{2}\in\cal{R}^{p_{2}}`, :math:`W_{
     \end{cases}
 
 
-where :math:`\Delta_{j}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{k}=\Phi^{-1}(\pi_{0k})`, :math:`\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})`, :math:`\Delta_{k}^{1}=\Phi^{-1}(\pi_{0k})`, :math:`\Delta_{k}^{2}=\Phi^{-1}(\pi_{0k}+\pi_{1k})`,
+where :math:`\Delta_{j}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{k}=\Phi^{-1}(\pi_{0k})`,
+:math:`\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})`, :math:`\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})`,
+:math:`\Delta_{k}^{1}=\Phi^{-1}(\pi_{0k})`, :math:`\Delta_{k}^{2}=\Phi^{-1}(\pi_{0k}+\pi_{1k})`,
 
 .. math::
 
@@ -241,26 +220,38 @@ and
 
 **Estimation methods**
 
-Given the form of bridge function :math:`F`, obtaining a moment-based estimation :math:`\widehat \sigma_{jk}` requires inversion of :math:`F`. :code:`latentcor` implements two methods for calculation of the inversion:
+Given the form of bridge function :math:`F`, obtaining a moment-based estimation
+:math:`\widehat \sigma_{jk}` requires inversion of :math:`F`. :code:`latentcor`
+implements two methods for calculation of the inversion:
 
 * :code:`method = "original"`
 * :code:`method = "approx"`
   
-Both methods calculate inverse bridge function applied to each element of sample Kendall's :math:`\tau` matrix. Because the calculation is performed point-wise (separately for each pair of variables), the resulting point-wise estimator of correlation matrix may not be positive semi-definite. :code:`latentcor` performs projection of the pointwise-estimator to the space of positive semi-definite matrices, and allows for shrinkage towards identity matrix using the parameter :code:`nu` (see [Subsection describing adjustment of point-wise estimator and relevant parameter :code:`nu`](shrinkage)).
+Both methods calculate inverse bridge function applied to each element of sample Kendall's
+:math:`\tau` matrix. Because the calculation is performed point-wise (separately for each pair
+of variables), the resulting point-wise estimator of correlation matrix may not be positive
+semi-definite. :code:`latentcor` performs projection of the pointwise-estimator to the space of
+positive semi-definite matrices, and allows for shrinkage towards identity matrix using the parameter
+:code:`nu`.
 
-*Original method (:code:`method = "original"`)*
+*Original method (`method = "original"`)*
 
-Original estimation approach relies on numerical inversion of :math:`F` based on solving uni-root optimization problem. Given the calculated :math:`\widehat \tau_{jk}` (sample Kendall's :math:`\tau` between variables :math:`j` and :math:`k`), the estimate of latent correlation :math:`\widehat \sigma_{jk}` is obtained by calling :code:`scipy.optimize.fminbound` function to solve the following optimization problem:
+Original estimation approach relies on numerical inversion of :math:`F` based on solving
+uni-root optimization problem. Given the calculated :math:`\widehat \tau_{jk}`
+(sample Kendall's :math:`\tau` between variables :math:`j` and :math:`k`), the estimate of
+latent correlation :math:`\widehat \sigma_{jk}` is obtained by calling :code:`scipy.optimize.fminbound`
+function to solve the following optimization problem:
 
 .. math::
 
     \widehat r_{jk} = \arg\min_{r} \{F(r) - \widehat \tau_{jk}\}^2.
 
-The parameter :code:`tol` controls the desired accuracy of the minimizer and is passed to :code:`scipy.optimize.fminbound`, with the default precision of :math:`1e-8`
+The parameter :code:`tol` controls the desired accuracy of the minimizer and is passed to
+:code:`scipy.optimize.fminbound`, with the default precision of :math:`10^{-8}`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> estimate_original = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original", tol = 1e-8)
+    estimate_original = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original", tol = 1e-8)
 
 *Algorithm for Original method*
 
@@ -268,36 +259,27 @@ The parameter :code:`tol` controls the desired accuracy of the minimizer and is 
 
 * *Step 1*. Calculate :math:`\hat{\tau}_{jk}` using :math:`(1)`.
 
-.. code-block::
+.. jupyter-execute::
    
-    >>> print(estimate_original[3])
-    [[1.         0.21737374 0.29818183 0.26565656]
-     [0.21737374 1.         0.1979798  0.17212121]
-     [0.29818183 0.1979798  1.         0.25919193]
-     [0.26565656 0.17212121 0.25919193 1.        ]]
+    print(estimate_original[3])
    
 * *Step 2*. For binary/truncated variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=\hat{\Delta}_{j}=\Phi^{-1}(\pi_{0j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}`. For ternary variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=(\hat{\Delta}_{j}^{1}, \hat{\Delta}_{j}^{2})` where :math:`\hat{\Delta}_{j}^{1}=\Phi^{-1}(\pi_{0j})` and :math:`\hat{\Delta}_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}` and :math:`\pi_{1j}=\sum_{i=1}^{n}\frac{I(x_{ij}=1)}{n}`.
 
-.. code-block::
+.. jupyter-execute::
    
-    >>> print(estimate_original[4])
-    [[nan 0.5 0.3 0.5]
-    [nan nan 0.8 nan]]
+    print(estimate_original[4])
 
 * *Step 3* Compute :math:`F^{-1}(\hat{\tau}_{jk})` as :math:`\hat{r}_{jk}=argmin\{F(r)-\hat{\tau}_{jk}\}^{2}` solved via :code:`scipy.optimize.fminbound` function with accuracy :code:`tol`.
 
-.. code::
+.. jupyter-execute::
 
-    >>> print(estimate_original[1])
-    [[1.         0.47355455 0.53764457 0.47350827]
-     [0.47355455 1.         0.5108396  0.43737176]
-     [0.53764457 0.5108396  1.         0.54667753]
-     [0.47350827 0.43737176 0.54667753 1.        ]]  
+    print(estimate_original[1])
 
+*Approximation method (`method = "approx"`)*
 
-*Approximation method (:code:`method = "approx"`)*
-
-A faster approximation method is based on multi-linear interpolation of pre-computed inverse bridge function on a fixed grid of points [@yoon2021fast]. This is possible as the inverse bridge function is an analytic function of at most :math:`5` parameters:
+A faster approximation method is based on multi-linear interpolation of pre-computed inverse
+bridge function on a fixed grid of points :cite:p:`yoon2021fast`. This is possible as the inverse
+bridge function is an analytic function of at most :math:`5` parameters:
 
 * Kendall's :math:`\tau`
 * Proportion of zeros in the :math:`1st` variable 
@@ -306,16 +288,18 @@ A faster approximation method is based on multi-linear interpolation of pre-comp
 * (Possibly) proportion of zeros and ones in the :math:`2nd` variable
 
 
-In short, d-dimensional multi-linear interpolation uses a weighted average of :math:`2^{d}` neighbors to approximate the function values at the points within the d-dimensional cube of the neighbors, and to perform interpolation, :code:`latentcor` takes advantage of the *Python* package :code:`scipy.interpolate.RegularGridInterpolator`. This approximation method has been first described in [@yoon2021fast] for continuous/binary/truncated cases. In :code:`latentcor`, we additionally implement ternary case, and optimize the choice of grid as well as interpolation boundary for faster computations with smaller memory footprint.
+In short, d-dimensional multi-linear interpolation uses a weighted average of :math:`2^{d}`
+neighbors to approximate the function values at the points within the d-dimensional cube of
+the neighbors, and to perform interpolation, :code:`latentcor` takes advantage of the :code:`Python`
+package :code:`scipy.interpolate.RegularGridInterpolator`. This approximation method has been first
+described in :cite:p:`yoon2021fast` for continuous/binary/truncated cases. In :code:`latentcor`,
+we additionally implement ternary case, and optimize the choice of grid as well as interpolation
+boundary for faster computations with smaller memory footprint.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> estimate_approx = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
-    >>> print(estimate_approx[1])
-    [[1.         0.47339904 0.5374965  0.47302574]
-     [0.47339904 1.         0.5188888  0.4373398 ]
-     [0.5374965  0.5188888  1.         0.54651654]
-     [0.47302574 0.4373398  0.54651654 1.        ]]
+    estimate_approx = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
+    print(estimate_approx[1])
 
 *Algorithm for Approximation method*
 
@@ -345,55 +329,82 @@ To avoid interpolation in areas with high approximation errors close to the boun
 
 By default, :code:`latentcor` uses :code:`ratio = 0.9` as this value was recommended in @yoon2021fast having a good balance of accuracy and computational speed. This value, however, can be modified by the user
 
-.. code::
+.. jupyter-execute::
 
-    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0])
-    [1.         0.47292564 0.53695901 0.47255271]
-     [0.47292564 1.         0.51836988 0.43690247]
-     [0.53695901 0.51836988 1.         0.54597002]
-     [0.47255271 0.43690247 0.54597002 1.        ]]
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0])
 
-    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0])
-    [[1.         0.473081   0.53710692 0.47255271]
-     [0.473081   1.         0.51836988 0.43690247]
-     [0.53710692 0.51836988 1.         0.54597002]
-     [0.47255271 0.43690247 0.54597002 1.        ]]
-
-    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0])
-    [[0.001      0.42376785 0.46788828 0.47769514]
-     [0.42376785 0.001      0.34819072 0.48333653]
-     [0.46788828 0.34819072 0.001      0.38260788]
-     [0.47769514 0.48333653 0.38260788 0.001     ]]
-
-The lower is the :code:`ratio`, the closer is the approximation method to original method (with :code:`ratio = 0` being equivalent to :code:`method = "original"`), but also the higher is the cost of computations.
+The lower is the :code:`ratio`, the closer is the approximation method to original method
+(with :code:`ratio = 0` being equivalent to :code:`method = "original"`), but also the higher
+is the cost of computations.
 
 *Rescaled Grid for Interpolation*
 
-Since :math:`|\hat{\tau}|\le \bar{\tau}`, the grid does not need to cover the whole domain :math:`\tau\in[-1, 1]`. To optimize memory associated with storing the grid, we rescale :math:`\tau` as follows:
-:math:`\check{\tau}_{jk}=\tau_{jk}/\bar{\tau}_{jk}\in[-1, 1]`, where :math:`\bar{\tau}_{jk}` is as defined above. 
+Since :math:`|\hat{\tau}|\le \bar{\tau}`, the grid does not need to cover the whole domain
+:math:`\tau\in[-1, 1]`. To optimize memory associated with storing the grid, we rescale :math:`\tau`
+as follows:
 
-In addition, for ternary variable :math:`j`, it always holds that :math:`\Delta_{j}^{2}>\Delta_{j}^{1}` since :math:`\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})` and :math:`\Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})`. Thus, the grid should not cover the the area corresponding to :math:`\Delta_{j}^{2}\ge\Delta_{j}^{1}`. We thus rescale as follows: :math:`\check{\Delta}_{j}^{1}=\Delta_{j}^{1}/\Delta_{j}^{2}\in[0, 1]`; :math:`\check{\Delta}_{j}^{2}=\Delta_{j}^{2}\in[0, 1]`.
+.. math::
 
-*Speed Comparison*
+    \check{\tau}_{jk}=\tau_{jk}/\bar{\tau}_{jk}\in[-1, 1],
 
-To illustrate the speed improvement by :code:`method = "approx"`, we plot the run time scaling behavior of :code:`method = "approx"` and :code:`method = "original"` (setting :code:`tps` for :code:`gen_data` by replicating :code:`["con", "bin", "ter", "tru"]` multiple times) with increasing dimensions :code:`p = [20, 40, 100, 200, 400]` at sample size :code:`n = 100` using simulation data. Figure below summarizes the observed scaling in a log-log plot. For both methods we observe the expected :code:`O(p^2)` scaling behavior with dimension p, i.e., a linear scaling in the log-log plot. However, :code:`method = "approx"` is at least one order of magnitude faster than :code:`method = "original"` independent of the dimension of the problem.
+where :math:`\bar{\tau}_{jk}` is as defined above. 
+
+In addition, for ternary variable :math:`j`, it always holds that
+
+.. math::
+
+    \Delta_{j}^{2}>\Delta_{j}^{1}` since :math:`\Delta_{j}^{1}=\Phi^{-1}(\pi_{0j})
+
+and
+
+.. math::
+    
+    \Delta_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j}).
+    
+Thus, the grid should not cover the the area corresponding to
+
+.. math::
+    
+    \Delta_{j}^{2}\ge\Delta_{j}^{1}.
+    
+We thus rescale as follows:
+
+.. math::
+    
+    \check{\Delta}_{j}^{1}=\Delta_{j}^{1}/\Delta_{j}^{2}\in[0, 1];
+    
+.. math::
+    
+    \check{\Delta}_{j}^{2}=\Delta_{j}^{2}\in[0, 1].
 
 **Adjustment of pointwise-estimator for positive-definiteness**
 
-Since the estimation is performed point-wise, the resulting matrix of estimated latent correlations is not guaranteed to be positive semi-definite. For example, this could be expected when the sample size is small (and so the estimation error for each pairwise correlation is larger).
+Since the estimation is performed point-wise, the resulting matrix of estimated latent correlations
+is not guaranteed to be positive semi-definite. For example, this could be expected when the sample
+size is small (and so the estimation error for each pairwise correlation is larger).
 
-.. code::
+.. jupyter-execute::
 
     X = gen_data(n = 6, tps = ["con", "bin", "ter", "tru"])[0]
-    out = latentcor(X, tps = ["con", "bin", "ter", "tru"])[1]
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])[1])
 
-:code:`latentcor` automatically corrects the pointwise estimator to be positive definite by making two adjustments. First, if :code:`Rpointwise` has smallest eigenvalue less than zero, the :code:`latentcor` projects this matrix to the nearest positive semi-definite matrix. The user is notified of this adjustment through the message (supressed in previous code chunk), e.g.
+:code:`latentcor` automatically corrects the pointwise estimator to be positive definite by making
+two adjustments.
+First, if :code:`Rpointwise` has smallest eigenvalue less than zero, the :code:`latentcor` projects
+this matrix to
+the nearest positive semi-definite matrix.
+The user is notified of this adjustment through the message (supressed in previous code chunk), e.g.
 
-.. code::
+.. jupyter-execute::
 
-    out = latentcor(X, tps = ["con", "bin", "ter", "tru"])[1]
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])[0])
 
-Second, :code:`latentcor` shrinks the adjusted matrix of correlations towards identity matrix using the parameter :code:`\nu` with default value of 0.001 (:code:`nu = 0.001`), so that the resulting :code:`latentcor[0]` is strictly positive definite with the minimal eigenvalue being greater or equal to :code:`\nu`. That is
+Second, :code:`latentcor` shrinks the adjusted matrix of correlations towards identity matrix using
+the parameter :code:`\nu` with default value of 0.001 (:code:`nu = 0.001`), so that the resulting
+:code:`latentcor[0]` is strictly positive definite with the minimal eigenvalue being greater or equal
+to :code:`\nu`. That is
 
 .. math::
 
@@ -401,23 +412,25 @@ Second, :code:`latentcor` shrinks the adjusted matrix of correlations towards id
 
 where :code:`\widetilde R` is the nearest positive semi-definite matrix to :code:`Rpointwise`.
 
-.. code::
+.. jupyter-execute::
 
-    out = latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)[1]
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)[0])
 
-As a result, :code:`R` and :code:`Rpointwise` could be quite different when sample size :code:`n` is small. When :code:`n` is large and :code:`p` is moderate, the difference is typically driven by parameter :code:`nu`.
+As a result, :code:`R` and :code:`Rpointwise` could be quite different when sample size :code:`n`
+is small. When :code:`n` is large and :code:`p` is moderate, the difference is typically driven by
+parameter :code:`nu`.
 
-.. code::
+.. jupyter-execute::
 
     X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
     out = latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)
-    out[1]
-    out[0]
+    print(out[1])
+    print(out[0])
 
 Appendix
 --------
 
-*Derivation of bridge function :math:`F` for ternary/truncated case*
+*Derivation of bridge function for ternary/truncated case*
 
 Without loss of generality, let :math:`j=1` and :math:`k=2`. By the definition of Kendall's :math:`\tau`,
 
