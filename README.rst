@@ -57,20 +57,20 @@ Example
 
 Let's import :code::`gen_data`, :code:`get_tps` and :code:`latentcor` :code:`latentcor`.
 
-.. jupyter-execute::
+.. code-block::
 
     from latentcor import gen_data, get_tps, latentcor
 
 First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
-.. jupyter-execute::
+.. code-block::
     
     simdata = gen_data(n = 100, tps = ["ter", "con"])
     print(simdata[0][ : 6, : ])
 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
-.. jupyter-execute::
+.. code-block::
 
     estimate = latentcor(simdata[0], tps = ["ter", "con"])
     print(estimate[0])
