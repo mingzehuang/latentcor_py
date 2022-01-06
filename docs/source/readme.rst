@@ -1,6 +1,6 @@
 
-latentcor: Latent Correlation for Mixed Types of Data
-=====================================================
+latentcor: Fast Computation of Latent Correlations for Mixed Data
+=================================================================
 
 .. image:: https://readthedocs.org/projects/latentcor-py/badge/?version=latest
         :target: https://latentcor-py.readthedocs.io/en/latest/?badge=latest
@@ -47,7 +47,7 @@ Installation
 
 The easiest way to install :code:`latentcor` is using :code:`pip`.
 
-.. code::
+.. code-block::
 
     pip install latentcor
 
@@ -82,7 +82,7 @@ Community Guidelines
 * Report issues or problems with the software using github’s `issue tracker <https://github.com/mingzehuang/latentcor_py/issues>`_.
 * The easiest way to replicate development environment of `latentcor` is using `pip`:
 
-.. code::
+.. code-block::
 
     pip install -r requirements_dev.txt
 

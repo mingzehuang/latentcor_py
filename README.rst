@@ -1,6 +1,6 @@
 
-latentcor: Latent Correlation for Mixed Types of Data
-=====================================================
+latentcor: Fast Computation of Latent Correlations for Mixed Data
+=================================================================
 
 .. image:: https://readthedocs.org/projects/latentcor-py/badge/?version=latest
         :target: https://latentcor-py.readthedocs.io/en/latest/?badge=latest
@@ -47,7 +47,7 @@ Installation
 
 The easiest way to install :code:`latentcor` is using :code:`pip`.
 
-.. code::
+.. code-block::
 
     pip install latentcor
 
@@ -55,23 +55,25 @@ The easiest way to install :code:`latentcor` is using :code:`pip`.
 Example
 -------
 
-Let's import module :code:`latentcor`.
+Let's import :code::`gen_data`, :code:`get_tps` and :code:`latentcor` :code:`latentcor`.
 
-.. code::
+.. jupyter-execute::
 
-    import latentcor
+    from latentcor import gen_data, get_tps, latentcor
 
 First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
-.. code::
+.. jupyter-execute::
     
-    gen_data(n = 100, tps = ["ter", "con"])[0]
+    simdata = gen_data(n = 100, tps = ["ter", "con"])
+    print(simdata[0][ : 6, : ])
 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
-.. code::
+.. jupyter-execute::
 
-    latentcor(simdata[0], tps = ["ter", "con"])[0]
+    estimate = latentcor(simdata[0], tps = ["ter", "con"])
+    print(estimate[0])
 
 Community Guidelines
 --------------------
@@ -80,7 +82,7 @@ Community Guidelines
 * Report issues or problems with the software using github’s `issue tracker <https://github.com/mingzehuang/latentcor_py/issues>`_.
 * The easiest way to replicate development environment of `latentcor` is using `pip`:
 
-.. code::
+.. code-block::
 
     pip install -r requirements_dev.txt
 
@@ -92,3 +94,4 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
