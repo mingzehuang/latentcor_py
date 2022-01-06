@@ -14,6 +14,9 @@ latentcor: Latent Correlation for Mixed Types of Data
 
 .. image:: https://codecov.io/gh/mingzehuang/latentcor_py/branch/master/graph/badge.svg?token=SF57J6ZW0B
     :target: https://codecov.io/gh/mingzehuang/latentcor_py
+
+* Free software: `GNU General Public License v3 <https://github.com/mingzehuang/latentcor_py/blob/master/LICENSE>`_
+* Documentation: https://latentcor-py.readthedocs.io.
     
 Introduction
 ------------
@@ -29,14 +32,14 @@ Introduction
 * `Yoon G., Müller C.L. and Gaynanova I. (2021). “Fast computation of latent correlations.” <https://doi.org/10.1080/10618600.2021.1882468>`_. **Approximation method of computation**, see `math framework <https://mingzehuang.github.io/latentcor/articles/latentcor_math.html>`_ for details.
 
 
+
 Statement of need
 -----------------
 
-No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner. The Python package *latentcor*, introduced here, thus represents the first stand-alone R package for computation of latent correlation that takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, and is computationally efficient, essentially making latent correlation estimation almost as fast as rank-based correlation estimation.
-
-
-* Free software: `GNU General Public License v3 <https://github.com/mingzehuang/latentcor_py/blob/master/LICENSE>`_
-* Documentation: https://latentcor-py.readthedocs.io.
+No Python software package is currently available that allows accurate and fast correlation estimation from mixed variable data in a unifying manner.
+The Python package :code:`latentcor`, introduced here, thus represents the first stand-alone Python package for computation of latent correlation that
+takes into account all variable types (continuous/binary/ordinal/zero-inflated), comes with an optimized memory footprint, and is computationally efficient,
+essentially making latent correlation estimation almost as fast as rank-based correlation estimation.
 
 
 Installation
@@ -75,7 +78,6 @@ Community Guidelines
 
 * Contributions and suggestions to the software are always welcome. Please consult our `contribution guidelines <https://github.com/mingzehuang/latentcor_py/blob/master/CONTRIBUTING.rst>`_ prior to submitting a pull request.
 * Report issues or problems with the software using github’s `issue tracker <https://github.com/mingzehuang/latentcor_py/issues>`_.
-* Contributors must adhere to the `Code of Conduct <https://github.com/mingzehuang/latentcor_py/blob/master/CODE_OF_CONDUCT.rst>`_.
 * The easiest way to replicate development environment of `latentcor` is using `pip`:
 
 .. code::
