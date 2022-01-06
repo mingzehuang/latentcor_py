@@ -507,7 +507,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     Rpointwise = R
     if use_nearPD is True:
         R = corr_nearest(R)
-        R = (1 - nu) * R; numpy.fill_diagonal(R, nu)
+        R = (1 - nu) * R; numpy.fill_diagonal(R, 1)
     plot = None
     if showplot is True:
         plot = seaborn.heatmap(R)

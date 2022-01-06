@@ -13,4 +13,3 @@ __author__ = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 __email__ = 'mingzehuang@gmail.com, christian.mueller@stat.uni-muenchen.de, irinag@stat.tamu.edu'
 __version__ = '0.1.1'
 
-print(__version__)

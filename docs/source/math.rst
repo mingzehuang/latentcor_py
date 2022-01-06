@@ -13,44 +13,74 @@ Main Framework
 
 A random :math:`X\in\cal{R}^{p}` satisfies the Gaussian copula (or nonparanormal) model if there exist monotonically increasing :math:`f=(f_{j})_{j=1}^{p}` with :math:`Z_{j}=f_{j}(X_{j})` satisfying :math:`Z\sim N_{p}(0, \Sigma)`, :math:`\sigma_{jj}=1`; we denote :math:`X\sim NPN(0, \Sigma, f)` :cite:p:`fan2017high`.
 
-.. code::
+.. code-block::
 
-    gen_data(n = 6, tps = "con")[0]
+    >>> gen_data(n = 6, tps = "con")[0]
+    array([[ 0.39638592],
+           [-0.3926094 ],
+           [-1.11274   ],
+           [ 1.92034928],
+           [-1.81139832],
+           [ 0.65553333]])
 
 
 *Definition of binary model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the binary latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}` are constants :cite:p:`fan2017high`.
 
-.. code::
+.. code-block::
 
-    gen_data(n = 6, tps = "bin")[0]
+    >>> gen_data(n = 6, tps = "bin")[0]     
+    array([[1.],
+           [1.],
+           [0.],
+           [0.],
+           [1.],
+           [0.]])
 
 
 *Definition of ternary model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the ternary latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})+I(W_{j}>c'_{j})`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}<c'_{j}` are constants :cite:p:`quan2018rank`.
 
-.. code::
+.. code-block::
 
-    gen_data(n = 6, tps = "ter")[0]
+    >>> gen_data(n = 6, tps = "ter")[0]  
+    array([[1.],
+           [2.],
+           [0.],
+           [0.],
+           [1.],
+           [1.]])
 
 *Definition of truncated or zero-inflated model*
 
 A random :math:`X\in\cal{R}^{p}` satisfies the truncated latent Gaussian copula model if there exists :math:`W\sim NPN(0, \Sigma, f)` such that :math:`X_{j}=I(W_{j}>c_{j})W_{j}`, where :math:`I(\cdot)` is the indicator function and :math:`c_{j}` are constants :cite:p:`yoon2020sparse`.
 
-.. code::
+.. code-block::
 
-    gen_data(n = 6, tps = "tru")[0]
+    >>> gen_data(n = 6, tps = "tru")[0]     
+    array([[0.81056225],
+           [1.02530611],
+           [0.        ],
+           [0.17744017],
+           [0.        ],
+           [0.        ]])
 
 *Mixed latent Gaussian copula model*
 
 The mixed latent Gaussian copula model jointly models :math:`W=(W_{1}, W_{2}, W_{3}, W_{4})\sim NPN(0, \Sigma, f)` such that :math:`X_{1j}=W_{1j}`, :math:`X_{2j}=I(W_{2j}>c_{2j})`, :math:`X_{3j}=I(W_{3j}>c_{3j})+I(W_{3j}>c'_{3j})` and :math:`X_{4j}=I(W_{4j}>c_{4j})W_{4j}`.
 
-.. code::
+.. code-block::
 
-    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
-
+    >>> X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
+    >>> print(X[ :6, : ])
+    [[ 0.26950174  0.          1.          1.36925125]
+     [ 1.31143527  1.          1.          1.70697045]
+     [-0.22323803  0.          1.          0.        ]
+     [-1.5554148   0.          1.          0.        ]
+     [-0.31339749  1.          1.          0.49739629]
+     [-0.22660333  0.          1.          0.72668606]]
 
 **Moment-based estimation of :math:`\Sigma` based on bridge functions**
 
@@ -69,9 +99,14 @@ where :math:`n` is the sample size.
 
 :code:`latentcor` calculates pairwise Kendall's :math:`\widehat \tau` as part of the estimation process.
 
-.. code::
+.. code-block::
 
-    K = latentcor(X, tps = ["con", "bin", "ter", "tru"])
+    >>> K = latentcor(X, tps = ["con", "bin", "ter", "tru"])[3]
+    >>> print(K)
+    [[1.         0.19393939 0.25737375 0.26848486]
+     [0.19393939 1.         0.13333334 0.19151515]
+     [0.25737375 0.13333334 1.         0.17818181]
+     [0.26848486 0.19151515 0.17818181 1.        ]]
 
 Using :math:`F` and :math:`\widehat \tau_{jk}`, a moment-based estimator is :math:`\hat{\sigma}_{jk}=F^{-1}(\hat{\tau}_{jk})` with the corresponding :math:`\hat{\Sigma}` being consistent for :math:`\Sigma` :cite:p:`fan2017high,quan2018rank,yoon2020sparse`. 
 
@@ -203,8 +238,8 @@ and
 
 Given the form of bridge function :math:`F`, obtaining a moment-based estimation :math:`\widehat \sigma_{jk}` requires inversion of :math:`F`. :code:`latentcor` implements two methods for calculation of the inversion:
 
-* :code:`method = "original"` [Subsection describing original method and relevant parameter :code:`tol`](original)
-* :code:`method = "approx"` [Subsection describing approximation method and relevant parameter :code:`ratio`](approx)
+* :code:`method = "original"`
+* :code:`method = "approx"`
   
 Both methods calculate inverse bridge function applied to each element of sample Kendall's :math:`\tau` matrix. Because the calculation is performed point-wise (separately for each pair of variables), the resulting point-wise estimator of correlation matrix may not be positive semi-definite. :code:`latentcor` performs projection of the pointwise-estimator to the space of positive semi-definite matrices, and allows for shrinkage towards identity matrix using the parameter :code:`nu` (see [Subsection describing adjustment of point-wise estimator and relevant parameter :code:`nu`](shrinkage)).
 
@@ -216,9 +251,11 @@ Original estimation approach relies on numerical inversion of :math:`F` based on
 
     \widehat r_{jk} = \arg\min_{r} \{F(r) - \widehat \tau_{jk}\}^2.
 
-The parameter :code:`tol` controls the desired accuracy of the minimizer and is passed to :code:`scipy.optimize.fminbound`, with the default precision of :math:`1e-8`::
+The parameter :code:`tol` controls the desired accuracy of the minimizer and is passed to :code:`scipy.optimize.fminbound`, with the default precision of :math:`1e-8`
 
-    estimate = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original", tol = 1e-8)
+.. code-block::
+
+    >>> estimate_original = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original", tol = 1e-8)
 
 *Algorithm for Original method*
 
@@ -226,21 +263,31 @@ The parameter :code:`tol` controls the desired accuracy of the minimizer and is 
 
 * *Step 1*. Calculate :math:`\hat{\tau}_{jk}` using :math:`(1)`.
 
-.. code::
+.. code-block::
    
-      estimate[3]
+    >>> print(estimate_original[3])
+    [[1.         0.19393939 0.25737375 0.26848486]
+     [0.19393939 1.         0.13333334 0.19151515]
+     [0.25737375 0.13333334 1.         0.17818181]
+     [0.26848486 0.19151515 0.17818181 1.        ]]
    
 * *Step 2*. For binary/truncated variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=\hat{\Delta}_{j}=\Phi^{-1}(\pi_{0j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}`. For ternary variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=(\hat{\Delta}_{j}^{1}, \hat{\Delta}_{j}^{2})` where :math:`\hat{\Delta}_{j}^{1}=\Phi^{-1}(\pi_{0j})` and :math:`\hat{\Delta}_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}` and :math:`\pi_{1j}=\sum_{i=1}^{n}\frac{I(x_{ij}=1)}{n}`.
 
-.. code::
+.. code-block::
    
-      estimate[4]
-   
+    >>> print(estimate_original[4])
+    [[nan 0.5 0.3 0.5]
+    [nan nan 0.8 nan]]
+
 * *Step 3* Compute :math:`F^{-1}(\hat{\tau}_{jk})` as :math:`\hat{r}_{jk}=argmin\{F(r)-\hat{\tau}_{jk}\}^{2}` solved via :code:`scipy.optimize.fminbound` function with accuracy :code:`tol`.
 
 .. code::
 
-      estimate[1]
+    >>> print(estimate_original[1])
+    [[1.         0.42419204 0.46835664 0.47821224]
+     [0.42419204 1.         0.34853926 0.48384005]
+     [0.46835664 0.34853926 1.         0.38299087]
+     [0.47821224 0.48384005 0.38299087 1.        ]]    
 
 
 *Approximation method (:code:`method = "approx"`)*
@@ -256,9 +303,14 @@ A faster approximation method is based on multi-linear interpolation of pre-comp
 
 In short, d-dimensional multi-linear interpolation uses a weighted average of :math:`2^{d}` neighbors to approximate the function values at the points within the d-dimensional cube of the neighbors, and to perform interpolation, :code:`latentcor` takes advantage of the *Python* package :code:`scipy.interpolate.RegularGridInterpolator`. This approximation method has been first described in [@yoon2021fast] for continuous/binary/truncated cases. In :code:`latentcor`, we additionally implement ternary case, and optimize the choice of grid as well as interpolation boundary for faster computations with smaller memory footprint.
 
-.. code::
+.. code-block::
 
-    estimate = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
+    >>> estimate_approx = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
+    >>> print(estimate_approx[1])
+    [[1.         0.42402717 0.4682099  0.47781307]
+     [0.42402717 1.         0.35700017 0.4835267 ]
+     [0.4682099  0.35700017 1.         0.386235  ]
+     [0.47781307 0.4835267  0.386235   1.        ]]
 
 *Algorithm for Approximation method*
 
@@ -290,9 +342,23 @@ By default, :code:`latentcor` uses :code:`ratio = 0.9` as this value was recomme
 
 .. code::
 
-    latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0]
-    latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0]
-    latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0]
+    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0])
+    [[0.001      0.42360315 0.46774168 0.47733525]
+     [0.42360315 0.001      0.35664317 0.48304318]
+     [0.46774168 0.35664317 0.001      0.38584876]
+     [0.47733525 0.48304318 0.38584876 0.001     ]]
+
+    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0])
+    [[0.001      0.42360315 0.46788828 0.47733525]
+     [0.42360315 0.001      0.35664317 0.48304318]
+     [0.46788828 0.35664317 0.001      0.38584876]
+     [0.47733525 0.48304318 0.38584876 0.001     ]]
+
+    >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0])
+    [[0.001      0.42376785 0.46788828 0.47769514]
+     [0.42376785 0.001      0.34819072 0.48333653]
+     [0.46788828 0.34819072 0.001      0.38260788]
+     [0.47769514 0.48333653 0.38260788 0.001     ]]
 
 The lower is the :code:`ratio`, the closer is the approximation method to original method (with :code:`ratio = 0` being equivalent to :code:`method = "original"`), but also the higher is the cost of computations.
 
