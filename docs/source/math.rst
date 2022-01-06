@@ -7,11 +7,16 @@ Main Framework
 
 **Latent Gaussian Copula Model for Mixed Data**
 
-:code:`latentcor` utilizes the powerful semi-parametric latent Gaussian copula models to estimate latent correlations between mixed data types (continuous/binary/ternary/truncated or zero-inflated). Below we review the definitions for each type.
+:code:`latentcor` utilizes the powerful semi-parametric latent Gaussian copula models to estimate
+latent correlations between mixed data types (continuous/binary/ternary/truncated or zero-inflated).
+Below we review the definitions for each type.
 
 *Definition of continuous model*
 
-A random :math:`X\in\cal{R}^{p}` satisfies the Gaussian copula (or nonparanormal) model if there exist monotonically increasing :math:`f=(f_{j})_{j=1}^{p}` with :math:`Z_{j}=f_{j}(X_{j})` satisfying :math:`Z\sim N_{p}(0, \Sigma)`, :math:`\sigma_{jj}=1`; we denote :math:`X\sim NPN(0, \Sigma, f)` :cite:p:`fan2017high`.
+A random :math:`X\in\cal{R}^{p}` satisfies the Gaussian copula (or nonparanormal) model if there
+exist monotonically increasing :math:`f=(f_{j})_{j=1}^{p}` with :math:`Z_{j}=f_{j}(X_{j})` satisfying
+:math:`Z\sim N_{p}(0, \Sigma)`, :math:`\sigma_{jj}=1`; we denote :math:`X\sim NPN(0, \Sigma, f)`
+:cite:p:`fan2017high`.
 
 .. code-block::
 
@@ -75,12 +80,12 @@ The mixed latent Gaussian copula model jointly models :math:`W=(W_{1}, W_{2}, W_
 
     >>> X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
     >>> print(X[ :6, : ])
-    [[ 0.26950174  0.          1.          1.36925125]
-     [ 1.31143527  1.          1.          1.70697045]
-     [-0.22323803  0.          1.          0.        ]
-     [-1.5554148   0.          1.          0.        ]
-     [-0.31339749  1.          1.          0.49739629]
-     [-0.22660333  0.          1.          0.72668606]]
+    [[-0.28686695  1.          0.          0.32018176]
+     [-1.44883802  0.          1.          0.        ]
+     [-0.9170464   0.          1.          0.        ]
+     [-0.62163167  1.          1.          0.57377273]
+     [ 0.17954829  1.          2.          0.27134714]
+     [ 1.45789924  0.          2.          1.62845087]]
 
 **Moment-based estimation of :math:`\Sigma` based on bridge functions**
 
@@ -103,10 +108,10 @@ where :math:`n` is the sample size.
 
     >>> K = latentcor(X, tps = ["con", "bin", "ter", "tru"])[3]
     >>> print(K)
-    [[1.         0.19393939 0.25737375 0.26848486]
-     [0.19393939 1.         0.13333334 0.19151515]
-     [0.25737375 0.13333334 1.         0.17818181]
-     [0.26848486 0.19151515 0.17818181 1.        ]]
+    [[1.         0.21737374 0.29818183 0.26565656]
+     [0.21737374 1.         0.1979798  0.17212121]
+     [0.29818183 0.1979798  1.         0.25919193]
+     [0.26565656 0.17212121 0.25919193 1.        ]]
 
 Using :math:`F` and :math:`\widehat \tau_{jk}`, a moment-based estimator is :math:`\hat{\sigma}_{jk}=F^{-1}(\hat{\tau}_{jk})` with the corresponding :math:`\hat{\Sigma}` being consistent for :math:`\Sigma` :cite:p:`fan2017high,quan2018rank,yoon2020sparse`. 
 
@@ -266,10 +271,10 @@ The parameter :code:`tol` controls the desired accuracy of the minimizer and is 
 .. code-block::
    
     >>> print(estimate_original[3])
-    [[1.         0.19393939 0.25737375 0.26848486]
-     [0.19393939 1.         0.13333334 0.19151515]
-     [0.25737375 0.13333334 1.         0.17818181]
-     [0.26848486 0.19151515 0.17818181 1.        ]]
+    [[1.         0.21737374 0.29818183 0.26565656]
+     [0.21737374 1.         0.1979798  0.17212121]
+     [0.29818183 0.1979798  1.         0.25919193]
+     [0.26565656 0.17212121 0.25919193 1.        ]]
    
 * *Step 2*. For binary/truncated variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=\hat{\Delta}_{j}=\Phi^{-1}(\pi_{0j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}`. For ternary variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=(\hat{\Delta}_{j}^{1}, \hat{\Delta}_{j}^{2})` where :math:`\hat{\Delta}_{j}^{1}=\Phi^{-1}(\pi_{0j})` and :math:`\hat{\Delta}_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}` and :math:`\pi_{1j}=\sum_{i=1}^{n}\frac{I(x_{ij}=1)}{n}`.
 
@@ -284,10 +289,10 @@ The parameter :code:`tol` controls the desired accuracy of the minimizer and is 
 .. code::
 
     >>> print(estimate_original[1])
-    [[1.         0.42419204 0.46835664 0.47821224]
-     [0.42419204 1.         0.34853926 0.48384005]
-     [0.46835664 0.34853926 1.         0.38299087]
-     [0.47821224 0.48384005 0.38299087 1.        ]]    
+    [[1.         0.47355455 0.53764457 0.47350827]
+     [0.47355455 1.         0.5108396  0.43737176]
+     [0.53764457 0.5108396  1.         0.54667753]
+     [0.47350827 0.43737176 0.54667753 1.        ]]  
 
 
 *Approximation method (:code:`method = "approx"`)*
@@ -307,10 +312,10 @@ In short, d-dimensional multi-linear interpolation uses a weighted average of :m
 
     >>> estimate_approx = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
     >>> print(estimate_approx[1])
-    [[1.         0.42402717 0.4682099  0.47781307]
-     [0.42402717 1.         0.35700017 0.4835267 ]
-     [0.4682099  0.35700017 1.         0.386235  ]
-     [0.47781307 0.4835267  0.386235   1.        ]]
+    [[1.         0.47339904 0.5374965  0.47302574]
+     [0.47339904 1.         0.5188888  0.4373398 ]
+     [0.5374965  0.5188888  1.         0.54651654]
+     [0.47302574 0.4373398  0.54651654 1.        ]]
 
 *Algorithm for Approximation method*
 
@@ -343,16 +348,16 @@ By default, :code:`latentcor` uses :code:`ratio = 0.9` as this value was recomme
 .. code::
 
     >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0])
-    [[0.001      0.42360315 0.46774168 0.47733525]
-     [0.42360315 0.001      0.35664317 0.48304318]
-     [0.46774168 0.35664317 0.001      0.38584876]
-     [0.47733525 0.48304318 0.38584876 0.001     ]]
+    [1.         0.47292564 0.53695901 0.47255271]
+     [0.47292564 1.         0.51836988 0.43690247]
+     [0.53695901 0.51836988 1.         0.54597002]
+     [0.47255271 0.43690247 0.54597002 1.        ]]
 
     >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0])
-    [[0.001      0.42360315 0.46788828 0.47733525]
-     [0.42360315 0.001      0.35664317 0.48304318]
-     [0.46788828 0.35664317 0.001      0.38584876]
-     [0.47733525 0.48304318 0.38584876 0.001     ]]
+    [[1.         0.473081   0.53710692 0.47255271]
+     [0.473081   1.         0.51836988 0.43690247]
+     [0.53710692 0.51836988 1.         0.54597002]
+     [0.47255271 0.43690247 0.54597002 1.        ]]
 
     >>> print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0])
     [[0.001      0.42376785 0.46788828 0.47769514]

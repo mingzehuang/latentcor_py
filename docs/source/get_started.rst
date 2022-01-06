@@ -16,12 +16,12 @@ First, we will generate a pair of variables with different types using a sample 
     
     >>> simdata = gen_data(n = 100, tps = ["ter", "con"])
     >>> print(simdata[0][ :6, :])
-    [[ 2.          0.61200788]
-     [ 0.         -2.00391226]
-     [ 1.          0.26714693]
-     [ 1.          0.17363031]
-     [ 2.          2.70537882]
-     [ 0.         -0.62657498]]
+    [[ 0.          0.28048824]
+     [ 1.         -2.15690986]
+     [ 2.         -0.11102735]
+     [ 1.         -0.95388833]
+     [ 2.          0.72836191]
+     [ 2.          1.24461087]]
     >>> print(simdata[1])
     None
 
@@ -45,16 +45,16 @@ Then we can estimate the latent correlation matrix based on these 2 variables us
 
     >>> estimate = latentcor(simdata[0], tps = data_types)
     >>> print(estimate[0])
-    [[0.001      0.56295584]
-     [0.56295584 0.001     ]]
+    [[1.         0.37879062]
+     [0.37879062 1.        ]]
     >>> print(estimate[1])
-    [[1.         0.56351936]
-     [0.56351936 1.        ]]
+    [[1.        0.3791698]
+     [0.3791698 1.       ]]
     >>> print(estimate[2]) 
     None
     >>> print(estimate[3])
-    [[1.        0.3139394]
-     [0.3139394 1.       ]]
+    [[1.         0.20646465]
+     [0.20646465 1.        ]]
     >>> print(estimate[4])
     [[0.3 nan]
      [0.8 nan]]     
