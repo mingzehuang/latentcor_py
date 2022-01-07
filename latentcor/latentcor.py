@@ -277,9 +277,10 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
 
     XP : numpy.array
         (Default value = None)
-        A (2 x p) matrix indicating proportion of zeros (for binary and truncated), and proportions of zeros and ones (for ternary) for each of the variables. For continuous variable, NA should be supplied. If `None`, the following values are automatically generated as elements of `XP` list for the corresponding data types:
-        For continuous variable, the corresponding value is [numpy.na, numpy.na];
-        for binary or truncated variable, the corresponding value is a number between 0 and 1 representing the proportion of zeros and numpy.na, the default value is [0.5, numpy.na];
+        A (2 x p) matrix indicating proportion of zeros (for binary and truncated), and proportions of zeros and ones (for ternary) for each of the variables.
+        For continuous variable, [numpy.nan, numpy.nan] should be supplied. If `None`, the following values are automatically generated as elements of `XP` list for the corresponding data types:
+        For continuous variable, the corresponding value is [numpy.nan, numpy.nan];
+        for binary or truncated variable, the corresponding value is a number between 0 and 1 representing the proportion of zeros and numpy.na, the default value is [0.5, numpy.nan];
         for ternary variable, the corresponding value is a pair of numbers between 0 and 1, the first number indicates the the proportion of zeros, the second number indicates the proportion of ones. The sum of a pair of numbers should be between 0 and 1, the default value is [0.3, 0.5].
 
     showplot : bool
@@ -353,7 +354,7 @@ def get_tps(X, tru_prop = 0.05):
     ----------
 
     X : numpy.array
-        A numeric data matrix (n by p), where n is number of samples, and p is number of variables. Missing values (numpy.na) are allowed.
+        A numeric data matrix (n by p), where n is number of samples, and p is number of variables. Missing values (numpy.nan) are allowed.
         
     tru_prop : float
         (Default value = 0.05)
@@ -402,7 +403,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     ----------
 
     X : numpy.array or pandas.DataFrame
-        A numeric matrix or numeric data frame (n by p), where n is number of samples, and p is number of variables. Missing values (NA) are allowed, in which case the estimation is based on pairwise complete observations.
+        A numeric matrix or numeric data frame (n by p), where n is number of samples, and p is number of variables. Missing values (numpy.nan) are allowed, in which case the estimation is based on pairwise complete observations.
     
     tps : list or numpy.array
         (Default value = None)
@@ -448,7 +449,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         (p x p) Kendall Tau (Tau-a) Matrix for `X`. 
 
     zratios : numpy.array
-        A (2 x p) matrix corresponding to each variable. Returns numpy.na for continuous variable; proportion of zeros for binary/truncated variables; the cumulative proportions of zeros and ones (e.g. first value is proportion of zeros, second value is proportion of zeros and ones) for ternary variable.
+        A (2 x p) matrix corresponding to each variable. Returns [numpy.nan, numpy.nan] for continuous variable; proportion of zeros for binary/truncated variables; the cumulative proportions of zeros and ones (e.g. first value is proportion of zeros, second value is proportion of zeros and ones) for ternary variable.
 
     """
     
