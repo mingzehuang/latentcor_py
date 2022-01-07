@@ -255,7 +255,7 @@ class r_switch(object):
 
 
 def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None, showplot = False):
-    """
+    """Generates data of mixed types from the latent Gaussian copula model.
 
     Parameters
     ----------
@@ -347,7 +347,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
 
 
 def get_tps(X, tru_prop = 0.05):
-    """
+    """Guess data types according to observed values.
 
     Parameters
     ----------
@@ -398,8 +398,6 @@ def get_tps(X, tru_prop = 0.05):
 def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, tol = 1e-8, ratio = 0.9, showplot = False):
     """Estimate latent correlation for mixed types.
 
-    Estimation of latent correlation matrix from observed data of (possibly) mixed types (continuous/binary/truncated/ternary) based on the latent Gaussian copula model. Missing values (NA) are allowed. The estimation is based on pairwise complete observations.
-    
     Parameters
     ----------
 
