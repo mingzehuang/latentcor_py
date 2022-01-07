@@ -55,22 +55,22 @@ The easiest way to install :code:`latentcor` is using :code:`pip`.
 Example
 -------
 
-Let's import :code::`gen_data`, :code:`get_tps` and :code:`latentcor` :code:`latentcor`.
+Let's import :code:`gen_data`, :code:`get_tps` and :code:`latentcor` from :code:`latentcor`.
 
-.. code-block::
+.. jupyter-execute::
 
     from latentcor import gen_data, get_tps, latentcor
 
 First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
-.. code-block::
+.. jupyter-execute::
     
     simdata = gen_data(n = 100, tps = ["ter", "con"])
     print(simdata[0][ : 6, : ])
 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
-.. code-block::
+.. jupyter-execute::
 
     estimate = latentcor(simdata[0], tps = ["ter", "con"])
     print(estimate[0])
@@ -94,4 +94,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-

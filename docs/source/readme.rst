@@ -55,7 +55,7 @@ The easiest way to install :code:`latentcor` is using :code:`pip`.
 Example
 -------
 
-Let's import :code::`gen_data`, :code:`get_tps` and :code:`latentcor` :code:`latentcor`.
+Let's import :code:`gen_data`, :code:`get_tps` and :code:`latentcor` from :code:`latentcor`.
 
 .. jupyter-execute::
 
