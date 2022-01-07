@@ -11,3 +11,13 @@ History
 ------------------
 
 * Fix some typos.
+
+0.1.2 (2022-01-06)
+------------------
+
+* Fix some bug on :code:`use_nearPD` argument in function :code:`latentcor`.
+
+0.1.3 (2022-01-07)
+------------------
+
+* Integrate `jupyter-sphinx` extension for automatic output generation of examples.
