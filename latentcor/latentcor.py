@@ -260,32 +260,32 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     Parameters
     ----------
     n : int
-        (Default value = :code:`100`)
+        (Default value = `100`)
         A positive integer indicating the sample size.
 
     tps : list or numpy.array
-        (Default value = :code:`["ter", "con"]`)
-        A vector indicating the type of each variable, could be :code:`"con"` (continuous), :code:`"bin"` (binary), :code:`"tru"` (truncated) or :code:`"ter"` (ternary). The number of variables is determined based on the length of types, that is :code:`p = len(tps)`. The default value :code:`["ter", "con"]` which creates two variables: the first one is ternary, the second one is continuous.
+        (Default value = `["ter", "con"]`)
+        A vector indicating the type of each variable, could be `"con"` (continuous), `"bin"` (binary), `"tru"` (truncated) or `"ter"` (ternary). The number of variables is determined based on the length of types, that is `p = len(tps)`. The default value `["ter", "con"]` which creates two variables: the first one is ternary, the second one is continuous.
         
     rhos : list or numpy.array
-        (Default value = :code:`.5`)
-        A vector with lower-triangular elements of desired correlation matrix, e.g. :code:`rhos = [.3, .5, .7]` means the correlation matrix is :code:`[[1, .3, .5], [.3, 1, .7], [.5, .7, 1]]`. If only a scalar is supplied (:code:`len(rhos) = 1`), then equi-correlation matrix is assumed with all pairwise correlations being equal to :code:`rhos`. The default value is :code:`0.5` which means correlations between any two variables are 0.5.
+        (Default value = `.5`)
+        A vector with lower-triangular elements of desired correlation matrix, e.g. `rhos = [.3, .5, .7]` means the correlation matrix is `[[1, .3, .5], [.3, 1, .7], [.5, .7, 1]]`. If only a scalar is supplied (`len(rhos) = 1`), then equi-correlation matrix is assumed with all pairwise correlations being equal to `rhos`. The default value is `0.5` which means correlations between any two variables are 0.5.
 
     copulas : list or numpy.array
-        (Default value = :code:`"no"`)
-        A vector indicating the copula transformation f for each of the p variables, e.g. U = f(Z). Each element can take value :code:`"no"` (f is identity), :code:`"expo"` (exponential transformation) or :code:`"cube"` (cubic transformation). If the vector has length 1, then the same transformation is applied to all p variables. The default value is :code:`"no"`: no copula transformation for any of the variables.
+        (Default value = `"no"`)
+        A vector indicating the copula transformation f for each of the p variables, e.g. U = f(Z). Each element can take value `"no"` (f is identity), `"expo"` (exponential transformation) or `"cube"` (cubic transformation). If the vector has length 1, then the same transformation is applied to all p variables. The default value is `"no"`: no copula transformation for any of the variables.
 
     XP : numpy.array
-        (Default value = :code:`None`)
+        (Default value = `None`)
         A (2 x p) matrix indicating proportion of zeros (for binary and truncated), and proportions of zeros and ones (for ternary) for each of the variables.
-        For continuous variable, :code:`[numpy.nan, numpy.nan]` should be supplied. If :code:`None`, the following values are automatically generated as elements of :code:`XP` list for the corresponding data types:
-        For continuous variable, the corresponding value is :code:`[numpy.nan, numpy.nan]`;
-        for binary or truncated variable, the corresponding value is a number between 0 and 1 representing the proportion of zeros and :code:`numpy.nan`, the default value is :code:`[0.5, numpy.nan]`;
-        for ternary variable, the corresponding value is a pair of numbers between 0 and 1, the first number indicates the the proportion of zeros, the second number indicates the proportion of ones. The sum of a pair of numbers should be between 0 and 1, the default value is :code:`[0.3, 0.5]`.
+        For continuous variable, `[numpy.nan, numpy.nan]` should be supplied. If `None`, the following values are automatically generated as elements of `XP` list for the corresponding data types:
+        For continuous variable, the corresponding value is `[numpy.nan, numpy.nan]`;
+        for binary or truncated variable, the corresponding value is a number between 0 and 1 representing the proportion of zeros and `numpy.nan`, the default value is `[0.5, numpy.nan]`;
+        for ternary variable, the corresponding value is a pair of numbers between 0 and 1, the first number indicates the the proportion of zeros, the second number indicates the proportion of ones. The sum of a pair of numbers should be between 0 and 1, the default value is `[0.3, 0.5]`.
 
     showplot : bool
-        (Default value = :code:`False`)
-        If :code:`True`, generates the plot of the data when number of variables p is no more than 3.
+        (Default value = `False`)
+        If `True`, generates the plot of the data when number of variables p is no more than 3.
 
     Returns
     -------
@@ -293,9 +293,9 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     X : numpy.array
         Generated data matrix (n by p) of observed variables.
     
-    plotX : object or :code:`None`
+    plotX : object or None
         Visualization of the data matrix X.
-        Histogram if `p=1`. 2D Scatter plot if `p=2`. 3D scatter plot if `p=3`. Returns :code:`None` if :code:`showplot = False`.
+        Histogram if `p=1`. 2D Scatter plot if `p=2`. 3D scatter plot if `p=3`. Returns `None` if `showplot = False`.
 
     """
 
@@ -354,17 +354,17 @@ def get_tps(X, tru_prop = 0.05):
     ----------
 
     X : numpy.array
-        A numeric data matrix (n by p), where n is number of samples, and p is number of variables. Missing values (:code:`numpy.nan`) are allowed.
+        A numeric data matrix (n by p), where n is number of samples, and p is number of variables. Missing values (`numpy.nan`) are allowed.
         
     tru_prop : float
-        (Default value = :code:`0.05`)
-        A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as :code:`"tru"` (truncated type or zero-inflated) rather than as :code:`"con"` (continuous type). The default value :code:`0.05` means any variable with more than 5% of zero values among n samples is treated as truncated or zero-inflated.
+        (Default value = `0.05`)
+        A scalar between 0 and 1 indicating the minimal proportion of zeros that should be present in a variable to be treated as `"tru"` (truncated type or zero-inflated) rather than as `"con"` (continuous type). The default value `0.05` means any variable with more than 5% of zero values among n samples is treated as truncated or zero-inflated.
 
     Returns
     -------
 
     tps: numpy.array
-        A vector of length p indicating the type of each of the p variables in :code:`X`. Each element is one of :code:`"con"` (continuous), :code:`"bin"` (binary), :code:`"ter"` (ternary) or :code:`"tru"` (truncated).
+        A vector of length p indicating the type of each of the p variables in `X`. Each element is one of `"con"` (continuous), `"bin"` (binary), `"ter"` (ternary) or `"tru"` (truncated).
 
     """
 
@@ -403,53 +403,53 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     ----------
 
     X : numpy.array or pandas.DataFrame
-        A numeric matrix or numeric data frame (n by p), where n is number of samples, and p is number of variables. Missing values (:code:`numpy.nan`) are allowed, in which case the estimation is based on pairwise complete observations.
+        A numeric matrix or numeric data frame (n by p), where n is number of samples, and p is number of variables. Missing values (`numpy.nan`) are allowed, in which case the estimation is based on pairwise complete observations.
     
     tps : list or numpy.array
-        (Default value = :code:`None`)
-        A vector of length p indicating the type of each of the p variables in :code:`X`. Each element must be one of :code:`"con"` (continuous), :code:`"bin"` (binary), :code:`"ter"` (ternary) or :code:`"tru"` (truncated). If the vector has length 1, then all p variables are assumed to be of the same type that is supplied. The variable types are determined automatically using function :code:`get_tps`. As automatic determination of variable types takes extra time, it is recommended to supply the types explicitly when they are known in advance.
+        (Default value = `None`)
+        A vector of length p indicating the type of each of the p variables in `X`. Each element must be one of `"con"` (continuous), `"bin"` (binary), `"ter"` (ternary) or `"tru"` (truncated). If the vector has length 1, then all p variables are assumed to be of the same type that is supplied. The variable types are determined automatically using function `get_tps`. As automatic determination of variable types takes extra time, it is recommended to supply the types explicitly when they are known in advance.
     
-    method : :code:`'original'` or :code:`'approx'`
-        (Default value = :code:`"approx"`)
-        The calculation method for latent correlations. Either :code:`"original"` or :code:`"approx"`. If :code:`method = "approx"`, multilinear approximation method is used, which is much faster than the original method, see Yoon et al. (2021) for timing comparisons for various variable types. If :code:`method = "original"`, optimization of the bridge inverse function is used.
+    method : {'original', 'approx'}
+        (Default value = `"approx"`)
+        The calculation method for latent correlations. Either `"original"` or `"approx"`. If `method = "approx"`, multilinear approximation method is used, which is much faster than the original method, see Yoon et al. (2021) for timing comparisons for various variable types. If `method = "original"`, optimization of the bridge inverse function is used.
     
     use_nearPD : bool
-        (Default value = :code:`True`)
-        :code:`use.nearPD = True` gets nearest positive definite matrix for the estimated latent correlation matrix with shrinkage adjustment by :code:`nu`. Output :code:`R` is the same as :code:`Rpointwise` if :code:`use.nearPD = False`.
+        (Default value = `True`)
+        `use.nearPD = True` gets nearest positive definite matrix for the estimated latent correlation matrix with shrinkage adjustment by `nu`. Output `R` is the same as `Rpointwise` if `use.nearPD = False`.
     
     nu : float
-        (Default value = :code:`0.001`)
-        Shrinkage parameter for the correlation matrix, must be between 0 and 1. Guarantees that the minimal eigenvalue of returned correlation matrix is greater or equal to :code:`nu`. When :code:`nu = 0`, no shrinkage is performed, the returned correlation matrix will be semi-positive definite but not necessarily strictly positive definite. When :code:`nu = 1`, the identity matrix is returned (not recommended).
+        (Default value = `0.001`)
+        Shrinkage parameter for the correlation matrix, must be between 0 and 1. Guarantees that the minimal eigenvalue of returned correlation matrix is greater or equal to `nu`. When `nu = 0`, no shrinkage is performed, the returned correlation matrix will be semi-positive definite but not necessarily strictly positive definite. When `nu = 1`, the identity matrix is returned (not recommended).
     
     tol : float
-        (Default value = :code:`1e-8`)
-        When :code:`method = "original"`, specifies the desired accuracy of the bridge function inversion via uniroot optimization and is passed to :code:`optimize`. When :code:`method = "approx"`, this parameter is ignored.
+        (Default value = `1e-8`)
+        When `method = "original"`, specifies the desired accuracy of the bridge function inversion via uniroot optimization and is passed to `optimize`. When `method = "approx"`, this parameter is ignored.
     
     ratio : float
-        (Default value = :code:`0.9`)
-        When :code:`method = "approx"`, specifies the boundary value for multilinear interpolation, must be between 0 and 1. When :code:`ratio = 0`, no linear interpolation is performed (the slowest execution) which is equivalent to :code:`method = "original"`. When :code:`ratio = 1`, linear interpolation is always performed (the fastest execution) but may lead to high approximation errors. The default (recommended) value controls the approximation error and has fast execution, see Yoon et al. (2021) for details. When :code:`method = "original"`, this parameter is ignored.
+        (Default value = `0.9`)
+        When `method = "approx"`, specifies the boundary value for multilinear interpolation, must be between 0 and 1. When `ratio = 0`, no linear interpolation is performed (the slowest execution) which is equivalent to `method = "original"`. When `ratio = 1`, linear interpolation is always performed (the fastest execution) but may lead to high approximation errors. The default (recommended) value controls the approximation error and has fast execution, see Yoon et al. (2021) for details. When `method = "original"`, this parameter is ignored.
     
     showplot : bool
-        (Default value = :code:`False`)
-        :code:`showplot = True` generates a seaborn object :code:`plot` with the heatmap of latent correlation matrix :code:`R`. :code:`plot = None` if :code:`showplot = False`.
+        (Default value = `False`)
+        `showplot = True` generates a seaborn object `plot` with the heatmap of latent correlation matrix `R`. `plot = None` if `showplot = False`.
     
     Returns
     -------
 
     R : numpy.array
-        (p x p) Estimated latent correlation matrix for :code:`X`.
+        (p x p) Estimated latent correlation matrix for `X`.
 
     Rpointwise : numpy.array
-        (p x p) Point-wise estimates of latent correlations for :code:`X`. This matrix is not guaranteed to be semi-positive definite. This is the original estimated latent correlation matrix without adjustment for positive-definiteness.
+        (p x p) Point-wise estimates of latent correlations for `X`. This matrix is not guaranteed to be semi-positive definite. This is the original estimated latent correlation matrix without adjustment for positive-definiteness.
 
-    plot : seaborn object or :code:`None`
-        Heatmap plot of latent correlation matrix :code:`R`, None if :code:`showplot = FALSE`.
+    plot : seaborn object or None
+        Heatmap plot of latent correlation matrix `R`, None if `showplot = False`.
 
     K : numpy.array
-        (p x p) Kendall Tau (Tau-a) Matrix for :code:`X`. 
+        (p x p) Kendall Tau (Tau-a) Matrix for `X`. 
 
     zratios : numpy.array
-        A (2 x p) matrix corresponding to each variable. Returns :code:`[numpy.nan, numpy.nan]` for continuous variable; proportion of zeros for binary/truncated variables; the cumulative proportions of zeros and ones (e.g. first value is proportion of zeros, second value is proportion of zeros and ones) for ternary variable.
+        A (2 x p) matrix corresponding to each variable. Returns `[numpy.nan, numpy.nan]` for continuous variable; proportion of zeros for binary/truncated variables; the cumulative proportions of zeros and ones (e.g. first value is proportion of zeros, second value is proportion of zeros and ones) for ternary variable.
 
     """
     

@@ -20,4 +20,4 @@ History
 0.1.3 (2022-01-07)
 ------------------
 
-* Integrate `jupyter-sphinx` extension for automatic output generation of examples.
+* Fix syntax errors for :code:`jupyter-execute` in README.txt
