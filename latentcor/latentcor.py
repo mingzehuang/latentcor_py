@@ -491,7 +491,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     for comb in combs:
         comb_select = combs_cp == comb
         if comb == "00":
-            R_lower[comb_select] = numpy.sin((numpy.pi / 2) * K_a_lower)
+            R_lower[comb_select] = numpy.sin((numpy.pi / 2) * K_a_lower[comb_select])
         else:
             K = K_a_lower[comb_select]
             """Here I need to deal with dimension degeneration"""
