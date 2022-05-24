@@ -20,4 +20,9 @@ History
 0.1.3 (2022-01-07)
 ------------------
 
-* Fix syntax errors for :code:`jupyter-execute` in README.txt
+* Fix syntax errors for :code:`jupyter-execute` in README.txt.
+
+0.1.4 (2022-05-23)
+------------------
+
+* Fix error for continuous estimation.
