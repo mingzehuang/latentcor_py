@@ -343,8 +343,10 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
         pyplot.show()
     elif (p == 2) & (showplot is True):
         plotX = seaborn.scatterplot(X)
-        pyplot.show()   
-    return X, plotX
+        pyplot.show()
+    result = dict()
+    result['X'] = X; result['plotX'] = plotX  
+    return result
 
 
 def get_tps(X, tru_prop = 0.05):
@@ -505,13 +507,15 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
     Rpointwise = R
     if use_nearPD is True:
-        R = corr_nearest(R)
+        R = corr_nearest(R, threshold=1e-08)
         R = (1 - nu) * R; numpy.fill_diagonal(R, 1)
     plot = None
     if showplot is True:
         plot = seaborn.heatmap(R)
         pyplot.show()
-    return R, Rpointwise, plot, K, zratios
+    result = dict()
+    result['R'] = R; result['Rpointwise'] = Rpointwise; result['plot'] = plot; result['K'] = K; result['zratios'] = zratios
+    return result
 
 
 
