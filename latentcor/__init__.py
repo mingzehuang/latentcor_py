@@ -11,5 +11,5 @@ from latentcor.latentcor import gen_data, get_tps, latentcor
 
 __author__ = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 __email__ = 'mingzehuang@gmail.com, christian.mueller@stat.uni-muenchen.de, irinag@stat.tamu.edu'
-__version__ = '0.1.4'
+__version__ = '0.2.0'
 
