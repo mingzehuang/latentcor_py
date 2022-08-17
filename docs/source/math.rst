@@ -24,7 +24,7 @@ exist monotonically increasing :math:`f=(f_{j})_{j=1}^{p}` with :math:`Z_{j}=f_{
 
 .. jupyter-execute::
 
-    print(gen_data(n = 6, tps = "con")[0])
+    print(gen_data(n = 6, tps = "con")['X'])
 
 *Definition of binary model*
 
@@ -32,7 +32,7 @@ A random :math:`X\in\cal{R}^{p}` satisfies the binary latent Gaussian copula mod
 
 .. jupyter-execute::
 
-    print(gen_data(n = 6, tps = "bin")[0])
+    print(gen_data(n = 6, tps = "bin")['X'])
 
 *Definition of ternary model*
 
@@ -40,7 +40,7 @@ A random :math:`X\in\cal{R}^{p}` satisfies the ternary latent Gaussian copula mo
 
 .. jupyter-execute::
 
-    print(gen_data(n = 6, tps = "ter")[0])
+    print(gen_data(n = 6, tps = "ter")['X'])
 
 *Definition of truncated or zero-inflated model*
 
@@ -48,7 +48,7 @@ A random :math:`X\in\cal{R}^{p}` satisfies the truncated latent Gaussian copula 
 
 .. jupyter-execute::
 
-    print(gen_data(n = 6, tps = "tru")[0])
+    print(gen_data(n = 6, tps = "tru")['X'])
 
 *Mixed latent Gaussian copula model*
 
@@ -56,7 +56,7 @@ The mixed latent Gaussian copula model jointly models :math:`W=(W_{1}, W_{2}, W_
 
 .. jupyter-execute::
 
-    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
+    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])['X']
     print(X[ :6, : ])
 
 **Moment-based estimation of latent correlation matrix based on bridge functions**
@@ -78,7 +78,7 @@ where :math:`n` is the sample size.
 
 .. jupyter-execute::
 
-    K = latentcor(X, tps = ["con", "bin", "ter", "tru"])[3]
+    K = latentcor(X, tps = ["con", "bin", "ter", "tru"])['K']
     print(K)
 
 Using :math:`F` and :math:`\widehat \tau_{jk}`, a moment-based estimator is :math:`\hat{\sigma}_{jk}=F^{-1}(\hat{\tau}_{jk})` with the corresponding :math:`\hat{\Sigma}` being consistent for :math:`\Sigma` :cite:p:`fan2017high,quan2018rank,yoon2020sparse`. 
@@ -261,19 +261,19 @@ The parameter :code:`tol` controls the desired accuracy of the minimizer and is 
 
 .. jupyter-execute::
    
-    print(estimate_original[3])
+    print(estimate_original['K'])
    
 * *Step 2*. For binary/truncated variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=\hat{\Delta}_{j}=\Phi^{-1}(\pi_{0j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}`. For ternary variable :math:`j`, set :math:`\hat{\mathbf{\Delta}}_{j}=(\hat{\Delta}_{j}^{1}, \hat{\Delta}_{j}^{2})` where :math:`\hat{\Delta}_{j}^{1}=\Phi^{-1}(\pi_{0j})` and :math:`\hat{\Delta}_{j}^{2}=\Phi^{-1}(\pi_{0j}+\pi_{1j})` with :math:`\pi_{0j}=\sum_{i=1}^{n}\frac{I(x_{ij}=0)}{n}` and :math:`\pi_{1j}=\sum_{i=1}^{n}\frac{I(x_{ij}=1)}{n}`.
 
 .. jupyter-execute::
    
-    print(estimate_original[4])
+    print(estimate_original['zratios'])
 
 * *Step 3* Compute :math:`F^{-1}(\hat{\tau}_{jk})` as :math:`\hat{r}_{jk}=argmin\{F(r)-\hat{\tau}_{jk}\}^{2}` solved via :code:`scipy.optimize.fminbound` function with accuracy :code:`tol`.
 
 .. jupyter-execute::
 
-    print(estimate_original[1])
+    print(estimate_original['Rpointwise'])
 
 *Approximation method (`method = "approx"`)*
 
@@ -299,7 +299,7 @@ boundary for faster computations with smaller memory footprint.
 .. jupyter-execute::
 
     estimate_approx = latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx")
-    print(estimate_approx[1])
+    print(estimate_approx['Rpointwise'])
 
 *Algorithm for Approximation method*
 
@@ -331,9 +331,9 @@ By default, :code:`latentcor` uses :code:`ratio = 0.9` as this value was recomme
 
 .. jupyter-execute::
 
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)[0])
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)[0])
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")[0])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.99)['R'])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "approx", ratio = 0.4)['R'])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], method = "original")['R'])
 
 The lower is the :code:`ratio`, the closer is the approximation method to original method
 (with :code:`ratio = 0` being equivalent to :code:`method = "original"`), but also the higher
@@ -387,8 +387,8 @@ size is small (and so the estimation error for each pairwise correlation is larg
 
 .. jupyter-execute::
 
-    X = gen_data(n = 6, tps = ["con", "bin", "ter", "tru"])[0]
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])[1])
+    X = gen_data(n = 6, tps = ["con", "bin", "ter", "tru"])['X']
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])['Rpointwise'])
 
 :code:`latentcor` automatically corrects the pointwise estimator to be positive definite by making
 two adjustments.
@@ -399,7 +399,7 @@ The user is notified of this adjustment through the message (supressed in previo
 
 .. jupyter-execute::
 
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])[0])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"])['R'])
 
 Second, :code:`latentcor` shrinks the adjusted matrix of correlations towards identity matrix using
 the parameter :code:`\nu` with default value of 0.001 (:code:`nu = 0.001`), so that the resulting
@@ -414,7 +414,7 @@ where :code:`\widetilde R` is the nearest positive semi-definite matrix to :code
 
 .. jupyter-execute::
 
-    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)[0])
+    print(latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)['R'])
 
 As a result, :code:`R` and :code:`Rpointwise` could be quite different when sample size :code:`n`
 is small. When :code:`n` is large and :code:`p` is moderate, the difference is typically driven by
@@ -422,10 +422,10 @@ parameter :code:`nu`.
 
 .. jupyter-execute::
 
-    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])[0]
+    X = gen_data(n = 100, tps = ["con", "bin", "ter", "tru"])['X']
     out = latentcor(X, tps = ["con", "bin", "ter", "tru"], nu = 0.001)
-    print(out[1])
-    print(out[0])
+    print(out['Rpointwise'])
+    print(out['R'])
 
 Appendix
 --------
