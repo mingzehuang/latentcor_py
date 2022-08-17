@@ -26,3 +26,9 @@ History
 ------------------
 
 * Fix error for continuous estimation.
+
+0.1.5 (2022-08-16)
+------------------
+
+* Increase maximum iteration for positive definiteness adjustment.
+* Make function outputs as dictionary.
