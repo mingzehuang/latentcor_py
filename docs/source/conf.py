@@ -25,7 +25,7 @@ copyright = '2022, Mingze Huang, Christian L. Müller, Irina Gaynanova'
 author = 'Mingze Huang, Christian L. Müller, Irina Gaynanova'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.5'
+release = '0.2.0'
 
 # -- General configuration ---------------------------------------------------
 
