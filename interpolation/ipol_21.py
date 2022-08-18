@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath('../latentcor'))
 import pickle
 import lzma
 from scipy import stats
-from scipy.interpolate import RegularGridInterpolator
+from scipy.interpolate._rgi import RegularGridInterpolator
 from joblib import Parallel, delayed
 
 def TB_value(tau, zratio1_1, zratio2_1):

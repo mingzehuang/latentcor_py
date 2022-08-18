@@ -2,12 +2,12 @@ import numpy
 import os
 import sys
 """sys.path.append('/scratch/user/sharkmanhmz/latentcor_py/latentcor')"""
-sys.path.insert(0, os.path.abspath('./latentcor'))
+sys.path.insert(0, os.path.abspath('../latentcor'))
 """import internal"""
 import pickle
 import lzma
 from scipy import stats
-from scipy.interpolate import RegularGridInterpolator
+from scipy.interpolate._rgi import RegularGridInterpolator
 from joblib import Parallel, delayed
 
 def BC_value(tau, zratio1_1):
