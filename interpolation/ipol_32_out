@@ -1,0 +1,105 @@
+exception calling callback for <Future at 0x2acad0bf7f40 state=finished raised BrokenProcessPool>
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 404, in _process_worker
+    call_item = call_queue.get(block=True, timeout=timeout)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 524, in load_temporary_memmap
+    obj = load(filename, mmap_mode)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 585, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 504, in _unpickle
+    obj = unpickler.load()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/pickle.py", line 1212, in load
+    dispatch[key[0]](self)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 342, in load_build
+    self.stack.append(array_wrapper.read(self))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 185, in read
+    array = self.read_mmap(unpickler)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 158, in read_mmap
+    marray = make_memmap(unpickler.filename,
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/backports.py", line 45, in make_memmap
+    raise NotImplementedError(
+NotImplementedError: 'joblib.backports.make_memmap' should not be used if numpy is not installed.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/_base.py", line 625, in _invoke_callbacks
+    callback(self)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 359, in __call__
+    self.parallel.dispatch_next()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 792, in dispatch_next
+    if not self.dispatch_one_batch(self._original_iterator):
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 859, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 777, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 531, in apply_async
+    future = self._workers.submit(SafeFunction(func))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/reusable_executor.py", line 177, in submit
+    return super(_ReusablePoolExecutor, self).submit(
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 1102, in submit
+    raise self._flags.broken
+joblib.externals.loky.process_executor.BrokenProcessPool: A task has failed to un-serialize. Please ensure that the arguments of the function are all picklable.
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 404, in _process_worker
+    call_item = call_queue.get(block=True, timeout=timeout)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 524, in load_temporary_memmap
+    obj = load(filename, mmap_mode)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 585, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 504, in _unpickle
+    obj = unpickler.load()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/pickle.py", line 1212, in load
+    dispatch[key[0]](self)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 342, in load_build
+    self.stack.append(array_wrapper.read(self))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 185, in read
+    array = self.read_mmap(unpickler)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/numpy_pickle.py", line 158, in read_mmap
+    marray = make_memmap(unpickler.filename,
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/backports.py", line 45, in make_memmap
+    raise NotImplementedError(
+NotImplementedError: 'joblib.backports.make_memmap' should not be used if numpy is not installed.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/user/sharkmanhmz/latentcor_py/latentcor_py/interpolation/ipol_32.py", line 35, in <module>
+    value_NT = Parallel(n_jobs=68)(delayed(NT_par)(i) for i in range(len(points_NT_tau_grid)))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 1054, in __call__
+    self.retrieve()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 933, in retrieve
+    self._output.extend(job.get(timeout=self.timeout))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 542, in wrap_future_result
+    return future.result(timeout=timeout)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/concurrent/futures/_base.py", line 445, in result
+    return self.__get_result()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/concurrent/futures/_base.py", line 390, in __get_result
+    raise self._exception
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/_base.py", line 625, in _invoke_callbacks
+    callback(self)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 359, in __call__
+    self.parallel.dispatch_next()
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 792, in dispatch_next
+    if not self.dispatch_one_batch(self._original_iterator):
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 859, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/parallel.py", line 777, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 531, in apply_async
+    future = self._workers.submit(SafeFunction(func))
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/reusable_executor.py", line 177, in submit
+    return super(_ReusablePoolExecutor, self).submit(
+  File "/sw/eb/sw/Python/3.9.6-GCCcore-11.2.0/lib/python3.9/site-packages/joblib/externals/loky/process_executor.py", line 1102, in submit
+    raise self._flags.broken
+joblib.externals.loky.process_executor.BrokenProcessPool: A task has failed to un-serialize. Please ensure that the arguments of the function are all picklable.

@@ -7,7 +7,7 @@
 #SBATCH --job-name=ipol_33            #Set the job name to
 #SBATCH --time=6-04:00:00               #Set the wall clock limit to 6hr and 30min
 #SBATCH --nodes=1                    #Request 1 node
-#SBATCH --ntasks-per-node=72         #Request 8 tasks/cores per node
+#SBATCH --ntasks-per-node=68         #Request 8 tasks/cores per node
 #SBATCH --mem=80GB                     #Request 8GB per node
 #SBATCH --output=ipol_33.%j            #Send stdout/err to "Example2Out.[jobID]"
 
@@ -16,6 +16,6 @@
 #SBATCH --mail-user=sharkmanhmz@tamu.edu    #Send all emails
 
 #First Executable Line
-module load Anaconda3/2021.05
+module load Python/3.9.6-GCCcore-11.2.0
 
-python ipol_33.py
+python ipol_33.py 2> ipol_33_out

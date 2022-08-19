@@ -17,6 +17,6 @@
 #SBATCH --mail-user=sharkmanhmz@tamu.edu    #Send all emails
 
 #First Executable Line
-module load Anaconda3/2021.05
+module load Python/3.9.6-GCCcore-11.2.0
 
-python ipol_21.py 
+python ipol_21.py 2> ipol_21_out

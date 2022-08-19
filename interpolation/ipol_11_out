@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/scratch/user/sharkmanhmz/latentcor_py/latentcor_py/interpolation/ipol_21.py", line 20, in <module>
+    tau_grid = numpy.array([-1, *stats.norm.cdf(numpy.linspace(-1.2, 1.2, 41), scale = .5) * 2 - 1, 1], dtype = numpy.float32)
+NameError: name 'numpy' is not defined
