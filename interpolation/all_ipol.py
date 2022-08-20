@@ -1,7 +1,7 @@
 import os
 import sys
 """sys.path.append('/scratch/user/sharkmanhmz/latentcor_py/latentcor')"""
-sys.path.insert(0, os.path.abspath('../latentcor'))
+"""sys.path.insert(0, os.path.abspath('../latentcor'))"""
 import pickle
 import lzma
 
