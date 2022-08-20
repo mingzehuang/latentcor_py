@@ -32,7 +32,7 @@ def NN_par(i):
     out = NN_value(tau = points_NN_tau_grid[i], zratio1_1 = points_NN_zratio1_1_grid[i], \
                                                        zratio1_2 = points_NN_zratio1_2_grid[i], zratio2_1 = points_NN_zratio2_1_grid[i], zratio2_2 = points_NN_zratio2_2_grid[i])
     return out
-value_NN = Parallel(n_jobs=68)(delayed(NN_par)(i) for i in range(len(points_NN_tau_grid)))
+value_NN = Parallel(n_jobs=68, backend = 'multiprocessing')(delayed(NN_par)(i) for i in range(len(points_NN_tau_grid)))
 value_NN = numpy.array(value_NN, dtype=numpy.float32).reshape(points_NN_meshgrid[0].shape)
 print(value_NN)
 
