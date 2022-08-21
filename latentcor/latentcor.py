@@ -514,7 +514,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     R = DataFrame(R, index = colnames, columns = colnames)
     plot = None
     if showplot is True:
-        plot = seaborn.heatmap(R)
+        plot = seaborn.heatmap(R, linewidths=.5).set(title='Estimated latent correlation')
         pyplot.show()
     result = dict()
     result['R'] = R; result['Rpointwise'] = Rpointwise; result['plot'] = plot; result['K'] = K; result['zratios'] = zratios
