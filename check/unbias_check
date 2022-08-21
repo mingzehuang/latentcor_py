@@ -1,1 +1,50 @@
-import latentcor
+import numpy
+import pandas
+from latentcor import gen_data, get_tps, latentcor
+import seaborn
+from matplotlib import pyplot
+cp1 = "expo"; cp2 = "cube"
+for tp1 in ["con", "bin", "ter", "tru"]:
+  for tp2 in ["con", "bin", "ter", "tru"]:
+    rhorep = numpy.linspace(-1, 1, 201); Rrep = numpy.full((len(rhorep), 3), numpy.nan)
+    Rrep_org = Rrep_approx = Rrep_pearson = dict()
+    for rep in range(len(rhorep)):
+      rho = rhorep[rep]
+      X = gen_data(n = 1000, rhos = rho, tps = [tp1, tp2], copulas = [cp1, cp2])['X']
+      R_org = latentcor(X, tps = [tp1, tp2], method = "original")['R']
+      R_approx = latentcor(X, tps = [tp1, tp2], method = "approx")['R']
+      Rrep[rep, 0] = R_org.loc[1, 0]; Rrep[rep, 1] = R_approx.loc[1, 0]; Rrep[rep, 2] = pandas.DataFrame(X).corr().loc[1, 0]
+    Rrep_org_name = "R_" + cp1 + "_" + cp2 + "_" + tp1 + "_" + tp2 + "_org"; Rrep_org[Rrep_org_name] = Rrep[ : , 0]
+    Rrep_approx_name = "R_" + cp1 + "_" + cp2 + "_" + tp1 + "_" + tp2 + "_approx"; Rrep_approx[Rrep_approx_name] = Rrep[ : , 1]
+    Rrep_pearson_name = "R_" + cp1 + "_" + cp2 + "_" + tp1 + "_" + tp2 + "pearson"; Rrep_pearson[Rrep_pearson_name] = Rrep[ : , 2]
+
+    if (tp1 == "con"):
+        type1 = "continuous"
+    elif (tp1 == "bin"):
+        type1 = "binary"
+    elif (tp1 == "tru"):
+        type1 = "truncated"
+    elif (tp1 == "ter"):
+        type1 = "ternary"
+    if (tp2 == "con"):
+        type2 = "continuous"
+    elif (tp2 == "bin"):
+        type2 = "binary"
+    elif (tp2 == "tru"):
+        type2 = "truncated"
+    elif (tp2 == "ter"):
+        type2 = "ternary"
+    
+    data_org = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_org[Rrep_org_name])), columns = ["True latent correlation", "Estimated latent correlation (original)"])
+    X_plot = Y_plot = numpy.linspace(-1, 1, 100)
+    plot_org = seaborn.scatterplot(data = data_org, x = "True latent correlation", y = "Estimated latent correlation (original)").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
+    pyplot.plot(X_plot, Y_plot, color='r')
+    pyplot.show()
+    data_approx = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_approx[Rrep_approx_name])), columns = ["True latent correlation", "Estimated latent correlation (approx)"])
+    plot_approx = seaborn.scatterplot(data = data_approx, x = "True latent correlation", y = "Estimated latent correlation (approx)").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
+    pyplot.plot(X_plot, Y_plot, color='r')
+    pyplot.show()
+    data_pearson = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_pearson[Rrep_pearson_name])), columns = ["True latent correlation", "Pearson correlation"])
+    plot_pearson = seaborn.scatterplot(data = data_pearson, x = "True latent correlation", y = "Pearson correlation").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
+    pyplot.plot(X_plot, Y_plot, color='r')
+    pyplot.show()

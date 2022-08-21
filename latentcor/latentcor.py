@@ -457,6 +457,8 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     """
     if isinstance(X, DataFrame):
         colnames = X.columns
+    else:
+        colnames = None
     X = numpy.array(X, dtype = numpy.float32); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
