@@ -3,6 +3,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
 import numpy
+from pandas import DataFrame
 from statsmodels.stats.correlation_tools import corr_nearest
 import seaborn
 from matplotlib import pyplot
@@ -454,7 +455,8 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         A (2 x p) matrix corresponding to each variable. Returns `[numpy.nan, numpy.nan]` for continuous variable; proportion of zeros for binary/truncated variables; the cumulative proportions of zeros and ones (e.g. first value is proportion of zeros, second value is proportion of zeros and ones) for ternary variable.
 
     """
-    
+    if isinstance(X, DataFrame):
+        colnames = X.columns
     X = numpy.array(X, dtype = numpy.float32); nu = float(nu); tol = float(tol); ratio = float(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
@@ -505,10 +507,11 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     K = numpy.zeros((p, p), dtype = numpy.float32)
     K[cp] = K_a_lower; R[cp] = R_lower
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
-    Rpointwise = R
+    Rpointwise = DataFrame(R, index = colnames, columns = colnames)
     if use_nearPD is True:
         R = corr_nearest(R, threshold=1e-08, n_fact = 1000)
         R = (1 - nu) * R; numpy.fill_diagonal(R, 1)
+    R = DataFrame(R, index = colnames, columns = colnames)
     plot = None
     if showplot is True:
         plot = seaborn.heatmap(R)
