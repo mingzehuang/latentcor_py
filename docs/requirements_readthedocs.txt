@@ -125,7 +125,6 @@ python-slugify==6.1.2
 pytz==2021.3
 pytz-deprecation-shim==0.1.0.post0
 pywin32-ctypes==0.2.0
-pywinpty==1.1.6
 PyYAML==5.4.1
 pyyaml_env_tag==0.1
 pyzmq==22.3.0
