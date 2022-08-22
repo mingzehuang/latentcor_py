@@ -511,7 +511,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
     Rpointwise = DataFrame(R, index = colnames, columns = colnames)
     if use_nearPD is True:
-        R = corr_nearest(R, threshold=1e-08, n_fact = 1000)
+        R = corr_nearest(R, threshold = 0, n_fact = 1000)
         R = (1 - nu) * R; numpy.fill_diagonal(R, 1)
     R = DataFrame(R, index = colnames, columns = colnames)
     plot = None
