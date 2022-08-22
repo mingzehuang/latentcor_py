@@ -43,3 +43,8 @@ History
 ------------------
 
 * Update README file.
+
+0.2.3 (2022-08-22)
+------------------
+
+* Correct update history.
