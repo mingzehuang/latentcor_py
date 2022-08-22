@@ -34,10 +34,12 @@ History
 * Make function outputs as dictionary.
 
 0.2.1 (2022-08-22)
+------------------
 
 * Make output latent correlation matrix as pandas.DataFrame.
 * Polish output heatmap.
 
 0.2.2 (2022-08-22)
+------------------
 
 * Update README file.
