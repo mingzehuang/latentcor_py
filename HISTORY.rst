@@ -37,3 +37,7 @@ History
 
 * Make output latent correlation matrix as pandas.DataFrame.
 * Polish output heatmap.
+
+0.2.2 (2022-08-22)
+
+* Update README file.
