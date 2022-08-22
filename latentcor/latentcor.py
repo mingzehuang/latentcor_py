@@ -439,16 +439,16 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     Returns
     -------
 
-    R : numpy.array
+    R : pandas.DataFrame
         (p x p) Estimated latent correlation matrix for `X`.
 
-    Rpointwise : numpy.array
+    Rpointwise : pandas.DataFrame
         (p x p) Point-wise estimates of latent correlations for `X`. This matrix is not guaranteed to be semi-positive definite. This is the original estimated latent correlation matrix without adjustment for positive-definiteness.
 
     plot : seaborn object or None
         Heatmap plot of latent correlation matrix `R`, None if `showplot = False`.
 
-    K : numpy.array
+    K : pandas.DataFrame
         (p x p) Kendall Tau (Tau-a) Matrix for `X`. 
 
     zratios : numpy.array
@@ -509,6 +509,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
     K = numpy.zeros((p, p), dtype = numpy.float32)
     K[cp] = K_a_lower; R[cp] = R_lower
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
+    K = DataFrame(K, index = colnames, columns = colnames)
     Rpointwise = DataFrame(R, index = colnames, columns = colnames)
     if use_nearPD is True:
         R = corr_nearest(R, threshold = 0, n_fact = 1000)
