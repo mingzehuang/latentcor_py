@@ -343,7 +343,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
         plotX = seaborn.histplot(X)
         pyplot.show()
     elif (p == 2) & (showplot is True):
-        plotX = seaborn.scatterplot(X)
+        plotX = seaborn.scatterplot(data = X, x = X[ : , 0], y = X[ : , 1])
         pyplot.show()
     result = dict()
     result['X'] = X; result['plotX'] = plotX  
