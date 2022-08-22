@@ -27,8 +27,13 @@ History
 
 * Fix error for continuous estimation.
 
-0.1.5 (2022-08-16)
+0.2.0 (2022-08-16)
 ------------------
 
 * Increase maximum iteration for positive definiteness adjustment.
 * Make function outputs as dictionary.
+
+0.2.1 (2022-08-16)
+
+* Make output latent correlation matrix as pandas.DataFrame.
+* Polish output heatmap.
