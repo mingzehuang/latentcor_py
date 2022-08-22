@@ -33,7 +33,7 @@ History
 * Increase maximum iteration for positive definiteness adjustment.
 * Make function outputs as dictionary.
 
-0.2.1 (2022-08-16)
+0.2.1 (2022-08-22)
 
 * Make output latent correlation matrix as pandas.DataFrame.
 * Polish output heatmap.
