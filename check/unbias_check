@@ -34,17 +34,21 @@ for tp1 in ["con", "bin", "ter", "tru"]:
         type2 = "truncated"
     elif (tp2 == "ter"):
         type2 = "ternary"
-    
-    data_org = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_org[Rrep_org_name])), columns = ["True latent correlation", "Estimated latent correlation (original)"])
+    fig, ax = pyplot.subplots(1, 3)
+    "fig.tight_layout()"
+    fig.set_figheight(5); fig.set_figwidth(18)
+    pyplot.subplot(1, 3, 1)
     X_plot = Y_plot = numpy.linspace(-1, 1, 100)
+    data_pearson = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_pearson[Rrep_pearson_name])), columns = ["True latent correlation", "Pearson correlation"])
+    plot_pearson = seaborn.scatterplot(data = data_pearson, x = "True latent correlation", y = "Pearson correlation").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
+    pyplot.plot(X_plot, Y_plot, color='r')
+    pyplot.subplot(1, 3, 2)
+    data_org = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_org[Rrep_org_name])), columns = ["True latent correlation", "Estimated latent correlation (original)"])
     plot_org = seaborn.scatterplot(data = data_org, x = "True latent correlation", y = "Estimated latent correlation (original)").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
     pyplot.plot(X_plot, Y_plot, color='r')
-    pyplot.show()
+    pyplot.subplot(1, 3, 3)
     data_approx = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_approx[Rrep_approx_name])), columns = ["True latent correlation", "Estimated latent correlation (approx)"])
     plot_approx = seaborn.scatterplot(data = data_approx, x = "True latent correlation", y = "Estimated latent correlation (approx)").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
     pyplot.plot(X_plot, Y_plot, color='r')
     pyplot.show()
-    data_pearson = pandas.DataFrame(numpy.column_stack((rhorep, Rrep_pearson[Rrep_pearson_name])), columns = ["True latent correlation", "Pearson correlation"])
-    plot_pearson = seaborn.scatterplot(data = data_pearson, x = "True latent correlation", y = "Pearson correlation").set(title = type1 + " vs. " + type2 + " (" + cp1 + " vs. " + cp2 + ")")
-    pyplot.plot(X_plot, Y_plot, color='r')
-    pyplot.show()
+
