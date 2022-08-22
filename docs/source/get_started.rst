@@ -6,24 +6,20 @@ A simple example with two variables
 
 Let's import :code:`gen_data`, :code:`get_tps` and :code:`latentcor` from package :code:`latentcor`.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> from latentcor import gen_data, get_tps, latentcor
+    from latentcor import gen_data, get_tps, latentcor
 
 First, we will generate a pair of variables with different types using a sample size :code:`n=100` which will serve as example data. Here first variable will be ternary, and second variable will be continuous.
 
-.. code-block::
+.. jupyter-execute::
     
-    >>> simdata = gen_data(n = 100, tps = ["ter", "con"])
-    >>> print(simdata['X'][ :6, :])
-    [[ 0.          0.28048824]
-     [ 1.         -2.15690986]
-     [ 2.         -0.11102735]
-     [ 1.         -0.95388833]
-     [ 2.          0.72836191]
-     [ 2.          1.24461087]]
-    >>> print(simdata[1])
-    None
+    simdata = gen_data(n = 100, tps = ["ter", "con"])
+    print(simdata['X'][ :6, :])
+
+.. jupyter-execute::
+
+    simdata['plotX']
 
 The output of `gen_data` is a list with 2 elements:
 
@@ -33,31 +29,33 @@ The output of `gen_data` is a list with 2 elements:
 
 Then we use :code:`get_tps` to guess data types automatically.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> data_types = get_tps(simdata['X'])
-    >>> print(data_types) 
-    ['ter' 'con']
+    data_types = get_tps(simdata['X'])
+    print(data_types) 
 
 Then we can estimate the latent correlation matrix based on these 2 variables using :code:`latentcor` function.
 
-.. code-block::
+.. jupyter-execute::
 
-    >>> estimate = latentcor(simdata['X'], tps = data_types)
-    >>> print(estimate['R'])
-    [[1.         0.37879062]
-     [0.37879062 1.        ]]
-    >>> print(estimate['Rpointwise'])
-    [[1.        0.3791698]
-     [0.3791698 1.       ]]
-    >>> print(estimate['plot']) 
-    None
-    >>> print(estimate['K'])
-    [[1.         0.20646465]
-     [0.20646465 1.        ]]
-    >>> print(estimate['zratios'])
-    [[0.3 nan]
-     [0.8 nan]]     
+    estimate = latentcor(simdata['X'], tps = data_types)
+    print(estimate['R'])
+
+.. jupyter-execute::
+
+    print(estimate['Rpointwise'])
+
+.. jupyter-execute::
+
+    print(estimate['plot']) 
+
+.. jupyter-execute::
+
+    print(estimate['K'])
+
+.. jupyter-execute::
+    
+    print(estimate['zratios'])
 
 The output of :code:`estimate` is a list with several elements:
 
