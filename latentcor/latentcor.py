@@ -13,6 +13,7 @@ from joblib import Parallel, delayed
 import lzma
 import pickle
 import pkg_resources
+from sys import exit
 
 with lzma.open(pkg_resources.resource_stream("latentcor", "all_ipol.xz"), "rb") as f:
     ipol_10, ipol_11, ipol_20, ipol_21, ipol_22, ipol_30, ipol_31, ipol_32, ipol_33 = pickle.load(f)
