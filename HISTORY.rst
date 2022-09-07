@@ -48,3 +48,8 @@ History
 ------------------
 
 * Correct update history.
+
+0.2.4 (2022-09-07)
+------------------
+
+* Correct incompatible versions.
