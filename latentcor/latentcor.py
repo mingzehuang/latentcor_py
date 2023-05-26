@@ -213,23 +213,23 @@ class r_switch(object):
                        zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ])])
     def ipol_switch(self, comb, K, zratio1, zratio2):
         if comb == "10":
-            out = ipol_10(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"))))
+            out = ipol_10(numpy.column_stack((K, zratio1[0, : ])))
         elif comb == "11":
-            out = ipol_11(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio2[0, : ].astype("double"))))
+            out = ipol_11(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
         elif comb == "20":
-            out = ipol_20(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"))))
+            out = ipol_20(numpy.column_stack((K, zratio1[0, : ])))
         elif comb == "21":
-            out = ipol_21(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio2[0, : ].astype("double"))))
+            out = ipol_21(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
         elif comb == "22":
-            out = ipol_22(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio2[0, : ].astype("double"))))           
+            out = ipol_22(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))           
         elif comb == "30":
-            out = ipol_30(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio1[1, : ].astype("double"))))
+            out = ipol_30(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ])))
         elif comb == "31":
-            out = ipol_31(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio1[1, : ].astype("double"), zratio2[0, : ].astype("double"))))
+            out = ipol_31(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
         elif comb == "32":
-            out = ipol_32(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio1[1, : ].astype("double"), zratio2[0, : ].astype("double"))))
+            out = ipol_32(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
         elif comb == "33":
-            out = ipol_33(numpy.column_stack((K.astype("double"), zratio1[0, : ].astype("double"), zratio1[1, : ].astype("double"), zratio2[0, : ].astype("double"), zratio2[1, : ].astype("double"))))
+            out = ipol_33(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ], zratio2[1, : ])))
         else:
             print("Unrecognized type.")
             exit()
