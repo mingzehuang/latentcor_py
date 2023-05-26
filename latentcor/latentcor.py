@@ -213,23 +213,23 @@ class r_switch(object):
                        zratio2[0, : ] * (1 - zratio2[0, : ]) + (1 - zratio2[1, : ]) * (zratio2[1, : ] - zratio2[0, : ])])
     def ipol_switch(self, comb, K, zratio1, zratio2):
         if comb == "10":
-            out = ipol_10(numpy.column_stack((K, zratio1[0, : ])))
+            out = ipol_10(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"))))
         elif comb == "11":
-            out = ipol_11(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
+            out = ipol_11(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio2[0, : ].astype("float"))))
         elif comb == "20":
-            out = ipol_20(numpy.column_stack((K, zratio1[0, : ])))
+            out = ipol_20(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"))))
         elif comb == "21":
-            out = ipol_21(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))
+            out = ipol_21(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio2[0, : ].astype("float"))))
         elif comb == "22":
-            out = ipol_22(numpy.column_stack((K, zratio1[0, : ], zratio2[0, : ])))           
+            out = ipol_22(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio2[0, : ].astype("float"))))           
         elif comb == "30":
-            out = ipol_30(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ])))
+            out = ipol_30(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio1[1, : ].astype("float"))))
         elif comb == "31":
-            out = ipol_31(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
+            out = ipol_31(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio1[1, : ].astype("float"), zratio2[0, : ].astype("float"))))
         elif comb == "32":
-            out = ipol_32(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ])))
+            out = ipol_32(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio1[1, : ].astype("float"), zratio2[0, : ].astype("float"))))
         elif comb == "33":
-            out = ipol_33(numpy.column_stack((K, zratio1[0, : ], zratio1[1, : ], zratio2[0, : ], zratio2[1, : ])))
+            out = ipol_33(numpy.column_stack((K.astype("float"), zratio1[0, : ].astype("float"), zratio1[1, : ].astype("float"), zratio2[0, : ].astype("float"), zratio2[1, : ].astype("float"))))
         else:
             print("Unrecognized type.")
             exit()
@@ -239,7 +239,7 @@ class r_switch(object):
             zratio1[0, : ] = zratio1[0, : ] / zratio1[1, : ]
         if comb == "33":
             zratio2[0, : ] = zratio2[0, : ] / zratio2[1, : ]
-        out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K.astype("float"), zratio1 = zratio1.astype("float"), zratio2 = zratio2.astype("float"))
+        out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K, zratio1 = zratio1, zratio2 = zratio2)
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
         bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2).flatten()
