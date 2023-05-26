@@ -239,7 +239,7 @@ class r_switch(object):
             zratio1[0, : ] = zratio1[0, : ] / zratio1[1, : ]
         if comb == "33":
             zratio2[0, : ] = zratio2[0, : ] / zratio2[1, : ]
-        out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K, zratio1 = zratio1, zratio2 = zratio2)
+        out = r_switch.ipol_switch(self = r_switch, comb = comb, K = K.astype("float"), zratio1 = zratio1.astype("float"), zratio2 = zratio2.astype("float"))
         return out
     def r_approx(self, K, zratio1, zratio2, comb, tol, ratio):
         bound = r_switch.bound_switch(self = r_switch, comb = comb, zratio1 = zratio1, zratio2 = zratio2).flatten()
