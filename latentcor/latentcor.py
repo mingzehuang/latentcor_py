@@ -47,7 +47,7 @@ class fromZtoX(object):
         return x
     """Define truncated data"""
     def tru (self, u, xp):
-        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = numpy.float32); x[u > q] = u[u > q] - q
+        q = numpy.quantile(u, xp[0]); x = numpy.zeros(len(u), dtype = numpy.double); x[u > q] = u[u > q] - q
         return x
     """Define ternary data"""
     def ter (self, u, xp):
@@ -121,61 +121,61 @@ class r_sol(object):
         return method(self = r_sol, r = r, zratio1 = zratio1, zratio2 = zratio2)
     def bridge_10(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0])
-        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(4 * stats.multivariate_normal.cdf(x = [de1, 0], cov = mat1) - 2 * zratio1[0])
+        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(4 * stats.multivariate_normal.cdf(x = [de1, 0], cov = mat1) - 2 * zratio1[0])
         return res
     def bridge_11(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(2 * (stats.multivariate_normal.cdf(x = [de1, de2], cov = mat1) - zratio1[0] * zratio2[0]))
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(2 * (stats.multivariate_normal.cdf(x = [de1, de2], cov = mat1) - zratio1[0] * zratio2[0]))
         return res
     def bridge_20(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0])
-        mat1 = numpy.array([[1, 1 / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        mat2 = numpy.array([[1, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), r, 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(- 2 * stats.multivariate_normal.cdf(x = [- de1, 0], cov = mat1) + 4 * stats.multivariate_normal.cdf(x = [- de1, 0, 0], cov = mat2))
+        mat1 = numpy.array([[1, 1 / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        mat2 = numpy.array([[1, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [1 / numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), r, 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(- 2 * stats.multivariate_normal.cdf(x = [- de1, 0], cov = mat1) + 4 * stats.multivariate_normal.cdf(x = [- de1, 0, 0], cov = mat2))
         return res
     def bridge_21(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, - r, 1 / numpy.sqrt(2)], [- r, 1, - r / numpy.sqrt(2)], [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        mat2 = numpy.array([[1, 0, - 1 / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [- 1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(2 * (1 - zratio1[0]) * zratio2[0] - 2 * stats.multivariate_normal.cdf(x = [- de1, de2, 0], cov = mat1) \
+        mat1 = numpy.array([[1, - r, 1 / numpy.sqrt(2)], [- r, 1, - r / numpy.sqrt(2)], [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        mat2 = numpy.array([[1, 0, - 1 / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [- 1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(2 * (1 - zratio1[0]) * zratio2[0] - 2 * stats.multivariate_normal.cdf(x = [- de1, de2, 0], cov = mat1) \
             - 2 * stats.multivariate_normal.cdf(x = [-de1, de2, 0], cov = mat2))
         return res
     def bridge_22(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1[0]); de2 = stats.norm.ppf(zratio2[0])
         mat1 = numpy.array([[1, 0 , 1 / numpy.sqrt(2), - r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2), 1 / numpy.sqrt(2)], \
-               [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1, - r], [- r / numpy.sqrt(2), 1 / numpy.sqrt(2), - r, 1]], dtype = numpy.float32, ndmin = 2)
+               [1 / numpy.sqrt(2), - r / numpy.sqrt(2), 1, - r], [- r / numpy.sqrt(2), 1 / numpy.sqrt(2), - r, 1]], dtype = numpy.double, ndmin = 2)
         mat2 = numpy.array([[1, r, 1 / numpy.sqrt(2), r / numpy.sqrt(2)], [r, 1, r / numpy.sqrt(2), 1 / numpy.sqrt(2)], \
-               [1 / numpy.sqrt(2), r /numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), 1 / numpy.sqrt(2), r, 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(- 2 * stats.multivariate_normal.cdf(x = [- de1, - de2, 0, 0], cov = mat1) \
+               [1 / numpy.sqrt(2), r /numpy.sqrt(2), 1, r], [r / numpy.sqrt(2), 1 / numpy.sqrt(2), r, 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(- 2 * stats.multivariate_normal.cdf(x = [- de1, - de2, 0, 0], cov = mat1) \
             + 2 * stats.multivariate_normal.cdf(x = [- de1, - de2, 0, 0], cov = mat2))
         return res
     def bridge_30(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1)
-        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        mat2 = numpy.array([[1, 0, r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [r / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(4 * stats.multivariate_normal.cdf(x = [de1[1], 0], cov = mat1) - 2 * zratio1[1] \
+        mat1 = numpy.array([[1, r / numpy.sqrt(2)], [r / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        mat2 = numpy.array([[1, 0, r / numpy.sqrt(2)], [0, 1, - r / numpy.sqrt(2)], [r / numpy.sqrt(2), - r / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(4 * stats.multivariate_normal.cdf(x = [de1[1], 0], cov = mat1) - 2 * zratio1[1] \
             + 4 * stats.multivariate_normal.cdf(x = [de1[0], de1[1], 0], cov = mat2) - 2 * zratio1[0] * zratio1[1])
         return res
     def bridge_31(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(2 * stats.multivariate_normal.cdf(x = [de2, de1[1]], cov = mat1) * (1 - zratio1[0]) \
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(2 * stats.multivariate_normal.cdf(x = [de2, de1[1]], cov = mat1) * (1 - zratio1[0]) \
             - 2 * zratio1[1] * (zratio2[0] - stats.multivariate_normal.cdf(x = [de2, de1[0]], cov = mat1)))
         return res
     def bridge_32(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2[0])
-        mat1 = numpy.array([[1, 0, 0], [0, 1, r], [0, r, 1]], dtype = numpy.float32, ndmin = 2)
-        mat2 = numpy.array([[1, 0, 0, r / numpy.sqrt(2)], [0, 1, - r, r / numpy.sqrt(2)], [0, - r, 1, - 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), - 1 / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        mat3 = numpy.array([[1, 0, r, r / numpy.sqrt(2)], [0, 1, 0, r / numpy.sqrt(2)], [r, 0, 1, 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), 1 / numpy.sqrt(2), 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(- 2 * (1 - zratio1[0]) * zratio1[1] + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], de2], cov = mat1) \
+        mat1 = numpy.array([[1, 0, 0], [0, 1, r], [0, r, 1]], dtype = numpy.double, ndmin = 2)
+        mat2 = numpy.array([[1, 0, 0, r / numpy.sqrt(2)], [0, 1, - r, r / numpy.sqrt(2)], [0, - r, 1, - 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), - 1 / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        mat3 = numpy.array([[1, 0, r, r / numpy.sqrt(2)], [0, 1, 0, r / numpy.sqrt(2)], [r, 0, 1, 1 / numpy.sqrt(2)], [r / numpy.sqrt(2), r / numpy.sqrt(2), 1 / numpy.sqrt(2), 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(- 2 * (1 - zratio1[0]) * zratio1[1] + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], de2], cov = mat1) \
               + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], - de2, 0], cov = mat2) + 2 * stats.multivariate_normal.cdf(x = [- de1[0], de1[1], - de2, 0], cov = mat3))
         return res
     def bridge_33(self, r, zratio1, zratio2):
         de1 = stats.norm.ppf(zratio1); de2 = stats.norm.ppf(zratio2)
-        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.float32, ndmin = 2)
-        res = numpy.float32(2 * stats.multivariate_normal.cdf(x = [de1[1], de2[1]], cov = mat1) * stats.multivariate_normal.cdf(x = [- de1[0], - de2[0]], cov = mat1) \
+        mat1 = numpy.array([[1, r], [r, 1]], dtype = numpy.double, ndmin = 2)
+        res = numpy.double(2 * stats.multivariate_normal.cdf(x = [de1[1], de2[1]], cov = mat1) * stats.multivariate_normal.cdf(x = [- de1[0], - de2[0]], cov = mat1) \
             - 2 * (zratio1[1] - stats.multivariate_normal.cdf(x = [de1[1], de2[0]], cov = mat1)) * (zratio2[1] - stats.multivariate_normal.cdf(x = [de1[0], de2[1]], cov = mat1)))
         return res
     def solver(i, K, comb, zratio1, zratio2, tol):
@@ -304,7 +304,7 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     if (type(n) is not int) | (n <= 0):
         print("n should be a positive integer as sample size.")
         exit()
-    n = int(n); rhos = float(rhos); copulas = numpy.array(copulas, dtype = str, ndmin = 1); tps = numpy.array(tps, dtype = str, ndmin = 1)
+    n = int(n); rhos = numpy.double(rhos); copulas = numpy.array(copulas, dtype = str, ndmin = 1); tps = numpy.array(tps, dtype = str, ndmin = 1)
     p = len(tps); p_copulas = len(copulas)
     if p_copulas == 1:
         copulas = numpy.repeat(copulas, p)
@@ -320,20 +320,20 @@ def gen_data(n = 100, tps = ["ter", "con"], rhos = .5, copulas = "no", XP = None
     elif ((numpy.sum(XP <= 0)) > 0) | ((numpy.sum(XP >= 1)) > 0):
         print("The proportion(s) should always between 0 and 1. Otherwise please consider to degenerate your data tp.")
         exit()
-    XP = numpy.array(XP, dtype = float, ndmin = 2)
+    XP = numpy.array(XP, dtype = numpy.double, ndmin = 2)
     if p == 1:
         Z = stats.norm.rvs(size = n).reshape((n, p))
     else:
         if len(copulas) == 1:
             copulas = numpy.repeat(copulas, p)
         lowertri = numpy.tril_indices(p, -1)
-        rhos = numpy.array([rhos], dtype = float, ndmin = 1)
+        rhos = numpy.array([rhos], dtype = numpy.double, ndmin = 1)
         if len(rhos) == 1:
             rhos = numpy.repeat(rhos, len(lowertri[1]))
         elif len(rhos) != len(lowertri[1]):
             print("Length of rhos should fit for lower triangular part of latent correlation matrix.")
             exit()
-        Sigma_lower = numpy.zeros((p, p), dtype = float); Sigma_lower[lowertri] = rhos; Sigma = Sigma_lower + Sigma_lower.transpose()
+        Sigma_lower = numpy.zeros((p, p), dtype = numpy.double); Sigma_lower[lowertri] = rhos; Sigma = Sigma_lower + Sigma_lower.transpose()
         numpy.fill_diagonal(Sigma, 1)
         Z = stats.multivariate_normal.rvs(cov = Sigma, size = n)
     X = Z
@@ -372,7 +372,7 @@ def get_tps(X, tru_prop = 0.05):
 
     """
 
-    X = numpy.array(X, dtype = float, ndmin = 2)
+    X = numpy.array(X, dtype = numpy.double, ndmin = 2)
     p = X.shape[1]; tps = numpy.repeat("NAN", p)
     for i in range(p):
         x = X[ : , i]
@@ -460,7 +460,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         colnames = X.columns
     else:
         colnames = None
-    X = numpy.array(X, dtype = numpy.float32); nu = float(nu); tol = float(tol); ratio = float(ratio)
+    X = numpy.array(X, dtype = numpy.double); nu = numpy.double(nu); tol = numpy.double(tol); ratio = numpy.double(ratio)
     """Check the supplied parameters are compatible with what is expected."""
     if (nu < 0) | (nu > 1):
         print("nu must be between 0 and 1.")
@@ -477,7 +477,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
         tps = numpy.array(tps, dtype = str, ndmin = 1)
     """Here I'll find some convenient way to check numeric matrix."""
     p = X.shape[1]
-    R = numpy.zeros((p, p), dtype = numpy.float32)
+    R = numpy.zeros((p, p), dtype = numpy.double)
     cp = numpy.tril_indices(p, -1); cp_col = len(cp[1])
     """Here I'll deal with NaN value."""
     K_a_lower = Kendalltau.Kendalltau(self = Kendalltau, X = X)
@@ -507,7 +507,7 @@ def latentcor(X, tps = None, method = "approx", use_nearPD = True, nu = 0.001, t
                 R_lower[comb_select] = r_sol.batch(self = r_sol, K = K, comb = comb, zratio1 = zratio1, zratio2 = zratio2, tol = tol)
             elif method == "approx":
                 R_lower[comb_select] = r_switch.r_approx(self = r_switch, K = K, zratio1 = zratio1, zratio2 = zratio2, comb = comb, tol = tol, ratio  = ratio)
-    K = numpy.zeros((p, p), dtype = numpy.float32)
+    K = numpy.zeros((p, p), dtype = numpy.double)
     K[cp] = K_a_lower; R[cp] = R_lower
     K = K + K.transpose(); numpy.fill_diagonal(K, 1); R = R + R.transpose(); numpy.fill_diagonal(R, 1)
     K = DataFrame(K, index = colnames, columns = colnames)
