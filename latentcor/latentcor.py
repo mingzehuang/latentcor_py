@@ -21,6 +21,21 @@ with lzma.open(pkg_resources.resource_stream("latentcor", "all_ipol.xz"), "rb") 
 with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_10.xz"), "rb") as f:
     ipol_10 = pickle.load(f)
 
+with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_11.xz"), "rb") as f:
+    ipol_11 = pickle.load(f)
+
+with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_20.xz"), "rb") as f:
+    ipol_20 = pickle.load(f)
+
+with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_21.xz"), "rb") as f:
+    ipol_21 = pickle.load(f)
+
+with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_22.xz"), "rb") as f:
+    ipol_22 = pickle.load(f)
+
+with lzma.open(pkg_resources.resource_stream("latentcor", "ipol_30.xz"), "rb") as f:
+    ipol_30 = pickle.load(f)
+
 class fromZtoX(object):
     """Switch between different copula"""
     def copula_switch(self, copula, z):
