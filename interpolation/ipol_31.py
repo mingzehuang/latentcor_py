@@ -1,10 +1,8 @@
-import os
-import sys
 """sys.path.append('/scratch/user/sharkmanhmz/python_project_package')"""
 """sys.path.append('/scratch/user/sharkmanhmz/latentcor_py/latentcor')"""
 """sys.path.insert(0, os.path.abspath('../latentcor'))"""
 
-"""Put all functions here to simplify path setting"""
+"""Put all related functions here to simplify path setting"""
 
 import os
 import sys
@@ -259,6 +257,7 @@ class r_switch(object):
         return out
 
 
+"""Here we start to generate interpolant"""
 import numpy
 import latentcor
 import pickle
@@ -286,10 +285,14 @@ points_NB_zratio2_1_grid = points_NB_meshgrid[3].flatten()
 def NB_par(i):
     out = NB_value(tau = points_NB_tau_grid[i], zratio1_1 = points_NB_zratio1_1_grid[i], zratio1_2 = points_NB_zratio1_2_grid[i], zratio2_1 = points_NB_zratio2_1_grid[i])
     return out
+
+"""Here we should set n_jobs=numbers of logical cores on your machine"""
 value_NB = Parallel(n_jobs=68, backend = 'multiprocessing')(delayed(NB_par)(i) for i in range(len(points_NB_tau_grid)))
 value_NB = numpy.array(value_NB, dtype=numpy.double).reshape(points_NB_meshgrid[0].shape)
 print(value_NB)
 
 ipol_31 = RegularGridInterpolator(points_NB, value_NB)
+
+"""Here the output will be compressed to an xz file"""
 with lzma.open(os.path.join(os.getcwd(), "ipol_31.xz"), "wb", preset = 9) as f:
     pickle.dump(ipol_31, f)
