@@ -269,8 +269,8 @@ from joblib import Parallel, delayed
 def NN_value(tau, zratio1_1, zratio1_2, zratio2_1, zratio2_2):
     zratio1 = zratio2 = numpy.full((2, 1), numpy.nan)
     zratio1[ : , 0] = [zratio1_1 * zratio1_2, zratio1_2]; zratio2[ : , 0] = [zratio2_1 * zratio2_2, zratio2_2]
-    tau = tau * latentcor.r_switch.bound_switch(self = latentcor.r_switch, comb = "33", zratio1 = zratio1, zratio2 = zratio2)
-    output = latentcor.r_sol.batch(self = latentcor.r_sol, K = tau, comb = "33", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
+    tau = tau * r_switch.bound_switch(self = r_switch, comb = "33", zratio1 = zratio1, zratio2 = zratio2)
+    output = r_sol.batch(self = r_sol, K = tau, comb = "33", zratio1 = zratio1, zratio2 = zratio2, tol = 1e-8)
     return output
 
 tau_grid = numpy.array([-1, *stats.norm.cdf(numpy.linspace(-1.8, 1.8, 13), scale = .8) * 2 - 1, 1], dtype = numpy.double)
