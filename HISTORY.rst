@@ -53,3 +53,7 @@ History
 ------------------
 
 * Correct incompatible versions.
+
+0.2.5 (2023-11-05)
+
+* Regenerate interpolants for approximation method and fix version compatibility for Python 3.7.
